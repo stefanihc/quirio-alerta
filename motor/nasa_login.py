@@ -22,8 +22,8 @@ def entrar():
         sys.exit("No encuentro tu clave guardada. Corre primero: python entrar_nasa.py")
     try:
         auth = earthaccess.login(strategy="environment")
-    except Exception:
-        auth = None
+    except Exception as e:                      # suele ser la NASA que no responde, no la clave
+        sys.exit(f"No se pudo conectar con NASA Earthdata: {type(e).__name__}: {e}")
     if not auth or not auth.authenticated:
         sys.exit("NASA rechazó la clave. En la PC: python entrar_nasa.py. En GitHub: revisa los secrets.")
     print("Entrada correcta a NASA Earthdata.")

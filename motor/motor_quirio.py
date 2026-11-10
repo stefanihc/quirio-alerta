@@ -113,12 +113,33 @@ def avisos(dias, p3, k, pron):
 
 
 if __name__ == "__main__":
-    dias, n = lluvia_observada()
-    p3 = round(sum(dias.values()), 1)            # todo lo que cayó en las últimas 72 h
+    import time
     try:
         previo = json.loads(SALIDA.read_text(encoding="utf-8"))
     except Exception:
         previo = {}
+    dias = None
+    for intento in range(1, 4):                   # la NASA a veces no responde: 3 intentos
+        try:
+            dias, n = lluvia_observada()
+            if not dias:
+                raise RuntimeError("la NASA no devolvió archivos de las últimas 72 h")
+            break
+        except (Exception, SystemExit) as e:
+            print(f"Intento {intento} falló: {e}")
+            dias = None
+            if intento < 3:
+                time.sleep(90)
+    if dias is None:
+        # No se inventa nada: se deja el último estado y se marca como atrasado para que la app lo diga.
+        if previo:
+            previo["atrasado"] = True
+            previo["ultimo_intento"] = datetime.now(LIMA).isoformat(timespec="minutes")
+            SALIDA.write_text(json.dumps(previo, ensure_ascii=False, indent=2), encoding="utf-8")
+            print("Sin datos nuevos de la NASA: se marcó el estado como atrasado.")
+            sys.exit(0)
+        sys.exit("Sin datos de la NASA y sin estado anterior.")
+    p3 = round(sum(dias.values()), 1)            # todo lo que cayó en las últimas 72 h
     k = color(p3, previo.get("color"))
     try:
         pron = pronostico()
