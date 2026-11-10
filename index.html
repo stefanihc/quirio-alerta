@@ -260,6 +260,15 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 .simular{display:block;width:100%;margin-top:10px;border:2px solid var(--accent);background:transparent;color:var(--accent);border-radius:14px;padding:10px;font-weight:800}
 .vivo.viejo{background:color-mix(in srgb,var(--amarillo) 22%,var(--card))}
 .vivo.viejo .punto{background:var(--amarillo);animation:none}
+
+.prot{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:p}
+.prot li{counter-increment:p;position:relative;padding:0 0 16px 52px;display:grid;gap:2px}
+.prot li::before{content:counter(p);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font:800 1rem var(--f-head);color:#fff;background:linear-gradient(145deg,color-mix(in srgb,var(--c) 70%,#fff),var(--c));box-shadow:0 4px 10px color-mix(in srgb,var(--c) 35%,transparent)}
+.prot li::after{content:"";position:absolute;left:17px;top:40px;bottom:2px;width:2px;background:var(--line)}
+.prot li:last-child::after{display:none}
+.prot b{font-size:1.02rem}
+.prot span{font-size:.92rem;color:var(--ink)}
+.prot em{font-style:normal;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -403,6 +412,19 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
       <p class="sub" id="m-cuenta">0 de 8 listos</p>
       <div class="check" id="mochila"></div>
     </section>
+    <section class="card" aria-labelledby="t-prot">
+      <h2 class="tit" id="t-prot">¿Quién hace qué?</h2>
+      <p class="sub">Cómo funciona la alerta en Quirio, paso a paso.</p>
+      <ol class="prot">
+        <li style="--c:var(--accent)"><b>Vigila la quebrada</b><span>El operador de la Municipalidad mira la cámara del punto de activación desde el COED.</span><em>SAT 2023</em></li>
+        <li style="--c:var(--verde)"><b>Lee la lluvia</b><span>Quirio Alerta revisa la lluvia del satélite cada hora y avisa si sube (amarillo, naranja).</span><em>propuesta</em></li>
+        <li style="--c:var(--naranja)"><b>Decide la alerta</b><span>El COE evalúa. Si el caudal sube, el operador hace sonar el Mensaje 01 · Alerta en las 5 sirenas.</span><em>SAT 2023</em></li>
+        <li style="--c:var(--amarillo)"><b>Ayuda en el barrio</b><span>Las brigadas recorren su zona y ayudan primero a niños, abuelos y personas con discapacidad.</span><em>propuesta</em></li>
+        <li style="--c:var(--rojo)"><b>Evacúa</b><span>Si baja el huaico, suena el Mensaje 02 · Alarma: todos a la zona segura por las rutas.</span><em>SAT 2023</em></li>
+        <li style="--c:var(--verde)"><b>Cancela</b><span>Cuando el caudal está estable, el operador da el Mensaje 03 · Cancelación. Recién ahí se vuelve.</span><em>SAT 2023</em></li>
+      </ol>
+      <p class="sub">Las sirenas se prueban cada día en silencio y se usan en los simulacros. Borrador según el Protocolo del SAT comunitario de Quirio (2023, punto 4.3); los pasos “propuesta” se validarán con el COE y las brigadas.</p>
+    </section>
     <section class="card">
       <h2 class="tit">Teléfonos de emergencia</h2>
       <div class="tels">
@@ -429,7 +451,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
         <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos: informe de diseño del SAT comunitario de Quirio (2023).</li><li>Íconos: Phosphor Icons (licencia MIT). Paisaje ilustrado: dibujo propio del proyecto.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.9 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.10 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
     </section>
   </main>
 </div>
