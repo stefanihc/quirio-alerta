@@ -5,7 +5,7 @@ Qué hace cada vez que se corre:
   1. Lluvia que YA cayó: suma GPM IMERG Early (cada 30 min) de las últimas 72 h en Quirio.
   2. Lluvia que VIENE: pronóstico ECMWF de los próximos 3 días (vía Open-Meteo, gratis, sin clave).
      Solo da un aviso de "se espera más lluvia"; NO cambia el color (ver 06_modelo/pronostico/LEEME_pronostico.md).
-  3. Calcula el color (umbrales Early preliminares: 5 y 9.6 mm en 3 días) y escribe los avisos.
+  3. Calcula el color (umbrales Early: 10 y 17 mm en 3 días, ver LEEME_umbral_early.md) y escribe los avisos.
   4. Guarda todo en 07_aplicativo/estado.json, que es lo que lee la app.
 
 El ROJO no sale de aquí: lo declara el COE (cámara del SAT o brigada). El motor solo propone hasta naranja.
@@ -27,7 +27,8 @@ BASE = Path(__file__).resolve().parents[2]
 SALIDA = Path(os.environ["QUIRIO_SALIDA"]) if os.environ.get("QUIRIO_SALIDA") else BASE / "07_aplicativo" / "estado.json"
 LON, LAT = -76.725, -11.92
 BBOX = (-76.75, -11.95, -76.70, -11.89)
-AMARILLO, NARANJA = 5.0, 9.6           # mm en 3 días, GPM Early (06_modelo/umbral_lluvia/LEEME_umbral_early.md)
+AMARILLO, NARANJA = 10.0, 17.0         # mm en 3 días, GPM Early calibrado con 2023-2025 (06_modelo/umbral_lluvia/LEEME_umbral_early.md)
+HISTERESIS = 2.0                       # mm: margen para bajar de nivel
 PRE_AVISO = 3.0                        # mm en 3 días, ECMWF (06_modelo/pronostico/LEEME_pronostico.md)
 LIMA = timezone(timedelta(hours=-5))
 
@@ -61,8 +62,31 @@ def pronostico():
     return [{"fecha": f, "mm": round(mm or 0, 1)} for f, mm in zip(d["time"], d["precipitation_sum"])][1:]
 
 
-def color(p3):
-    return "naranja" if p3 >= NARANJA else "amarillo" if p3 >= AMARILLO else "verde"
+def color(p3, antes=None):
+    """Color por lluvia de 3 días. Para BAJAR de nivel pide 1 mm menos que el umbral (histéresis),
+    así el color no salta de ida y vuelta cada hora cuando la lluvia está justo en el límite."""
+    k = "naranja" if p3 >= NARANJA else "amarillo" if p3 >= AMARILLO else "verde"
+    orden = ["verde", "amarillo", "naranja"]
+    if antes in orden and orden.index(k) < orden.index(antes):
+        umbral_antes = NARANJA if antes == "naranja" else AMARILLO
+        if p3 > umbral_antes - HISTERESIS:
+            k = antes
+    return k
+
+
+def telegram(texto):
+    """Manda el aviso al canal de Telegram si están los secrets TELEGRAM_TOKEN y TELEGRAM_CANAL."""
+    token, canal = os.environ.get("TELEGRAM_TOKEN"), os.environ.get("TELEGRAM_CANAL")
+    if not (token and canal):
+        return
+    from urllib.parse import urlencode
+    from urllib.request import Request
+    datos = urlencode({"chat_id": canal, "text": texto, "disable_web_page_preview": "true"}).encode()
+    try:
+        with urlopen(Request(f"https://api.telegram.org/bot{token}/sendMessage", data=datos), timeout=30) as r:
+            print("Telegram:", r.status)
+    except Exception as e:
+        print("Telegram falló:", e)
 
 
 def avisos(dias, p3, k, pron):
@@ -91,7 +115,11 @@ def avisos(dias, p3, k, pron):
 if __name__ == "__main__":
     dias, n = lluvia_observada()
     p3 = round(sum(dias.values()), 1)            # todo lo que cayó en las últimas 72 h
-    k = color(p3)
+    try:
+        previo = json.loads(SALIDA.read_text(encoding="utf-8"))
+    except Exception:
+        previo = {}
+    k = color(p3, previo.get("color"))
     try:
         pron = pronostico()
     except Exception as e:
@@ -106,6 +134,18 @@ if __name__ == "__main__":
         "fuente": f"GPM IMERG Early V07 ({n} archivos de 30 min) y Open-Meteo. Umbrales preliminares {AMARILLO} y {NARANJA} mm en 3 días.",
         "nota": "El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.",
     }
+    # ¿Qué es nuevo respecto a la corrida anterior? Solo eso se notifica (no se repite cada hora).
+    titulos_antes = {x["titulo"] for x in previo.get("avisos", [])}
+    nuevos = [x for x in estado["avisos"] if x["titulo"] not in titulos_antes]
+    cambio = previo.get("color") and previo.get("color") != k
+    estado["color_desde"] = estado["actualizado"] if (cambio or not previo) else previo.get("color_desde", estado["actualizado"])
+    if cambio and k == "verde":
+        nuevos.insert(0, {"color": "verde", "titulo": "Bajó la lluvia",
+                          "texto": "La lluvia de los últimos 3 días bajó. Sigue atento: el suelo puede seguir mojado."})
+    if nuevos:
+        icono = {"verde": "🟢", "amarillo": "🟡", "naranja": "🟠"}
+        telegram("\n\n".join(f"{icono.get(x['color'], '')} {x['titulo']}\n{x['texto']}" for x in nuevos)
+                 + f"\n\nLluvia en 3 días: {p3} mm · Quirio Alerta\nhttps://stefanihc.github.io/quirio-alerta/")
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
     SALIDA.write_text(json.dumps(estado, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nColor: {k.upper()}  |  lluvia 3 días: {p3} mm  |  pronóstico 3 días: {sum(x['mm'] for x in pron):.1f} mm")
