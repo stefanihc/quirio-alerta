@@ -1,5 +1,5 @@
 // Quirio Alerta: funciona sin internet con lo último que vio.
-const CACHE = "quirio-v4";
+const CACHE = "quirio-v6";
 const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-192.png", "iconos/icono-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(BASE)).then(() => self.skipWaiting())); });
