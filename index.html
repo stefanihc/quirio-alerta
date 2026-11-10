@@ -258,6 +258,8 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 .ir{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z'/%3E%3C/svg%3E")}
 .nota-gm{display:block;margin-top:6px;color:var(--muted);font-size:.78rem}
 .simular{display:block;width:100%;margin-top:10px;border:2px solid var(--accent);background:transparent;color:var(--accent);border-radius:14px;padding:10px;font-weight:800}
+.vivo.viejo{background:color-mix(in srgb,var(--amarillo) 22%,var(--card))}
+.vivo.viejo .punto{background:var(--amarillo);animation:none}
 @media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -541,7 +543,9 @@ function pintarVivo(){
   $("avisos").innerHTML = av.length ? av.map(m=>`<article class="aviso" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><div class="h"><b>${m.t}</b><span>${hora(E.actualizado)}</span></div><p>${m.p}</p><p class="porque">${(+E.p3_mm).toFixed(1)} mm en 3 días</p></div></article>`).join("")
     : `<p class="vacio">Todo tranquilo: no hay avisos. La app revisó la lluvia por última vez el ${hora(E.actualizado)}.</p>`;
   const b=$("badge"); b.textContent=av.length; b.hidden=!av.length;
-  $("vivo-txt").textContent=`En vivo · revisado ${hora(E.actualizado)}`;
+  const horas=(Date.now()-new Date(E.actualizado).getTime())/36e5, viejo=E.atrasado||horas>3;
+  $("barra-vivo").classList.toggle("viejo",!!viejo);
+  $("vivo-txt").textContent = viejo ? `Sin datos nuevos desde ${hora(E.actualizado)}. Revisa los avisos del SENAMHI y atiende a la brigada.` : `En vivo · revisado ${hora(E.actualizado)}`;
 }
 function ponerModo(m){ modo=m; parar();
   $("barra-vivo").hidden = m!=="vivo"; $("barra-demo").hidden = m!=="demo"; $("ver-vivo").hidden = !VIVO;
