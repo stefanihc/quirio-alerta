@@ -257,6 +257,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 .ir::before{content:"";width:18px;height:18px;flex:none;background:#fff;-webkit-mask:var(--pin) center/contain no-repeat;mask:var(--pin) center/contain no-repeat}
 .ir{--pin:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z'/%3E%3C/svg%3E")}
 .nota-gm{display:block;margin-top:6px;color:var(--muted);font-size:.78rem}
+.simular{display:block;width:100%;margin-top:10px;border:2px solid var(--accent);background:transparent;color:var(--accent);border-radius:14px;padding:10px;font-weight:800}
 @media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -387,7 +388,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
     <button type="button" class="gps" id="gps"><svg aria-hidden="true"><use href="#i-gps"/></svg>Usar mi ubicación (GPS)</button>
     <div class="mio" id="mio" aria-live="polite">
       <b class="grande">¿Dónde está tu casa?</b>
-      <p id="mio-txt">Toca el botón GPS o toca el mapa en tu casa. Te digo si estás en zona de peligro y a dónde ir.</p>
+      <p id="mio-txt">Toca el botón GPS o toca el mapa en tu casa. Te digo si estás en zona de peligro y a dónde ir. Si no estás en Quirio, toca cualquier casa del mapa para probar.</p>
     </div>
     <div class="chips" id="chips"></div>
   </main>
@@ -419,14 +420,14 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
       <b>De dónde salen los datos</b>
       <ol>
         <li>Lluvia: GPM IMERG V07 (NASA), versión final, 15–23 de marzo de 2015. En tiempo real se usará la versión Early, que en 2015 marcó menos lluvia que la final.</li>
-        <li>Umbrales preliminares (lluvia de 3 días): en vivo, con GPM Early, amarillo ≥ 5 mm y naranja ≥ 9.6 mm; en la demo, con GPM Final, 5 y 8 mm. Calibrados con los huaicos de 2009 a 2017; se revisarán con 2018–2025 y con datos SENAMHI. El pronóstico (ECMWF) solo da avisos informativos: no cambia el color.</li>
+        <li>Umbrales preliminares (lluvia de 3 días): en vivo, con GPM Early, amarillo ≥ 10 mm y naranja ≥ 17 mm (calibrados con 2023–2025, porque desde 2023 Early marca el doble que Final); en la demo, con GPM Final, 5 y 8 mm, que avisan 4 y 3 de los 5 huaicos de 2009–2017. Se revisarán cada temporada y con datos SENAMHI. El pronóstico (ECMWF) solo da avisos informativos: no cambia el color.</li>
         <li>Huaico del 23 de marzo de 2015 en Quirio: Núñez et al. (2015), INGEMMET A6680.</li>
         <li>Rutas, zonas seguras, puntos de reunión, colegios, puesto de comando y flujo de 2023: paquetes ArcGIS KNOW / GRACC 2026 (vía Diego Miranda).</li>
-        <li>Zonas de peligro: mapas comunitarios KNOW / GRACC 2026, digitalizados del PDF. Calles y puentes: paquetes KNOW / GRACC 2026.</li><li>Mapa de fondo: © OpenStreetMap y CARTO (calles), Esri (satélite). Las rutas a pie se abren en Google Maps.</li>
+        <li>Zonas de peligro: mapas comunitarios KNOW / GRACC 2026, digitalizados del PDF. Calles y puentes: paquetes KNOW / GRACC 2026.</li><li>Mapa de fondo: © colaboradores de OpenStreetMap (calles), Esri (satélite). Las rutas a pie se abren en Google Maps.</li>
         <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos: informe de diseño del SAT comunitario de Quirio (2023).</li><li>Íconos: Phosphor Icons (licencia MIT). Paisaje ilustrado: dibujo propio del proyecto.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.8 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.9 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
     </section>
   </main>
 </div>
@@ -621,7 +622,7 @@ function abrirMapa(){
   const m = mapa = L.map("mapa",{zoomSnap:.25,maxZoom:19}); L.control.scale({imperial:false}).addTo(m); m.attributionControl.setPrefix(false);
   /* Fondos: calles (OpenStreetMap + CARTO), satélite (Esri) y relieve propio (funciona sin internet) */
   const FONDOS={
-    calles:L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{subdomains:"abcd",maxZoom:20,attribution:"© OpenStreetMap · © CARTO"}),
+    calles:L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}),
     satelite:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Imagen © Esri, Maxar, Earthstar"}),
     relieve:L.imageOverlay(RELIEVE.uri,RELIEVE.bounds,{interactive:false,attribution:"Relieve: Copernicus GLO-30"})};
   let fondo=null, errores=0, cargo=false;
@@ -663,12 +664,13 @@ function abrirMapa(){
   m.on("preclick",e=>ubicar(e.latlng));
 }
 let ubicar = null;
+document.addEventListener("click",e=>{ if(e.target.id==="simular" && ubicar) ubicar(L.latLng(-11.944531,-76.71431)); });
 $("gps").addEventListener("click",()=>{
   const msg=t=>{ $("mio-txt").textContent=t; };
   if(!navigator.geolocation){ msg("Este equipo no tiene GPS. Toca el mapa en tu casa."); return; }
   msg("Buscando tu ubicación…");
   navigator.geolocation.getCurrentPosition(p=>{ const ll=L.latLng(p.coords.latitude,p.coords.longitude);
-      if(ll.distanceTo(L.latLng(-11.935,-76.715))>5000){ msg("Estás lejos de Quirio (más de 5 km). Toca el mapa en tu casa para ver tu ruta."); return; }
+      if(ll.distanceTo(L.latLng(-11.935,-76.715))>5000){ $("mio-txt").innerHTML=`Estás a ${(ll.distanceTo(L.latLng(-11.935,-76.715))/1000).toFixed(0)} km de Quirio. Toca el mapa en una casa, o prueba cómo funcionaría allá: <button type="button" class="simular" id="simular">Simular que estoy en Quirio</button>`; return; }
       ubicar(ll); },
     ()=>msg("No se pudo usar el GPS (permiso negado o sin señal). Toca el mapa en tu casa."),
     {enableHighAccuracy:true,timeout:15000,maximumAge:60000});
