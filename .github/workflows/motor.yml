@@ -1,0 +1,35 @@
+name: Motor Quirio Alerta
+# Cada hora: lee la lluvia satelital (GPM IMERG Early) y el pronóstico, y actualiza estado.json
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: motor
+  cancel-in-progress: false
+jobs:
+  motor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: motor/requirements.txt
+      - run: pip install -r motor/requirements.txt
+      - name: Calcular el color
+        run: python motor/motor_quirio.py
+        env:
+          EARTHDATA_USERNAME: ${{ secrets.EARTHDATA_USERNAME }}
+          EARTHDATA_PASSWORD: ${{ secrets.EARTHDATA_PASSWORD }}
+          QUIRIO_SALIDA: estado.json
+      - name: Guardar estado.json
+        run: |
+          git config user.name "motor-quirio"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estado.json
+          git diff --cached --quiet || (git commit -m "estado $(date -u +%Y-%m-%dT%H:%MZ)" && git push)
