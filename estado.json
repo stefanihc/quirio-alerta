@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-11T11:09-05:00",
+  "actualizado": "2026-11-11T17:45-05:00",
   "color": "verde",
   "p3_mm": 1.1,
   "lluvia_por_dia_mm": {
@@ -11,25 +11,19 @@
   "pronostico": [
     {
       "fecha": "2026-11-12",
-      "mm": 0.8
+      "mm": 1.2
     },
     {
       "fecha": "2026-11-13",
-      "mm": 1.8
+      "mm": 1.0
     },
     {
       "fecha": "2026-11-14",
       "mm": 0.5
     }
   ],
-  "avisos": [
-    {
-      "color": "verde",
-      "titulo": "Se espera más lluvia",
-      "texto": "El pronóstico anuncia unos 3 mm en los próximos 3 días. Es un pronóstico: puede fallar, pero conviene alistarse."
-    }
-  ],
-  "fuente": "GPM IMERG Early V07 (134 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.",
+  "avisos": [],
+  "fuente": "GPM IMERG Early V07 (135 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.",
   "nota": "El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.",
   "color_desde": "2026-11-10T08:19-05:00"
 }
