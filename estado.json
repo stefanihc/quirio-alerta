@@ -1,9 +1,9 @@
 {
-  "actualizado": "2026-11-10T15:59-05:00",
+  "actualizado": "2026-11-10T20:15-05:00",
   "color": "verde",
-  "p3_mm": 1.3,
+  "p3_mm": 0.8,
   "lluvia_por_dia_mm": {
-    "2026-11-07": 0.5,
+    "2026-11-07": 0.0,
     "2026-11-08": 0.0,
     "2026-11-09": 0.8,
     "2026-11-10": 0.0
@@ -23,7 +23,7 @@
     }
   ],
   "avisos": [],
-  "fuente": "GPM IMERG Early V07 (135 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.",
+  "fuente": "GPM IMERG Early V07 (134 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.",
   "nota": "El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.",
   "color_desde": "2026-11-10T08:19-05:00"
 }
