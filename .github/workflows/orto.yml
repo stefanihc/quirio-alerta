@@ -1,0 +1,33 @@
+name: Teselas de la foto de dron
+# Cuando se sube una ortofoto nueva a orto_fuente/, la convierte en teselas para el mapa (carpeta orto/).
+on:
+  push:
+    paths:
+      - "orto_fuente/**"
+      - "herramientas/teselas_orto.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: motor
+  cancel-in-progress: false
+jobs:
+  teselas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install rasterio pillow scipy numpy
+      - name: Crear teselas
+        run: |
+          rm -rf orto
+          python herramientas/teselas_orto.py orto_fuente/orto_quirio_app.tif orto
+      - name: Guardar teselas
+        run: |
+          git config user.name "motor-quirio"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A orto
+          git diff --cached --quiet || (git commit -q -m "Teselas de la foto de dron" && git pull --rebase -q && git push)
