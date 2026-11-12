@@ -86,7 +86,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .escala div{border-radius:12px;padding:8px 4px;text-align:center;font-weight:800;font-size:.78rem;background:var(--soft);color:var(--muted);border-bottom:6px solid var(--c)}
 .escala div.on{background:var(--c);color:var(--on);transform:translateY(-3px)}
 /* Lluvia */
-.lluvia{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;height:140px;padding-top:18px}
+.lluvia{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;height:112px;padding-top:18px}
 .lluvia .col{display:grid;grid-template-rows:1fr auto;height:100%;text-align:center;gap:4px}
 .lluvia .b{align-self:end;border-radius:8px 8px 3px 3px;background:var(--accent);position:relative;min-height:3px;transition:height .5s}
 .lluvia .b.hoy{background:var(--c)}
@@ -158,7 +158,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* Navegación inferior */
 nav.abajo{position:fixed;left:0;right:0;bottom:0;z-index:1000;background:var(--card);border-top:1px solid var(--line);
   padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
-nav.abajo .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+nav.abajo .in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
 nav.abajo a{display:grid;justify-items:center;gap:2px;text-decoration:none;color:var(--muted);font-weight:800;font-size:.78rem;padding:6px 0;border-radius:14px;position:relative}
 nav.abajo a svg{width:26px;height:26px}
 nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
@@ -216,7 +216,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 #escena[data-nivel="amarillo"]{--cielo1:#9fb4c4;--cielo2:#e7edf1}
 #escena[data-nivel="naranja"]{--cielo1:#6b7c8c;--cielo2:#c4ccd3}
 #escena[data-nivel="rojo"]{--cielo1:#4a5562;--cielo2:#9aa4ad}
-#escena .sol,#escena .nubes,#escena .flujo,#escena #lluvia,#escena .gente,#escena .segura{transition:opacity .6s}
+#escena .sol,#escena .nubes,#escena .flujo,#escena #esc-lluvia,#escena .gente,#escena .segura{transition:opacity .6s}
 #escena .sol{opacity:1} #escena:not([data-nivel="verde"]) .sol{opacity:0}
 #escena .nube{fill:#fff;opacity:.85}
 #escena[data-nivel="amarillo"] .nube{fill:#dfe6eb}
@@ -226,9 +226,9 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 #escena .flujo{opacity:0;animation:baja 1.4s linear infinite}
 #escena[data-nivel="naranja"] .flujo{opacity:.55} #escena[data-nivel="rojo"] .flujo{opacity:.95}
 @keyframes baja{to{stroke-dashoffset:-36}}
-#escena #lluvia{opacity:0;stroke:#ffffff;stroke-width:1.6;stroke-linecap:round}
-#escena[data-nivel="amarillo"] #lluvia{opacity:.55} #escena[data-nivel="naranja"] #lluvia{opacity:.8} #escena[data-nivel="rojo"] #lluvia{opacity:.95}
-#escena #lluvia line{animation:gota .9s linear infinite}
+#escena #esc-lluvia{opacity:0;stroke:#ffffff;stroke-width:1.6;stroke-linecap:round}
+#escena[data-nivel="amarillo"] #esc-lluvia{opacity:.55} #escena[data-nivel="naranja"] #esc-lluvia{opacity:.8} #escena[data-nivel="rojo"] #esc-lluvia{opacity:.95}
+#escena #esc-lluvia line{animation:gota .9s linear infinite}
 @keyframes gota{from{transform:translate(0,-30px)}to{transform:translate(-10px,60px)}}
 #escena .gente,#escena .segura{opacity:0} #escena[data-nivel="rojo"] .gente,#escena[data-nivel="rojo"] .segura{opacity:1}
 #escena[data-nivel="naranja"] .segura{opacity:.9}
@@ -270,6 +270,64 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 .prot span{font-size:.92rem;color:var(--ink)}
 .prot em{font-style:normal;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}}
+
+/* ---- v0.11: reloj en vivo, medidor de lluvia, simulacro aparte, ilustraciones ---- */
+.top .logo{flex:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25));border-radius:14px}
+.reloj{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:12px;row-gap:2px;padding-block:10px 12px;
+  background:linear-gradient(100deg,color-mix(in srgb,var(--verde) 20%,var(--card)),var(--card));border-bottom:1px solid var(--line)}
+.reloj .rl-izq{display:grid;gap:2px}
+.reloj .rl-modo{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem;color:var(--verde)}
+.reloj .punto{width:12px;height:12px;border-radius:50%;background:var(--verde);animation:latido 1.6s ease-out infinite;box-shadow:0 0 0 3px color-mix(in srgb,var(--verde) 30%,transparent)}
+.reloj #rl-dia{font-weight:700;color:var(--muted);font-size:.92rem;text-transform:capitalize}
+.reloj .rl-hora{font-family:var(--f-head);font-weight:800;font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em;grid-row:span 2}
+.reloj p{grid-column:1/-1;margin:2px 0 0;font-size:.85rem;font-weight:700;color:var(--muted)}
+.reloj.viejo{background:linear-gradient(100deg,color-mix(in srgb,var(--amarillo) 34%,var(--card)),var(--card))}
+.reloj.viejo .rl-modo{color:#8a5a00} .reloj.viejo .punto{background:var(--amarillo);animation:none}
+.reloj.viejo p{color:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .reloj.viejo .rl-modo{color:var(--amarillo)}}
+:root[data-theme="dark"] .reloj.viejo .rl-modo{color:var(--amarillo)}
+.medidor{background:var(--soft);border-radius:18px;padding:14px 14px 10px;display:grid;gap:8px;margin-bottom:6px}
+.m-top{display:flex;align-items:center;gap:12px}
+.m-top b{font-family:var(--f-head);font-size:2.3rem;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.m-top span{font-size:.85rem;font-weight:700;color:var(--muted);line-height:1.25}
+.m-barra{position:relative;height:16px;border-radius:999px;display:flex;overflow:visible}
+.m-barra i{height:100%}
+.m-barra .z1{background:var(--verde);border-radius:999px 0 0 999px}
+.m-barra .z2{background:var(--amarillo)} .m-barra .z3{background:var(--naranja);border-radius:0 999px 999px 0}
+.m-pin{position:absolute;top:50%;width:26px;height:26px;margin-left:-13px;transform:translateY(-50%);border-radius:50%;background:var(--card);border:4px solid var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.3);transition:left .6s}
+.m-esc{position:relative;height:18px;font-size:.74rem;font-weight:800;color:var(--muted)}
+.m-esc span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.m-esc span:first-child{transform:none}
+.m-falta{margin:0;font-weight:800;font-size:.95rem}
+.leyenda{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--muted);margin:6px 0 10px}
+.leyenda i{width:12px;height:12px;border-radius:3px;background:var(--accent);display:inline-block}
+.leyenda i.fu{background:var(--accent);opacity:.35;margin-left:8px}
+.cifras.c4{grid-template-columns:1fr 1fr}
+.cifra b small{font-size:.9rem;font-weight:800;color:var(--muted)}
+.tiempo{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;background:linear-gradient(135deg,color-mix(in srgb,#2563eb 10%,var(--card)),var(--card));border:1px solid var(--line);border-radius:16px;padding:10px 8px}
+.tiempo h3{grid-column:1/-1;font-size:.82rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding-inline:4px}
+.tiempo div{display:grid;justify-items:center;text-align:center;gap:2px}
+.tiempo svg{width:26px;height:26px;color:var(--accent)}
+.tiempo b{font-family:var(--f-head);font-size:1.15rem;line-height:1}
+.tiempo span{font-size:.7rem;font-weight:700;color:var(--muted)}
+.tile svg.il{width:72px!important;height:72px!important;padding:0!important;background:none!important;box-shadow:none!important;border-radius:50%!important;filter:drop-shadow(0 4px 8px rgba(16,40,48,.14))}
+.tile.no svg.il{filter:drop-shadow(0 4px 8px rgba(16,40,48,.14)) saturate(.9)}
+.cinta{margin:12px 0 0;padding:10px 14px;border-radius:14px;font-weight:800;color:#3d2c00;text-align:center;
+  background:repeating-linear-gradient(-45deg,#ffd75e 0 14px,#ffe9a3 14px 28px);box-shadow:var(--sombra)}
+.cinta b{letter-spacing:.12em}
+#v-simulacro .ctl{display:flex;align-items:center;gap:8px;margin-top:10px}
+#v-simulacro .ctl > button{border:0;background:var(--accent-2);color:#fff;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none}
+#v-simulacro .ctl > button svg{width:22px;height:22px}
+.sim{display:flex;align-items:center;gap:14px;border-radius:22px;padding:16px;margin-top:12px;background:var(--c);color:var(--on);box-shadow:var(--sombra);position:relative;overflow:hidden}
+.sim::after{content:"SIMULACRO";position:absolute;right:-30px;top:14px;transform:rotate(30deg);background:rgba(0,0,0,.22);color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.12em;padding:3px 34px}
+.sim .s-luz{width:58px;height:58px;border-radius:18px;background:rgba(255,255,255,.22);display:grid;place-items:center;flex:none}
+.sim .s-luz svg{width:36px;height:36px}
+.sim small{font-weight:800;opacity:.85}
+.sim .palabra{font-family:var(--f-head);font-size:1.9rem;font-weight:800;text-transform:uppercase;line-height:1}
+.sim .nivel{font-weight:700;font-size:.9rem}
+nav.abajo a{font-size:.72rem}
+#v-simulacro .dias button{color:var(--ink)!important;height:50px!important;border-color:var(--line)!important}
+#v-simulacro .dias button[aria-pressed="true"]{background:var(--ink)!important;color:var(--card)!important;border-color:var(--ink)!important}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -295,26 +353,35 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 <symbol id="n-mapa" viewBox="0 0 256 256" fill="currentColor"><path d="M160,72V216L96,184V40Z" opacity="0.2"/><path d="M228.92,49.69a8,8,0,0,0-6.86-1.45L160.93,63.52,99.58,32.84a8,8,0,0,0-5.52-.6l-64,16A8,8,0,0,0,24,56V200a8,8,0,0,0,9.94,7.76l61.13-15.28,61.35,30.68A8.15,8.15,0,0,0,160,224a8,8,0,0,0,1.94-.24l64-16A8,8,0,0,0,232,200V56A8,8,0,0,0,228.92,49.69ZM104,52.94l48,24V203.06l-48-24ZM40,62.25l48-12v127.5l-48,12Zm176,131.5-48,12V78.25l48-12Z"/></symbol>
 <symbol id="n-plan" viewBox="0 0 256 256" fill="currentColor"><path d="M208,48V216a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H96a39.83,39.83,0,0,0-8,24v8h80V64a39.83,39.83,0,0,0-8-24h40A8,8,0,0,1,208,48Z" opacity="0.2"/><path d="M168,152a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,152Zm-8-40H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm56-64V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V48A16,16,0,0,1,56,32H92.26a47.92,47.92,0,0,1,71.48,0H200A16,16,0,0,1,216,48ZM96,64h64a32,32,0,0,0-64,0ZM200,48H173.25A47.93,47.93,0,0,1,176,64v8a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V64a47.93,47.93,0,0,1,2.75-16H56V216H200Z"/></symbol>
 <symbol id="i-gps" viewBox="0 0 256 256" fill="currentColor"><path d="M160,128a32,32,0,1,1-32-32A32,32,0,0,1,160,128Z" opacity="0.2"/><path d="M232,120h-8.34A96.14,96.14,0,0,0,136,32.34V24a8,8,0,0,0-16,0v8.34A96.14,96.14,0,0,0,32.34,120H24a8,8,0,0,0,0,16h8.34A96.14,96.14,0,0,0,120,223.66V232a8,8,0,0,0,16,0v-8.34A96.14,96.14,0,0,0,223.66,136H232a8,8,0,0,0,0-16Zm-96,87.6V200a8,8,0,0,0-16,0v7.6A80.15,80.15,0,0,1,48.4,136H56a8,8,0,0,0,0-16H48.4A80.15,80.15,0,0,1,120,48.4V56a8,8,0,0,0,16,0V48.4A80.15,80.15,0,0,1,207.6,120H200a8,8,0,0,0,0,16h7.6A80.15,80.15,0,0,1,136,207.6ZM128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Z"/></symbol>
+<symbol id="t-temp" viewBox="0 0 256 256" fill="currentColor"><path d="M152,160a24,24,0,1,1-32-22.62V56a8,8,0,0,1,16,0v81.38A24,24,0,0,1,152,160Z" opacity="0.2"/><path d="M136,145.17V96a8,8,0,0,0-16,0v49.17a24,24,0,1,0,16,0ZM128,176a8,8,0,1,1,8-8A8,8,0,0,1,128,176Zm40-34.06V48a40,40,0,0,0-80,0v93.94a64,64,0,1,0,80,0ZM128,224a48,48,0,0,1-27.2-87.55A8,8,0,0,0,104,129.88V48a24,24,0,0,1,48,0v81.88a8,8,0,0,0,3.2,6.57A48,48,0,0,1,128,224Z"/></symbol>
+<symbol id="t-nube" viewBox="0 0 256 256" fill="currentColor"><path d="M240,128a80,80,0,0,1-80,80H72A56,56,0,1,1,85.92,97.74l0,.1A80,80,0,0,1,240,128Z" opacity="0.2"/><path d="M160,40A88.09,88.09,0,0,0,81.29,88.67,64,64,0,1,0,72,216h88a88,88,0,0,0,0-176Zm0,160H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.29.11A88,88,0,0,0,72,128a8,8,0,0,0,16,0,72,72,0,1,1,72,72Z"/></symbol>
+<symbol id="t-viento" viewBox="0 0 256 256" fill="currentColor"><path d="M184,184a32,32,0,0,1-32,32c-13.7,0-26.95-8.93-31.5-21.22a8,8,0,0,1,15-5.56C137.74,195.27,145,200,152,200a16,16,0,0,0,0-32H40a8,8,0,0,1,0-16H152A32,32,0,0,1,184,184Zm-64-80a32,32,0,0,0,0-64c-13.7,0-26.95,8.93-31.5,21.22a8,8,0,0,0,15,5.56C105.74,60.73,113,56,120,56a16,16,0,0,1,0,32H24a8,8,0,0,0,0,16Zm88-32c-13.7,0-26.95,8.93-31.5,21.22a8,8,0,0,0,15,5.56C193.74,92.73,201,88,208,88a16,16,0,0,1,0,32H32a8,8,0,0,0,0,16H208a32,32,0,0,0,0-64Z"/></symbol>
+<symbol id="n-sim" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm36.44-94.66-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17Z"/></symbol>
+<symbol id="il-mochila" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#ffedd5"/><path d="M25 18a7 7 0 0 1 14 0" fill="none" stroke="#9a3412" stroke-width="3.2" stroke-linecap="round"/><rect x="15" y="17" width="34" height="38" rx="10" fill="#f97316"/><path d="M15 31V27a10 10 0 0 1 10-10h14a10 10 0 0 1 10 10v4Z" fill="#c2410c"/><rect x="21" y="37" width="22" height="13" rx="4" fill="#fdba74"/><rect x="21" y="41" width="22" height="2.6" fill="#fff"/><circle cx="32" cy="31" r="2.2" fill="#fff7ed"/><path d="M15 34h-3v12a3 3 0 0 0 3 3M49 34h3v12a3 3 0 0 1-3 3" fill="none" stroke="#9a3412" stroke-width="2.4"/></symbol>
+<symbol id="il-familia" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#ede9fe"/><circle cx="23" cy="19" r="6.5" fill="#e9b48a"/><path d="M16.5 17.5a6.5 6.5 0 0 1 13 0c-3-2-9-2-13 0Z" fill="#3b2a20"/><path d="M12 56V36a11 11 0 0 1 22 0v20Z" fill="#7c3aed"/><circle cx="44" cy="31" r="5" fill="#e9b48a"/><path d="M39 30a5 5 0 0 1 10 0c-2-2-7-2-10 0Z" fill="#3b2a20"/><path d="M36 56V44a8 8 0 0 1 16 0v12Z" fill="#a78bfa"/><path d="M31 42c3 3 6 3 8 1" fill="none" stroke="#e9b48a" stroke-width="3.4" stroke-linecap="round"/><path d="M29 8l1.6 3 3.3.5-2.4 2.3.6 3.3-3.1-1.6-3 1.6.6-3.3L24.2 11.5l3.3-.5Z" fill="#f59e0b" opacity=".9" transform="translate(16 -2) scale(.8)"/></symbol>
+<symbol id="il-ruta" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#d1fae5"/><path d="M2 46 Q22 24 40 30 T62 40 V48 Q32 60 2 48Z" fill="#34d399"/><path d="M4 50 Q32 62 60 50 V54 Q32 66 4 54Z" fill="#10b981"/><path d="M12 54 C20 48 22 42 30 40 S 40 36 44 30" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 6"/><path d="M45 31V11" stroke="#065f46" stroke-width="2.6" stroke-linecap="round"/><path d="M46 11l12 4-12 5Z" fill="#16a34a"/><circle cx="12" cy="54" r="4" fill="#065f46"/><circle cx="12" cy="54" r="1.6" fill="#fff"/></symbol>
+<symbol id="il-radio" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#dbeafe"/><path d="M40 22 52 8" stroke="#1e3a8a" stroke-width="2.6" stroke-linecap="round"/><circle cx="52" cy="8" r="2.4" fill="#1e3a8a"/><rect x="10" y="22" width="44" height="30" rx="7" fill="#2563eb"/><rect x="10" y="22" width="44" height="7" rx="3" fill="#1d4ed8"/><circle cx="24" cy="39" r="8" fill="#1e3a8a"/><g fill="#93c5fd"><circle cx="21" cy="36" r="1.3"/><circle cx="27" cy="36" r="1.3"/><circle cx="24" cy="39" r="1.3"/><circle cx="21" cy="42" r="1.3"/><circle cx="27" cy="42" r="1.3"/></g><rect x="36" y="33" width="12" height="5" rx="2" fill="#bfdbfe"/><circle cx="42" cy="45" r="3" fill="#fbbf24"/><path d="M5 30a12 12 0 0 1 0-10M59 30a12 12 0 0 0 0-10" fill="none" stroke="#60a5fa" stroke-width="2.4" stroke-linecap="round" transform="translate(0 6)"/></symbol>
+<symbol id="il-correr" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#fee2e2"/><path d="M2 54 L62 34 V64 H2Z" fill="#fca5a5" opacity=".6"/><circle cx="38" cy="13" r="5.5" fill="#e9b48a"/><g fill="none" stroke="#dc2626" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M35 22 30 36"/><path d="M30 36 38 42 36 52"/><path d="M30 36 22 42 16 42"/><path d="M34 24 42 30 48 27"/><path d="M34 24 26 26 22 32"/></g><path d="M50 10h8M48 16h10M52 22h6" stroke="#ef4444" stroke-width="2.4" stroke-linecap="round" opacity=".7"/></symbol>
+<symbol id="il-cauce" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#e0f2fe"/><path d="M4 30 Q16 22 24 30 T44 30 T62 30 V58 Q32 66 4 58Z" fill="#7a5a3a"/><path d="M4 38 Q14 32 22 38 T40 38 T60 38" fill="none" stroke="#c9a074" stroke-width="3" stroke-linecap="round"/><path d="M6 47 Q16 41 26 47 T46 47 T60 46" fill="none" stroke="#c9a074" stroke-width="3" stroke-linecap="round"/><ellipse cx="18" cy="28" rx="6" ry="4" fill="#78716c"/><ellipse cx="46" cy="27" rx="7" ry="5" fill="#57534e"/><ellipse cx="34" cy="54" rx="5" ry="3.4" fill="#78716c"/></symbol>
+<symbol id="il-construir" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#ffe4e6"/><path d="M4 46 Q14 40 24 46 T44 46 T60 45 V58 Q32 66 4 58Z" fill="#8a6440"/><path d="M8 52 Q18 48 28 52 T50 52" fill="none" stroke="#c9a074" stroke-width="2.6" stroke-linecap="round"/><path d="M18 44V28L32 16 46 28V44Z" fill="#f1ece2"/><path d="M14 30 32 14 50 30" fill="none" stroke="#c8553d" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="28" y="32" width="8" height="12" rx="1" fill="#c8553d"/><rect x="21" y="30" width="5" height="5" fill="#7dd3fc"/></symbol>
+<symbol id="il-volver" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#ffe4e6"/><path d="M38 40V28l9-8 9 8v12Z" fill="#f1ece2"/><path d="M36 29 47 19 58 29" fill="none" stroke="#c8553d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="44" y="31" width="6" height="9" fill="#c8553d"/><path d="M34 52H18a10 10 0 0 1 0-20h10" fill="none" stroke="#e11d48" stroke-width="4.6" stroke-linecap="round"/><path d="M26 26l6 6-6 6" fill="none" stroke="#e11d48" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="38" y="46" width="14" height="10" rx="2" fill="#a16207"/><path d="M42 46v-2h6v2" fill="none" stroke="#713f12" stroke-width="2"/></symbol>
+<symbol id="il-puente" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#e2e8f0"/><path d="M2 46 Q12 40 22 46 T42 46 T62 46 V60 H2Z" fill="#8a6440"/><path d="M6 52 Q16 48 26 52 T46 52 T60 51" fill="none" stroke="#c9a074" stroke-width="2.6" stroke-linecap="round"/><path d="M6 32h52v6H6Z" fill="#475569"/><path d="M12 38v10M52 38v10" stroke="#475569" stroke-width="5"/><path d="M8 32V24M56 32V24" stroke="#64748b" stroke-width="3" stroke-linecap="round"/><path d="M8 24 Q32 40 56 24" fill="none" stroke="#64748b" stroke-width="2.4"/><path d="M20 30v-4M32 32v-2M44 30v-4" stroke="#64748b" stroke-width="1.8"/></symbol>
+<symbol id="il-poste" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#fef3c7"/><path d="M28 58V10h6v48Z" fill="#78716c"/><path d="M14 16h34" stroke="#57534e" stroke-width="4" stroke-linecap="round"/><path d="M14 16 Q4 30 2 36M48 16 Q56 26 52 40" fill="none" stroke="#292524" stroke-width="2"/><path d="M50 36 42 48h7l-4 12 12-16h-7l4-8Z" fill="#facc15" stroke="#a16207" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+<symbol id="il-grabar" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#fee2e2"/><rect x="18" y="8" width="28" height="48" rx="6" fill="#1f2937"/><rect x="21" y="14" width="22" height="34" rx="2" fill="#7a5a3a"/><path d="M21 34 Q27 30 32 34 T43 33 V48 H21Z" fill="#a67c52"/><circle cx="38" cy="19" r="2.6" fill="#ef4444"/><circle cx="32" cy="52" r="2" fill="#4b5563"/></symbol>
 </defs>
 </svg>
 
 <div class="app">
   <header class="top gut">
-    <svg width="42" height="42" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c4f7a"/><stop offset="1" stop-color="#11a39a"/></linearGradient><linearGradient id="lg-m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d7f3ef"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#lg-a)"/><rect x="1" y="1" width="62" height="62" rx="17" fill="none" stroke="rgba(255,255,255,.25)"/><circle cx="46" cy="17" r="6.5" fill="#ffc53d"/><path d="M8 50 25 22l9 14 6-8 16 22Z" fill="url(#lg-m)"/><path d="M25 22l4 6-4 2-3-3Z" fill="#11a39a" opacity=".35"/><path d="M14 54c6-3 10 1 16-2s10 1 16-2 8 0 10-1" fill="none" stroke="#7fe3d8" stroke-width="3" stroke-linecap="round"/></svg>
+    <svg class="logo" width="46" height="46" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lq-f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b2540"/><stop offset=".62" stop-color="#16507a"/><stop offset="1" stop-color="#f08a3c"/></linearGradient><linearGradient id="lq-i" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2a867"/><stop offset="1" stop-color="#9c6a3c"/></linearGradient><linearGradient id="lq-d" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c78e"/><stop offset="1" stop-color="#b98149"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lq-f)"/><path d="M32 6.5 L42.5 24 H21.5Z" fill="#ffc53d" stroke="#ffc53d" stroke-width="3" stroke-linejoin="round"/><path d="M32 12.5v5.5" stroke="#3a2600" stroke-width="2.8" stroke-linecap="round"/><circle cx="32" cy="21.3" r="1.5" fill="#3a2600"/><path d="M0 40 L15 22 L22 29 L31 36 L28 64 H0Z" fill="url(#lq-i)"/><path d="M33 36 L42 25 L50 19 L64 34 V64 H36Z" fill="url(#lq-d)"/><path d="M31 36 L33 36 L36 64 H28Z" fill="#7a4e2a" opacity=".35"/><path d="M0 64 V54 Q32 45 64 54 V64Z" fill="#f6e3c2"/><path d="M32 35 C29 41 35 44 31.5 49 S 28 57 33 64" fill="none" stroke="#5fe0e6" stroke-width="3.4" stroke-linecap="round"/><path d="M32 35 C29 41 35 44 31.5 49 S 28 57 33 64" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity=".8"/><rect x="12" y="53" width="6" height="5" rx="1" fill="#c8553d"/><rect x="44" y="52" width="6" height="5" rx="1" fill="#3d7ea6"/><rect x="51" y="55" width="5" height="4" rx="1" fill="#ffffff"/></svg>
     <h1>Quirio Alerta<small>Huaicos · Quirio, Chosica</small></h1>
     <button class="oir" id="oir" type="button" aria-label="Escuchar lo que dice la pantalla"><svg><use href="#i-parlante"/></svg>Escuchar</button>
   </header>
 
-  <div class="vivo gut" id="barra-vivo" hidden>
-    <span class="punto" aria-hidden="true"></span><p id="vivo-txt">En vivo</p>
-    <button type="button" id="ver-demo">Ver demo 2015</button>
-  </div>
-  <div class="demo gut" id="barra-demo" role="region" aria-label="Modo demostración">
-    <p><button type="button" id="ver-vivo" class="volver" hidden>← Volver a en vivo</button><b>DEMO con lluvia real de marzo 2015.</b> Toca un día o ▶ para ver cómo habría avisado la app antes del huaico del 23 de marzo.</p>
-    <div class="ctl">
-      <button type="button" id="play" aria-label="Reproducir"><svg><use href="#i-play"/></svg></button>
-      <div class="dias" id="dias"></div>
-    </div>
+  <div class="reloj gut" id="reloj" aria-live="polite">
+    <div class="rl-izq"><span class="rl-modo"><span class="punto" aria-hidden="true"></span><b id="rl-modo">Conectando…</b></span><span id="rl-dia"></span></div>
+    <div class="rl-hora" id="rl-hora">--:--</div>
+    <p id="rl-txt">La app revisa la lluvia sola, cada 20 minutos.</p>
   </div>
 
   <!-- AHORA -->
@@ -348,7 +415,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
   <g id="casas"></g>
   <g class="segura"><path d="M42 108 L42 82" stroke="#f4f4f4" stroke-width="2"/><path d="M43 82 L60 87 L43 92Z" fill="#16a34a"/><circle cx="42" cy="110" r="10" fill="#16a34a" opacity=".25"/></g>
   <g class="gente"><g class="p p1"><circle cx="0" cy="-9" r="2.6"/><path d="M0 -6 V2 M0 2 L-3 8 M0 2 L3 8 M0 -4 L-4 0 M0 -4 L4 -1"/></g><g class="p p2"><circle cx="0" cy="-9" r="2.6"/><path d="M0 -6 V2 M0 2 L-3 8 M0 2 L3 8 M0 -4 L-4 0 M0 -4 L4 -1"/></g><g class="p p3"><circle cx="0" cy="-7" r="2.1"/><path d="M0 -5 V1 M0 1 L-2 6 M0 1 L2 6"/></g></g>
-  <g id="lluvia"></g>
+  <g id="esc-lluvia"></g>
   <rect width="400" height="210" fill="url(#g-sombra)"/>
 </svg></div>
       <div class="luz"><svg id="e-ico"><use href="#i-atento"/></svg></div>
@@ -360,12 +427,22 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 
     <section class="card" aria-labelledby="t-lluvia">
       <h2 class="tit" id="t-lluvia">Lluvia en la quebrada</h2>
-      <div class="lluvia" id="lluvia" role="img" aria-label="Lluvia de los últimos 7 días"></div>
-      <div class="cifras">
-        <div class="cifra"><b id="c-p3">0 mm</b><span>en los últimos 3 días</span></div>
-        <div class="cifra"><b id="c-seg">0</b><span>días seguidos lloviendo</span></div>
+      <div class="medidor" id="medidor">
+        <div class="m-top"><b id="c-p3">– mm</b><span>cayeron en los últimos 3 días<br>(esto decide el color)</span></div>
+        <div class="m-barra" aria-hidden="true"><i class="z1"></i><i class="z2"></i><i class="z3"></i><span class="m-pin" id="m-pin"></span></div>
+        <div class="m-esc" aria-hidden="true"><span style="left:0">0</span><span id="m-u1">10 · amarillo</span><span id="m-u2">17 · naranja</span></div>
+        <p class="m-falta" id="m-falta"></p>
       </div>
-      <p class="sub">Medido por satélite (GPM, NASA) en la parte alta de la quebrada. La app lo lee sola: no tienes que ingresar nada.</p>
+      <div class="lluvia" id="barras" role="img" aria-label="Lluvia de los últimos días y pronóstico"></div>
+      <p class="leyenda"><i class="ob"></i>medido por satélite <i class="fu"></i>pronóstico</p>
+      <div class="cifras c4">
+        <div class="cifra"><b id="c-24">–</b><span>mm en las últimas 24 h</span></div>
+        <div class="cifra"><b id="c-int">–</b><span id="c-int-t">mm/h, lo más fuerte</span></div>
+        <div class="cifra"><b id="c-seg">0</b><span>días seguidos lloviendo</span></div>
+        <div class="cifra"><b id="c-pron">–</b><span>mm se esperan en 3 días</span></div>
+      </div>
+      <div class="tiempo" id="tiempo" hidden></div>
+      <p class="sub" id="c-fuente">Medido por satélite (GPM, NASA) en la parte alta de la quebrada. La app lo lee sola: no tienes que ingresar nada.</p>
     </section>
 
     <section class="card" aria-labelledby="t-hacer">
@@ -386,6 +463,36 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
       <p class="sub">La app te escribe cuando la lluvia sube, día a día, para que te prepares con tiempo. Nada de sustos: primero te pide alistar, luego estar listo, y solo el COE ordena evacuar.</p>
     </section>
     <div class="avisos" id="avisos"></div>
+  </main>
+
+  <!-- SIMULACRO -->
+  <main id="v-simulacro" class="vista gut" hidden>
+    <div class="cinta" role="note"><b>SIMULACRO</b> · Esto NO está pasando ahora</div>
+    <section class="card">
+      <h2 class="tit">¿Cómo habría avisado la app en 2015?</h2>
+      <p class="sub">Lluvia real medida por satélite del 17 al 23 de marzo de 2015, antes del huaico del 23 de marzo. Toca un día o ▶ para verlo paso a paso.</p>
+      <div class="ctl">
+        <button type="button" id="play" aria-label="Reproducir"><svg><use href="#i-play"/></svg></button>
+        <div class="dias" id="dias"></div>
+      </div>
+    </section>
+    <section class="sim" id="sim" aria-live="polite">
+      <div class="s-luz"><svg id="s-ico"><use href="#i-atento"/></svg></div>
+      <div><small id="s-fecha"></small><div class="palabra" id="s-palabra"></div><div class="nivel" id="s-nivel"></div></div>
+    </section>
+    <section class="card">
+      <h2 class="tit">Lluvia de esos días</h2>
+      <div class="lluvia" id="s-barras" role="img" aria-label="Lluvia de los 7 días del simulacro"></div>
+      <div class="cifras">
+        <div class="cifra"><b id="s-p3">0 mm</b><span>en los últimos 3 días</span></div>
+        <div class="cifra"><b id="s-seg">0</b><span>días seguidos lloviendo</span></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2 class="tit">Avisos que habrías recibido</h2>
+      <div class="avisos" id="s-avisos"></div>
+      <p class="sub">En el simulacro se usan los umbrales de la versión final del satélite (amarillo ≥ 5 mm, naranja ≥ 8 mm en 3 días). En vivo la app usa la versión rápida (Early), con 10 y 17 mm.</p>
+    </section>
   </main>
 
   <!-- MAPA -->
@@ -443,15 +550,15 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
     <section class="card fuentes">
       <b>De dónde salen los datos</b>
       <ol>
-        <li>Lluvia: GPM IMERG V07 (NASA), versión final, 15–23 de marzo de 2015. En tiempo real se usará la versión Early, que en 2015 marcó menos lluvia que la final.</li>
+        <li>Lluvia en vivo: GPM IMERG Early V07 (NASA), cada 30 min, con unas 4 h de retraso. Pronóstico: ECMWF IFS 0,25° vía Open-Meteo. El tiempo de ahora (temperatura, humedad, nubes, viento) es de un modelo de Open-Meteo, no de una estación en Quirio. Intensidad: llovizna/ligera &lt; 2,5 mm/h, moderada 2,5–7,6 mm/h, fuerte &gt; 7,6 mm/h (Glosario de la AMS).</li><li>Simulacro: GPM IMERG V07 final, 15–23 de marzo de 2015.</li>
         <li>Umbrales preliminares (lluvia de 3 días): en vivo, con GPM Early, amarillo ≥ 10 mm y naranja ≥ 17 mm (calibrados con 2023–2025, porque desde 2023 Early marca el doble que Final); en la demo, con GPM Final, 5 y 8 mm, que avisan 4 y 3 de los 5 huaicos de 2009–2017. Se revisarán cada temporada y con datos SENAMHI. El pronóstico (ECMWF) solo da avisos informativos: no cambia el color.</li>
         <li>Huaico del 23 de marzo de 2015 en Quirio: Núñez et al. (2015), INGEMMET A6680.</li>
         <li>Rutas, zonas seguras, puntos de reunión, colegios, puesto de comando y flujo de 2023: paquetes ArcGIS KNOW / GRACC 2026 (vía Diego Miranda).</li>
         <li>Zonas de peligro: mapas comunitarios KNOW / GRACC 2026, digitalizados del PDF. Calles y puentes: paquetes KNOW / GRACC 2026.</li><li>Mapa de fondo: © colaboradores de OpenStreetMap (calles), Esri (satélite). Las rutas a pie se abren en Google Maps.</li>
-        <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos: informe de diseño del SAT comunitario de Quirio (2023).</li><li>Íconos: Phosphor Icons (licencia MIT). Paisaje ilustrado: dibujo propio del proyecto.</li>
+        <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos del SAT comunitario de Quirio (informe de diseño, 2023), usadas con permiso del equipo KNOW / GRACC.</li><li>Íconos de menú: Phosphor Icons (licencia MIT). Logo, paisaje e ilustraciones de “Haz esto”: dibujo propio del proyecto.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.10 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.11 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
     </section>
   </main>
 </div>
@@ -462,6 +569,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
     <a href="#avisos" data-v="avisos"><svg><use href="#n-avisos"/></svg>Avisos<span class="badge" id="badge" hidden>0</span></a>
     <a href="#mapa" data-v="mapa"><svg><use href="#n-mapa"/></svg>Mapa</a>
     <a href="#plan" data-v="plan"><svg><use href="#n-plan"/></svg>Mi plan</a>
+    <a href="#simulacro" data-v="simulacro"><svg><use href="#n-sim"/></svg>Simulacro</a>
   </div>
 </nav>
 <div id="toast-slot"></div>
@@ -482,20 +590,20 @@ const fecha = s => { const d=new Date(s+"T12:00:00"); return {sem:DIAS_SEM[d.get
 const NIV = {
   verde:{palabra:"Tranquilo",nivel:"Verde · Situación normal",ico:"i-ok",
     frase:"No hay lluvia importante en la quebrada.",quien:"Te lo dice la app. Revisa tu mochila de vez en cuando.",
-    si:[["i-mochila","Ten tu mochila lista"],["i-ruta","Conoce tu ruta y tu punto de reunión"],["i-familia","Acuerda con tu familia dónde encontrarse"],["i-radio","Ten una radio a pilas"]],
-    no:[["i-cauce","No bajes al cauce a jugar o botar basura"],["i-volver","No construyas en el cauce"]]},
+    si:[["il-mochila","Ten tu mochila lista"],["il-ruta","Conoce tu ruta y tu punto de reunión"],["il-familia","Acuerda con tu familia dónde encontrarse"],["il-radio","Ten una radio a pilas"]],
+    no:[["il-cauce","No bajes al cauce a jugar o botar basura"],["il-construir","No construyas en el cauce"]]},
   amarillo:{palabra:"Prepárate",nivel:"Amarillo · Condiciones de aviso",ico:"i-atento",
     frase:"Está lloviendo en la parte alta. Ten tu mochila y tus documentos a la mano.",quien:"Te lo dice la app. Las brigadas vigilan la quebrada.",
-    si:[["i-mochila","Ten la mochila y los documentos a la mano"],["i-familia","Ubica a niños, abuelos y vecinos que necesitan ayuda"],["i-ruta","Repasa tu ruta de evacuación"],["i-radio","Atento a sirenas, megáfonos y brigadas"]],
-    no:[["i-puente","No cruces puentes ni el cauce si sigue lloviendo"],["i-cauce","No te quedes cerca del cauce de noche"]]},
+    si:[["il-mochila","Ten la mochila y los documentos a la mano"],["il-familia","Ubica a niños, abuelos y vecinos que necesitan ayuda"],["il-ruta","Repasa tu ruta de evacuación"],["il-radio","Atento a sirenas, megáfonos y brigadas"]],
+    no:[["il-puente","No cruces puentes ni el cauce si sigue lloviendo"],["il-cauce","No te quedes cerca del cauce de noche"]]},
   naranja:{palabra:"Alístate",nivel:"Naranja · Condiciones críticas",ico:"i-atento",
     frase:"Varios días de lluvia: el cerro está cargado de agua. Ponte la mochila y prepárate para salir.",quien:"La app lo propone. El COE de Lurigancho-Chosica decide la alerta y la evacuación.",
-    si:[["i-mochila","Mochila puesta, documentos y medicinas contigo"],["i-familia","Ayuda a salir primero a quien camina con dificultad"],["i-radio","Si suena la sirena de Alerta, sigue a la brigada"],["i-ruta","Ten clara tu ruta a la zona segura"]],
-    no:[["i-puente","No cruces puentes ni el cauce"],["i-poste","No te acerques a postes ni cables"]]},
+    si:[["il-mochila","Mochila puesta, documentos y medicinas contigo"],["il-familia","Ayuda a salir primero a quien camina con dificultad"],["il-radio","Si suena la sirena de Alerta, sigue a la brigada"],["il-ruta","Ten clara tu ruta a la zona segura"]],
+    no:[["il-puente","No cruces puentes ni el cauce"],["il-poste","No te acerques a postes ni cables"]]},
   rojo:{palabra:"¡Evacúa!",nivel:"Rojo · Impacto",ico:"i-correr",
     frase:"Huaico en curso. Sal ya hacia la zona segura, lejos del cauce.",quien:"Lo ordena el COE con la cámara del SAT o el reporte de la brigada.",
-    si:[["i-correr","Sal ya por tu ruta a la zona segura"],["i-familia","Lleva a niños y abuelos de la mano"],["i-ruta","Sube, aléjate del cauce"],["i-radio","Quédate en la zona segura hasta la cancelación"]],
-    no:[["i-volver","No regreses por tus cosas"],["i-puente","No cruces el cauce ni los puentes"],["i-poste","No te acerques a postes ni cables caídos"],["i-cauce","No te pongas a grabar cerca del cauce"]]}
+    si:[["il-correr","Sal ya por tu ruta a la zona segura"],["il-familia","Lleva a niños y abuelos de la mano"],["il-ruta","Sube, aléjate del cauce"],["il-radio","Quédate en la zona segura hasta la cancelación"]],
+    no:[["il-volver","No regreses por tus cosas"],["il-puente","No cruces el cauce ni los puentes"],["il-poste","No te acerques a postes ni cables caídos"],["il-grabar","No te pongas a grabar cerca del cauce"]]}
 };
 const ORDEN = ["verde","amarillo","naranja","rojo"];
 const SIRENAS = [
@@ -528,10 +636,14 @@ function mensajes(i){
   return out;
 }
 
-/* ---------- En vivo: estado.json que escribe el motor cada hora ---------- */
-let VIVO=null, modo="demo";
+/* ---------- En vivo: estado.json que escribe el motor cada 20 min ---------- */
+/* Respaldo: el último estado real guardado al armar esta versión. Solo se muestra si no hay conexión, y se marca como atrasado. */
+const RESPALDO = {"actualizado":"2026-11-11T17:45-05:00","color":"verde","p3_mm":1.1,"lluvia_por_dia_mm":{"2026-11-08":0.0,"2026-11-09":0.8,"2026-11-10":0.2,"2026-11-11":0.2},"pronostico":[{"fecha":"2026-11-12","mm":1.2},{"fecha":"2026-11-13","mm":1.0},{"fecha":"2026-11-14","mm":0.5}],"avisos":[],"fuente":"GPM IMERG Early V07 (135 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.","nota":"El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.","color_desde":"2026-11-10T08:19-05:00"};
+let VIVO=null;
 function hora(iso){ try{ const d=new Date(iso); return d.toLocaleString("es-PE",{weekday:"short",hour:"2-digit",minute:"2-digit"}); }catch(e){ return iso; } }
-const TONO={"i-mochila":["#ffb067","#f2681d"],"i-familia":["#b9a2ff","#7c3aed"],"i-ruta":["#5be3b4","#0f9d74"],"i-radio":["#7cc0ff","#2563eb"],"i-correr":["#ff9b8a","#e0453a"],"i-ok":["#6ee7a8","#15945a"],"i-cauce":["#7dd3fc","#0284c7"],"i-volver":["#fda4af","#e11d48"],x:["#94a3b8","#475569"]};
+const hhmm = iso => { try{ return new Date(iso).toLocaleTimeString("es-PE",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"America/Lima"}); }catch(e){ return "--:--"; } };
+const diaLargo = iso => { try{ return new Date(iso).toLocaleDateString("es-PE",{weekday:"long",day:"numeric",month:"short",timeZone:"America/Lima"}); }catch(e){ return ""; } };
+const TONO={"i-mochila":["#ffb067","#f2681d"],x:["#94a3b8","#475569"]};
 /* escena: casas y lluvia */
 (function(){ const svg=$("escena"); if(!svg) return; const NS="http://www.w3.org/2000/svg";
   const casas=[[118,160,16,12,"#c8553d"],[136,154,14,11,"#e8e3d8"],[152,162,15,12,"#3d7ea6"],[100,170,17,13,"#e2b84a"],[124,176,16,12,"#f1ece2"],[146,178,15,11,"#8bb174"],[168,170,13,12,"#d97941"],
@@ -541,7 +653,7 @@ const TONO={"i-mochila":["#ffb067","#f2681d"],"i-familia":["#b9a2ff","#7c3aed"],
   casas.forEach(([x,y,w,h,c])=>{ const r=document.createElementNS(NS,"rect"); Object.entries({x,y,width:w,height:h,fill:c,rx:1}).forEach(([k,v])=>r.setAttribute(k,v)); g.appendChild(r);
     const v=document.createElementNS(NS,"rect"); Object.entries({x:x+3,y:y+3,width:3.5,height:3,fill:"#2b3640",opacity:.55}).forEach(([k,v2])=>v.setAttribute(k,v2)); g.appendChild(v);
     const s=document.createElementNS(NS,"rect"); Object.entries({x,y:y+h-2,width:w,height:2,fill:"#000",opacity:.12}).forEach(([k,v2])=>s.setAttribute(k,v2)); g.appendChild(s); });
-  const ll=svg.querySelector("#lluvia");
+  const ll=svg.querySelector("#esc-lluvia");
   for(let i=0;i<70;i++){ const l=document.createElementNS(NS,"line"); const x=Math.random()*420, y=Math.random()*200;
     Object.entries({x1:x,y1:y,x2:x-4,y2:y+11}).forEach(([k,v])=>l.setAttribute(k,v)); l.style.animationDelay=(-Math.random()*.9).toFixed(2)+"s"; l.style.animationDuration=(.7+Math.random()*.5).toFixed(2)+"s"; ll.appendChild(l); }
 })();
@@ -549,59 +661,79 @@ function estadoUI(k){ const N=NIV[k], e=$("estado"); const es=$("escena"); if(es
   $("e-ico").innerHTML=`<use href="#${N.ico}"/>`; $("e-palabra").textContent=N.palabra; $("e-nivel").textContent=N.nivel;
   $("e-frase").textContent=N.frase; $("e-quien").textContent=N.quien;
   [...$("escala").children].forEach((d,j)=>d.classList.toggle("on",ORDEN[j]===k));
-  const tile=(t,cl)=>`<button type="button" class="tile ${cl}" data-hablar="${t[1]}" style="--t1:${(TONO[t[0]]||TONO.x)[0]};--t2:${(TONO[t[0]]||TONO.x)[1]}">${cl==="no"?'<span class="x" aria-hidden="true">✕</span>':'<span class="v" aria-hidden="true">✓</span>'}<svg aria-hidden="true"><use href="#${t[0]}"/></svg><b>${t[1]}</b></button>`;
+  const tile=(t,cl)=>`<button type="button" class="tile ${cl}" data-hablar="${t[1]}" style="--t1:${(TONO[t[0]]||TONO.x)[0]};--t2:${(TONO[t[0]]||TONO.x)[1]}">${cl==="no"?'<span class="x" aria-hidden="true">✕</span>':'<span class="v" aria-hidden="true">✓</span>'}<svg class="il" aria-hidden="true"><use href="#${t[0]}"/></svg><b>${t[1]}</b></button>`;
   $("si").innerHTML = N.si.map(t=>tile(t,"si")).join(""); $("no").innerHTML = N.no.map(t=>tile(t,"no")).join(""); }
+function intensidad(x){ return x<2.5?"llovizna o lluvia ligera":x<=7.6?"lluvia moderada":"lluvia fuerte"; }
+function barras(el,cols,k,max){
+  el.innerHTML = cols.map(([f0,mm,tag])=>{ const f=fecha(f0), alto=Math.max(3,Math.min(100,mm/max*100));
+    return `<div class="col${tag==="fut"?" futuro":""}"><div class="b${tag==="hoy"?" hoy":""}" style="height:${alto}%;--c:var(--${k})"><span>${(+mm).toFixed(1)}</span></div><div class="d">${tag==="hoy"?"hoy":f.sem}<br>${f.n}</div></div>`; }).join(""); }
 function pintarVivo(){
   const E=VIVO, k=ORDEN.includes(E.color)?E.color:"verde";
   estadoUI(k);
+  const U=E.umbrales_mm||{amarillo:10,naranja:17}, TOPE=Math.max(24,U.naranja+7), p3=+E.p3_mm||0;
+  /* reloj grande */
+  const horas=(Date.now()-new Date(E.actualizado).getTime())/36e5, viejo=!!(E.atrasado||horas>3);
+  $("reloj").classList.toggle("viejo",viejo);
+  $("rl-modo").textContent = viejo ? "Sin datos nuevos" : "En vivo";
+  $("rl-hora").textContent = hhmm(E.actualizado);
+  $("rl-dia").textContent = (viejo?"último dato: ":"revisado ")+diaLargo(E.actualizado);
+  $("rl-txt").textContent = viejo ? "No llegan datos nuevos del satélite. Atiende a la brigada, las sirenas y los avisos del SENAMHI." : "La app revisa la lluvia sola, cada 20 minutos.";
+  /* medidor: lluvia de 3 días contra los umbrales */
+  $("c-p3").textContent=p3.toFixed(1)+" mm";
+  const pc=v=>Math.min(100,v/TOPE*100);
+  const z=$("medidor").querySelectorAll(".m-barra i"); z[0].style.width=pc(U.amarillo)+"%"; z[1].style.width=(pc(U.naranja)-pc(U.amarillo))+"%"; z[2].style.width=(100-pc(U.naranja))+"%";
+  $("m-pin").style.left=pc(p3)+"%";
+  $("m-u1").style.left=pc(U.amarillo)+"%"; $("m-u1").textContent=U.amarillo+" · amarillo";
+  $("m-u2").style.left=pc(U.naranja)+"%"; $("m-u2").textContent=U.naranja+" · naranja";
+  $("m-falta").textContent = p3<U.amarillo ? `Faltan ${(U.amarillo-p3).toFixed(1)} mm para pasar a amarillo.` : p3<U.naranja ? `Faltan ${(U.naranja-p3).toFixed(1)} mm para pasar a naranja.` : "Ya pasó el umbral naranja. El COE decide si se evacúa.";
+  /* barras: 4 días medidos + 3 de pronóstico */
   const obs=Object.entries(E.lluvia_por_dia_mm||{}).slice(-4), pron=(E.pronostico||[]).slice(0,3).map(p=>[p.fecha,p.mm]);
   const cols=[...obs.map((d,j)=>[...d,j===obs.length-1?"hoy":""]),...pron.map(d=>[...d,"fut"])];
-  $("lluvia").innerHTML = cols.map(([f0,mm,tag])=>{ const f=fecha(f0), alto=Math.max(3,Math.min(100,mm/10*100));
-    return `<div class="col${tag==="fut"?" futuro":""}"><div class="b${tag==="hoy"?" hoy":""}" style="height:${alto}%;--c:var(--${k})"><span>${(+mm).toFixed(1)}</span></div><div class="d">${tag==="hoy"?"hoy":f.sem}<br>${f.n}</div></div>`; }).join("");
-  $("lluvia").setAttribute("aria-label","Lluvia medida de los últimos días y pronóstico (barras claras)");
-  $("c-p3").textContent=(+E.p3_mm).toFixed(1)+" mm";
+  barras($("barras"),cols,k,Math.max(4,...cols.map(c=>+c[1]||0))*1.15);
+  /* cifras */
   let seg=0; for(let j=obs.length-1;j>=0&&obs[j][1]>=1;j--) seg++; $("c-seg").textContent=seg;
+  $("c-24").textContent = E.lluvia_24h_mm!=null ? (+E.lluvia_24h_mm).toFixed(1) : (obs.length?(+obs[obs.length-1][1]).toFixed(1):"–");
+  if(E.intensidad_max_mm_h!=null){ $("c-int").innerHTML=`${(+E.intensidad_max_mm_h).toFixed(1)} <small>${hhmm(E.hora_intensidad_max)}</small>`; $("c-int-t").textContent=`mm/h, lo más fuerte (${intensidad(+E.intensidad_max_mm_h)})`; }
+  else { $("c-int").textContent="–"; $("c-int-t").textContent="mm/h, lo más fuerte (llega con la próxima versión del motor)"; }
+  $("c-pron").textContent=pron.reduce((a,p)=>a+(+p[1]||0),0).toFixed(1);
+  $("c-fuente").textContent = `Satélite GPM (NASA) en la parte alta de la quebrada`+(E.dato_satelite_hasta?`, con dato hasta las ${hhmm(E.dato_satelite_hasta)} (llega con unas 4 h de retraso)`:` (llega con unas 4 h de retraso)`)+`. Pronóstico: ECMWF. La app lo lee sola: no tienes que ingresar nada.`;
+  /* avisos */
   const av=(E.avisos||[]).map(a=>({k:a.color,ico:a.color==="verde"?"i-gota":"i-atento",t:a.titulo,p:a.texto}));
-  $("avisos").innerHTML = av.length ? av.map(m=>`<article class="aviso" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><div class="h"><b>${m.t}</b><span>${hora(E.actualizado)}</span></div><p>${m.p}</p><p class="porque">${(+E.p3_mm).toFixed(1)} mm en 3 días</p></div></article>`).join("")
+  $("avisos").innerHTML = av.length ? av.map(m=>`<article class="aviso" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><div class="h"><b>${m.t}</b><span>${hora(E.actualizado)}</span></div><p>${m.p}</p><p class="porque">${p3.toFixed(1)} mm en 3 días</p></div></article>`).join("")
     : `<p class="vacio">Todo tranquilo: no hay avisos. La app revisó la lluvia por última vez el ${hora(E.actualizado)}.</p>`;
   const b=$("badge"); b.textContent=av.length; b.hidden=!av.length;
-  const horas=(Date.now()-new Date(E.actualizado).getTime())/36e5, viejo=E.atrasado||horas>3;
-  $("barra-vivo").classList.toggle("viejo",!!viejo);
-  $("vivo-txt").textContent = viejo ? `Sin datos nuevos desde ${hora(E.actualizado)}. Revisa los avisos del SENAMHI y atiende a la brigada.` : `En vivo · revisado ${hora(E.actualizado)}`;
 }
-function ponerModo(m){ modo=m; parar();
-  $("barra-vivo").hidden = m!=="vivo"; $("barra-demo").hidden = m!=="demo"; $("ver-vivo").hidden = !VIVO;
-  m==="vivo" ? pintarVivo() : pintar(false); }
+/* El tiempo ahora en Quirio (modelo Open-Meteo; si no hay internet, no se muestra) */
+async function cargarTiempo(){
+  try{ const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-11.92&longitude=-76.725&current=temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m&timezone=America%2FLima",{cache:"no-store"});
+    if(!r.ok) throw 0; const c=(await r.json()).current; if(!c) throw 0;
+    const it=(ico,v,u,txt)=>`<div><svg aria-hidden="true"><use href="#${ico}"/></svg><b>${v}${u}</b><span>${txt}</span></div>`;
+    $("tiempo").innerHTML=`<h3>El tiempo ahora · ${hhmm(c.time+"-05:00")}</h3>`+it("t-temp",Math.round(c.temperature_2m),"°","temperatura")+it("i-gota",Math.round(c.relative_humidity_2m),"%","humedad")+it("t-nube",Math.round(c.cloud_cover),"%","nubes")+it("t-viento",Math.round(c.wind_speed_10m)," km/h","viento");
+    $("tiempo").hidden=false; }catch(e){ $("tiempo").hidden=true; }
+}
 async function cargarVivo(){
-  try{ const r=await fetch("estado.json",{cache:"no-store"}); if(!r.ok) throw 0; VIVO=await r.json(); if(!VIVO.lluvia_por_dia_mm) throw 0; ponerModo("vivo"); }
-  catch(e){ VIVO=null; }
+  if(!VIVO){ VIVO=RESPALDO; pintarVivo(); $("reloj").classList.remove("viejo"); $("rl-modo").textContent="Conectando…"; $("rl-txt").textContent="Buscando el último dato de lluvia…"; }
+  try{ const r=await fetch("estado.json",{cache:"no-store"}); if(!r.ok) throw 0; const E=await r.json(); if(!E.lluvia_por_dia_mm) throw 0; VIVO=E; }
+  catch(e){ if(!VIVO) VIVO=RESPALDO; }
+  pintarVivo();
 }
-$("ver-demo").addEventListener("click",()=>ponerModo("demo"));
-$("ver-vivo").addEventListener("click",()=>ponerModo("vivo"));
-
-/* ---------- Pintar ---------- */
+/* ---------- Simulacro 2015 ---------- */
 let dia = 4; /* 19 de marzo: primer aviso */
-const vistos = new Set();
 function pintar(conToast){
-  const h = calc(dia);
-  estadoUI(h.k);
-  /* barras de 7 días */
-  const ini = dia-6, max = 10;
-  $("lluvia").innerHTML = Array.from({length:7},(_,j)=>{ const i=ini+j; if(i<0) return `<div class="col"></div>`;
-    const d=SERIE[i], f=fecha(d[0]), hoy=i===dia, alto=Math.max(3,Math.min(100,d[1]/max*100));
-    return `<div class="col"><div class="b${hoy?" hoy":""}" style="height:${alto}%;--c:var(--${h.k})"><span>${d[1].toFixed(1)}</span></div><div class="d">${hoy?"hoy":f.sem}<br>${f.n}</div></div>`; }).join("");
-  $("c-p3").textContent = h.p3.toFixed(1)+" mm"; $("c-seg").textContent = h.seg;
-  /* avisos acumulados hasta hoy, el más nuevo arriba */
+  const h = calc(dia), N=NIV[h.k], f=fecha(h.fecha);
+  const s=$("sim"); s.style.setProperty("--c",`var(--${h.k})`); s.style.setProperty("--on",`var(--on-${h.k})`);
+  $("s-ico").innerHTML=`<use href="#${N.ico}"/>`; $("s-palabra").textContent=N.palabra; $("s-nivel").textContent=N.nivel; $("s-fecha").textContent=`${f.sem} ${f.n} de marzo de 2015`;
+  const ini=dia-6; barras($("s-barras"),Array.from({length:7},(_,j)=>ini+j).filter(i=>i>=0).map(i=>[SERIE[i][0],SERIE[i][1],i===dia?"hoy":""]),h.k,10);
+  $("s-p3").textContent = h.p3.toFixed(1)+" mm"; $("s-seg").textContent = h.seg;
   let lista=[]; for(let i=INICIO;i<=dia;i++) mensajes(i).forEach(m=>lista.push({...m,f:SERIE[i][0]}));
-  $("avisos").innerHTML = lista.length ? lista.reverse().map(m=>{const f=fecha(m.f);
-    return `<article class="aviso" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><div class="h"><b>${m.t}</b><span>${f.sem} ${f.n} mar</span></div><p>${m.p}</p><p class="porque">${m.d}</p></div></article>`}).join("")
-    : `<p class="vacio">Todavía no hay avisos. Cuando llueva en la quebrada te escribiremos aquí.</p>`;
-  const b=$("badge"); b.textContent=lista.length; b.hidden=!lista.length;
+  $("s-avisos").innerHTML = lista.length ? lista.reverse().map(m=>{const f=fecha(m.f);
+    return `<article class="aviso" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><div class="h"><b>${m.t}</b><span>${f.sem} ${f.n} mar 2015</span></div><p>${m.p}</p><p class="porque">${m.d}</p></div></article>`}).join("")
+    : `<p class="vacio">Ese día todavía no había avisos.</p>`;
   [...$("dias").children].forEach((x,j)=>x.setAttribute("aria-pressed",String(j+INICIO===dia)));
   if (conToast) { const hoy=mensajes(dia); if(hoy.length) toast(hoy[0]); }
 }
 function toast(m){
-  const s=$("toast-slot"); s.innerHTML=`<div class="toast" role="status" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><small>Quirio Alerta · ahora</small><br><b>${m.t}</b><br><span style="font-size:.9rem">${m.p}</span></div></div>`;
+  const s=$("toast-slot"); s.innerHTML=`<div class="toast" role="status" style="--c:var(--${m.k});--on:var(--on-${m.k})"><div class="ico"><svg><use href="#${m.ico}"/></svg></div><div><small>SIMULACRO 2015 · no es real</small><br><b>${m.t}</b><br><span style="font-size:.9rem">${m.p}</span></div></div>`;
   clearTimeout(toast.t); toast.t=setTimeout(()=>s.innerHTML="",3800);
 }
 $("escala").innerHTML = ORDEN.map(k=>`<div style="--c:var(--${k});--on:var(--on-${k})">${NIV[k].nivel.split(" · ")[0]}</div>`).join("");
@@ -617,7 +749,7 @@ $("play").addEventListener("click",()=>{ if(timer){parar();return;}
 /* ---------- Voz ---------- */
 function hablar(t){ try{ const s=window.speechSynthesis; if(!s) return false; s.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="es-PE"; u.rate=.95; s.speak(u); return true; }catch(e){ return false; } }
 $("oir").addEventListener("click",()=>{ const v=location.hash.slice(1)||"ahora"; let t="";
-  if(v==="ahora"){ const N=NIV[modo==="vivo"&&VIVO?VIVO.color:calc(dia).k]; t=`${N.palabra}. ${N.frase} Haz esto: ${N.si.map(x=>x[1]).join(". ")}. No hagas esto: ${N.no.map(x=>x[1]).join(". ")}.`; }
+  if(v==="ahora"||v==="simulacro"){ const N=NIV[v==="ahora"?(VIVO&&ORDEN.includes(VIVO.color)?VIVO.color:"verde"):calc(dia).k]; t=`${N.palabra}. ${N.frase} Haz esto: ${N.si.map(x=>x[1]).join(". ")}. No hagas esto: ${N.no.map(x=>x[1]).join(". ")}.`; }
   else if(v==="avisos"){ t=[...document.querySelectorAll(".aviso")].slice(0,2).map(a=>a.querySelector("b").textContent+". "+a.querySelector("p").textContent).join(" "); }
   else if(v==="mapa"){ t=$("mio-txt").textContent; } else { t="Revisa tu mochila de emergencia y guarda los teléfonos: 115 Defensa Civil, 116 Bomberos, 105 Policía, 106 ambulancia."; }
   if(!hablar(t)) $("oir").textContent="Sin voz en este equipo"; });
@@ -633,9 +765,10 @@ $("sirenas").innerHTML = SIRENAS.map(s=>`<div class="sirena" style="--c:var(--${
 
 /* ---------- Navegación ---------- */
 let mapa=null;
-function ir(){ let v=location.hash.slice(1); if(!["ahora","avisos","mapa","plan"].includes(v)) v="ahora";
-  ["ahora","avisos","mapa","plan"].forEach(x=>$("v-"+x).hidden = x!==v);
+function ir(){ let v=location.hash.slice(1); if(!["ahora","avisos","mapa","plan","simulacro"].includes(v)) v="ahora";
+  ["ahora","avisos","mapa","plan","simulacro"].forEach(x=>$("v-"+x).hidden = x!==v);
   document.querySelectorAll("nav.abajo a").forEach(a=>a.toggleAttribute("aria-current",a.dataset.v===v)); document.querySelectorAll('nav.abajo a[aria-current]').forEach(a=>a.setAttribute("aria-current","page"));
+  if(v!=="simulacro") parar();
   if(v==="mapa") abrirMapa(); window.scrollTo(0,0); }
 window.addEventListener("hashchange",ir);
 
@@ -702,7 +835,8 @@ $("gps").addEventListener("click",()=>{
     {enableHighAccuracy:true,timeout:15000,maximumAge:60000});
 });
 
-pintar(false); ir(); cargarVivo();
+pintar(false); VIVO=null; ir(); cargarVivo(); cargarTiempo();
+setInterval(()=>{ cargarVivo(); },10*60*1000);   /* se refresca sola mientras está abierta */
 if("serviceWorker" in navigator && location.protocol==="https:" && !location.hostname.endsWith("claude.ai")){ try{ navigator.serviceWorker.register("sw.js").catch(()=>{}); }catch(e){} }
 </script>
 
