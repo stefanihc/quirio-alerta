@@ -1,8 +1,8 @@
 // Quirio Alerta: funciona sin internet con lo último que vio.
-const CACHE = "quirio-v9";
+const CACHE = "quirio-v10";
 const TESELAS = "quirio-teselas-v1";       // mapa de calles/satélite que la persona ya miró
 const MAX_TESELAS = 600;                    // ~15 MB como máximo
-const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-192.png", "iconos/icono-512.png",
+const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-v2-192.png", "iconos/icono-v2-512.png", "iconos/icono-v2-maskable.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(BASE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE && k !== TESELAS).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
