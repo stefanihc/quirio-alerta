@@ -45,12 +45,14 @@ def lluvia_observada(horas=72):
                                 temporal=(ini.strftime("%Y-%m-%dT%H:%M"), fin.strftime("%Y-%m-%dT%H:%M")),
                                 bounding_box=BBOX)
     print(f"IMERG Early: {len(g)} archivos de 30 min")
-    por_dia = {}
+    por_dia, serie = {}, []
     for f in earthaccess.open(g):
         with xr.open_dataset(f, group="Grid", engine="h5netcdf") as ds:
             mm = float(ds["precipitation"].sel(lon=LON, lat=LAT, method="nearest").values.squeeze()) * 0.5
             t = datetime.fromisoformat(str(ds["time"].values[0])[:19]).replace(tzinfo=timezone.utc).astimezone(LIMA)
         por_dia[t.date().isoformat()] = por_dia.get(t.date().isoformat(), 0.0) + mm
+        serie.append((t, mm))
+    lluvia_observada.serie = sorted(serie)          # cada 30 min, para la lluvia de 24 h y la intensidad
     return dict(sorted(por_dia.items())), len(g)
 
 
@@ -146,6 +148,16 @@ if __name__ == "__main__":
     except Exception as e:
         print("Sin pronóstico:", e)
         pron = []
+    serie = getattr(lluvia_observada, "serie", [])
+    extra = {}
+    if serie:
+        ultimo = serie[-1][0]
+        u24 = [(t, mm) for t, mm in serie if t > ultimo - timedelta(hours=24)]
+        tmax, mmax = max(serie, key=lambda x: x[1])
+        extra = {"lluvia_24h_mm": round(sum(mm for _, mm in u24), 1),
+                 "intensidad_max_mm_h": round(mmax * 2, 1),          # 30 min -> mm/h
+                 "hora_intensidad_max": tmax.isoformat(timespec="minutes"),
+                 "dato_satelite_hasta": ultimo.isoformat(timespec="minutes")}
     estado = {
         "actualizado": datetime.now(LIMA).isoformat(timespec="minutes"),
         "color": k, "p3_mm": p3,
@@ -154,6 +166,8 @@ if __name__ == "__main__":
         "avisos": avisos(dias, p3, k, pron),
         "fuente": f"GPM IMERG Early V07 ({n} archivos de 30 min) y Open-Meteo. Umbrales preliminares {AMARILLO} y {NARANJA} mm en 3 días.",
         "nota": "El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.",
+        "umbrales_mm": {"amarillo": AMARILLO, "naranja": NARANJA},
+        **extra,
     }
     # ¿Qué es nuevo respecto a la corrida anterior? Solo eso se notifica (no se repite cada hora).
     titulos_antes = {x["titulo"] for x in previo.get("avisos", [])}
