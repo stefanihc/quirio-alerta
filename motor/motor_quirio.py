@@ -105,6 +105,50 @@ def telegram(texto):
         print("Telegram falló:", e)
 
 
+def avisar_celulares(nuevos, k, p3):
+    """Notificación en el celular (Web Push vía OneSignal) a todos los que activaron avisos en la app.
+    Robusto: 3 intentos con espera creciente, llave anti-duplicado (si GitHub repite la corrida no llega dos veces),
+    caducidad de 3 h (un aviso viejo no debe llegar tarde) y un solo aviso visible a la vez (el nuevo reemplaza al anterior).
+    Nunca detiene al motor: si falla, solo lo anota en el registro."""
+    app_id, clave = os.environ.get("ONESIGNAL_APP_ID"), os.environ.get("ONESIGNAL_API_KEY")
+    if not (app_id and clave) or not nuevos:
+        return
+    import hashlib
+    import time
+    from urllib.error import HTTPError, URLError
+    from urllib.request import Request
+    icono = {"verde": "🟢", "amarillo": "🟡", "naranja": "🟠"}
+    principal = nuevos[0]
+    titulo = f"{icono.get(principal['color'], '')} {principal['titulo']}".strip()
+    texto = principal["texto"] + (f" (+{len(nuevos) - 1} aviso más)" if len(nuevos) > 1 else "")
+    llave = hashlib.sha256(f"{k}|{p3}|{'|'.join(x['titulo'] for x in nuevos)}|{datetime.now(LIMA):%Y-%m-%dT%H}".encode()).hexdigest()
+    llave = f"{llave[:8]}-{llave[8:12]}-{llave[12:16]}-{llave[16:20]}-{llave[20:32]}"   # formato UUID
+    cuerpo = {
+        "app_id": app_id, "target_channel": "push", "included_segments": ["Total Subscriptions"],
+        "headings": {"es": titulo, "en": titulo}, "contents": {"es": texto, "en": texto},
+        "url": "https://stefanihc.github.io/quirio-alerta/#ahora",
+        "chrome_web_icon": "https://stefanihc.github.io/quirio-alerta/iconos/icono-v2-192.png",
+        "ttl": 3 * 3600, "priority": 10, "web_push_topic": "quirio-estado", "idempotency_key": llave,
+    }
+    datos = json.dumps(cuerpo).encode()
+    for intento in range(1, 4):
+        try:
+            req = Request("https://api.onesignal.com/notifications?c=push", data=datos, method="POST",
+                          headers={"Authorization": f"Key {clave}", "Content-Type": "application/json"})
+            with urlopen(req, timeout=30) as r:
+                print("Avisos al celular:", r.status, r.read()[:200].decode(errors="ignore"))
+                return
+        except HTTPError as e:
+            detalle = e.read()[:300].decode(errors="ignore")
+            print(f"OneSignal respondió {e.code} (intento {intento}): {detalle}")
+            if e.code < 500 and e.code != 429:
+                return          # error de datos o de clave: reintentar no sirve
+        except (URLError, TimeoutError) as e:
+            print(f"Sin conexión con OneSignal (intento {intento}): {e}")
+        time.sleep(5 * intento * intento)
+    print("No se pudo enviar el aviso al celular después de 3 intentos.")
+
+
 def avisos(dias, p3, k, pron):
     lluviosos = 0
     for mm in reversed(list(dias.values())):
@@ -199,6 +243,7 @@ if __name__ == "__main__":
         icono = {"verde": "🟢", "amarillo": "🟡", "naranja": "🟠"}
         telegram("\n\n".join(f"{icono.get(x['color'], '')} {x['titulo']}\n{x['texto']}" for x in nuevos)
                  + f"\n\nLluvia en 3 días: {p3} mm · Quirio Alerta\nhttps://stefanihc.github.io/quirio-alerta/")
+        avisar_celulares(nuevos, k, p3)
     SALIDA.parent.mkdir(parents=True, exist_ok=True)
     SALIDA.write_text(json.dumps(estado, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nColor: {k.upper()}  |  lluvia 3 días: {p3} mm  |  pronóstico 3 días: {sum(x['mm'] for x in pron):.1f} mm")
