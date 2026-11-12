@@ -1,7 +1,7 @@
 // Quirio Alerta: funciona sin internet con lo último que vio.
-const CACHE = "quirio-v12";
+const CACHE = "quirio-v13";
 const TESELAS = "quirio-teselas-v1";       // mapa de calles/satélite que la persona ya miró
-const MAX_TESELAS = 600;                    // ~15 MB como máximo
+const MAX_TESELAS = 1500;                   // ~30 MB como máximo
 const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-v2-192.png", "iconos/icono-v2-512.png", "iconos/icono-v2-maskable.png",
   "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(BASE)).then(() => self.skipWaiting())); });
@@ -17,7 +17,7 @@ self.addEventListener("fetch", e => {
       .catch(() => caches.match("estado.json")));
     return;
   }
-  if (url.hostname === "tile.openstreetmap.org" || url.hostname === "server.arcgisonline.com") {
+  if (url.hostname === "tile.openstreetmap.org" || url.hostname === "server.arcgisonline.com" || url.pathname.includes("/orto/")) {
     // Solo se guardan las teselas que la persona ya vio (no se descargan en masa: regla de OpenStreetMap).
     e.respondWith(caches.open(TESELAS).then(c => c.match(e.request).then(guardada => {
       const red = fetch(e.request).then(r => { if (r.ok || r.type === "opaque") { c.put(e.request, r.clone()); recortar(); } return r; })
