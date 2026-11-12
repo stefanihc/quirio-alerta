@@ -304,7 +304,7 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 .leyenda i.fu{background:var(--accent);opacity:.35;margin-left:8px}
 .cifras.c4{grid-template-columns:1fr 1fr}
 .cifra b small{font-size:.9rem;font-weight:800;color:var(--muted)}
-.tiempo{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;background:linear-gradient(135deg,color-mix(in srgb,#2563eb 10%,var(--card)),var(--card));border:1px solid var(--line);border-radius:16px;padding:10px 8px}
+.tiempo{display:grid;grid-template-columns:repeat(auto-fit,minmax(52px,1fr));gap:6px;margin-top:10px;background:linear-gradient(135deg,color-mix(in srgb,#2563eb 10%,var(--card)),var(--card));border:1px solid var(--line);border-radius:16px;padding:10px 8px}
 .tiempo h3{grid-column:1/-1;font-size:.82rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding-inline:4px}
 .tiempo div{display:grid;justify-items:center;text-align:center;gap:2px}
 .tiempo svg{width:26px;height:26px;color:var(--accent)}
@@ -340,6 +340,73 @@ nav.abajo a[aria-current="page"]{color:var(--accent);background:color-mix(in srg
 nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;left:30%;right:30%;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--turquesa),var(--accent),var(--magenta))}
 .tit{position:relative;padding-left:14px}
 .tit::before{content:"";position:absolute;left:0;top:.15em;bottom:.15em;width:5px;border-radius:3px;background:linear-gradient(180deg,var(--turquesa),var(--accent),var(--magenta))}
+
+/* ---- v0.13: actualizar, ayuda, contactos, alarma, instalar, sin internet ---- */
+.rl-acc{grid-column:1/-1;display:flex;align-items:center;gap:10px;justify-content:space-between;margin-top:4px}
+.rl-acc span{font-size:.85rem;font-weight:800}
+#actualizar{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--accent);background:var(--card);color:var(--accent);border-radius:999px;padding:6px 12px;font-weight:800;font-size:.85rem}
+#actualizar svg{width:18px;height:18px} #actualizar.girando svg{animation:girar 1s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+.ayuda .llamar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.ayuda .llamar a{display:grid;justify-items:center;text-decoration:none;color:#fff;background:linear-gradient(160deg,#ef4444,#b91c1c);border-radius:16px;padding:10px 4px;box-shadow:0 4px 12px rgba(185,28,28,.3)}
+.ayuda .llamar b{font-family:var(--f-head);font-size:1.5rem;line-height:1}
+.ayuda .llamar span{font-size:.68rem;font-weight:800;opacity:.92}
+.ayuda .avisar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ayuda .avisar button,.alarma-btn{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:16px;padding:12px 10px;font-weight:800;font-size:.95rem;line-height:1.15;text-align:left}
+.ayuda .avisar svg,.alarma-btn svg{width:26px;height:26px;flex:none}
+.ayuda .pedir{background:color-mix(in srgb,var(--naranja) 18%,var(--card));color:var(--ink);border:2px solid var(--naranja)!important}
+.ayuda .salvo{background:color-mix(in srgb,var(--verde) 16%,var(--card));color:var(--ink);border:2px solid var(--verde)!important}
+.alarma-btn{width:100%;margin-top:8px;background:linear-gradient(118deg,#2a0f55,#6d28d9 60%,#a21caf);color:#fff}
+.envio{margin-top:10px;background:var(--soft);border-radius:16px;padding:12px;display:grid;gap:8px}
+.envio p{margin:0;font-size:.9rem}
+.envio .btns{display:flex;flex-wrap:wrap;gap:8px}
+.envio a,.envio button{flex:1 1 140px;text-align:center;text-decoration:none;border:0;border-radius:12px;padding:10px;font-weight:800;color:#fff;background:var(--accent)}
+.envio a.wa{background:#128c4a}
+.ayuda.arriba{border:3px solid var(--rojo)}
+.contactos{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px}
+.contactos li{display:flex;align-items:center;gap:8px;background:var(--soft);border-radius:12px;padding:8px 10px}
+.contactos li b{flex:1} .contactos li span{color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+.contactos li button{border:0;background:transparent;color:var(--rojo);font-weight:800;font-size:1.1rem;padding:2px 6px}
+.contactos .vacio{background:none;color:var(--muted);font-size:.9rem;padding:0}
+.nuevo{display:grid;grid-template-columns:1fr 1fr auto;gap:6px}
+.nuevo input{min-width:0;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px;font:inherit;font-size:.95rem}
+.nuevo button{border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:800;padding:0 12px}
+@media (max-width:380px){.nuevo{grid-template-columns:1fr 1fr}.nuevo button{grid-column:1/-1;padding:10px}}
+.instalar{width:100%;border:0;border-radius:16px;padding:14px;font-weight:800;font-size:1.05rem;color:#fff;background:linear-gradient(118deg,#2a0f55,#6d28d9 60%,#a21caf);margin:6px 0}
+.pasos{margin:6px 0;padding-left:20px;display:grid;gap:6px;font-size:.95rem}
+.sinred{display:grid;gap:8px}
+.sinred div{border-radius:14px;padding:10px 12px;display:grid;gap:2px}
+.sinred b{font-size:.95rem} .sinred span{font-size:.9rem}
+.si-red{background:color-mix(in srgb,var(--verde) 14%,var(--card));border-left:5px solid var(--verde)}
+.no-red{background:color-mix(in srgb,var(--amarillo) 18%,var(--card));border-left:5px solid var(--amarillo)}
+.capa-alarma{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:24px;color:#fff;animation:destello .5s steps(1) infinite}
+@keyframes destello{0%{background:#d91f1f}50%{background:#1a0b0b}}
+.ca-in{display:grid;justify-items:center;gap:12px;text-align:center;max-width:360px}
+.ca-in svg{width:96px;height:96px}
+.ca-in b{font-family:var(--f-head);font-size:3rem;letter-spacing:.1em}
+.ca-in p{font-size:1.35rem;font-weight:800;margin:0;min-height:3.2em}
+.ca-in button{border:0;border-radius:20px;background:#fff;color:#b91c1c;font-weight:800;font-size:1.3rem;padding:18px 28px;width:100%}
+.ca-in small{font-weight:700;opacity:.9}
+@media (prefers-reduced-motion:reduce){.capa-alarma{animation:none;background:#b91c1c}}
+
+/* ---- v0.14: mapa más claro ---- */
+.pin{background:none;border:0}
+.pin .pin-c,.lm .pin-c{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;color:#fff;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.pin.grande .pin-c{width:38px;height:38px;border-width:3px}
+.pin .pin-c svg,.lm .pin-c svg{width:62%;height:62%}
+.pin-c.zona{background:#14a44d} .pin-c.reunion{background:#0d9488} .pin-c.comando{background:#1747a6} .pin-c.sat{background:#7c3aed} .pin-c.helipuerto{background:#334155}
+.pin b{position:absolute;left:44px;top:6px;white-space:nowrap;background:#14a44d;color:#fff;font:800 .82rem var(--f-body);padding:3px 8px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.ir-zona{display:flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:18px;padding:16px;font-weight:800;font-size:1.1rem;color:#fff;background:linear-gradient(135deg,#16a34a,#0f7a3a);box-shadow:0 6px 16px rgba(22,163,74,.35)}
+.ir-zona svg{width:26px;height:26px}
+.lm{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.lm li{display:flex;gap:12px;align-items:flex-start}
+.lm li .pin-c{flex:none;width:34px;height:34px}
+.lm li div{display:grid;gap:1px} .lm li div span{font-size:.9rem;color:var(--muted)}
+.lm-ruta{flex:none;width:34px;height:34px;display:block;background:repeating-linear-gradient(90deg,#16a34a 0 8px,transparent 8px 13px) center/100% 5px no-repeat}
+.pin.reunion .pin-c{width:21px;height:21px;border-width:2px}
+.leaflet-popup-content a.ir{color:#fff!important}
+.tiempo b{font-size:1.05rem}
+.lm-peligro{flex:none;width:34px;height:34px;display:block;border-radius:8px;background:rgba(255,31,31,.45);border:2px solid #ff1f1f}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -368,6 +435,15 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
 <symbol id="t-temp" viewBox="0 0 256 256" fill="currentColor"><path d="M152,160a24,24,0,1,1-32-22.62V56a8,8,0,0,1,16,0v81.38A24,24,0,0,1,152,160Z" opacity="0.2"/><path d="M136,145.17V96a8,8,0,0,0-16,0v49.17a24,24,0,1,0,16,0ZM128,176a8,8,0,1,1,8-8A8,8,0,0,1,128,176Zm40-34.06V48a40,40,0,0,0-80,0v93.94a64,64,0,1,0,80,0ZM128,224a48,48,0,0,1-27.2-87.55A8,8,0,0,0,104,129.88V48a24,24,0,0,1,48,0v81.88a8,8,0,0,0,3.2,6.57A48,48,0,0,1,128,224Z"/></symbol>
 <symbol id="t-nube" viewBox="0 0 256 256" fill="currentColor"><path d="M240,128a80,80,0,0,1-80,80H72A56,56,0,1,1,85.92,97.74l0,.1A80,80,0,0,1,240,128Z" opacity="0.2"/><path d="M160,40A88.09,88.09,0,0,0,81.29,88.67,64,64,0,1,0,72,216h88a88,88,0,0,0,0-176Zm0,160H72a48,48,0,0,1,0-96c1.1,0,2.2,0,3.29.11A88,88,0,0,0,72,128a8,8,0,0,0,16,0,72,72,0,1,1,72,72Z"/></symbol>
 <symbol id="t-viento" viewBox="0 0 256 256" fill="currentColor"><path d="M184,184a32,32,0,0,1-32,32c-13.7,0-26.95-8.93-31.5-21.22a8,8,0,0,1,15-5.56C137.74,195.27,145,200,152,200a16,16,0,0,0,0-32H40a8,8,0,0,1,0-16H152A32,32,0,0,1,184,184Zm-64-80a32,32,0,0,0,0-64c-13.7,0-26.95,8.93-31.5,21.22a8,8,0,0,0,15,5.56C105.74,60.73,113,56,120,56a16,16,0,0,1,0,32H24a8,8,0,0,0,0,16Zm88-32c-13.7,0-26.95,8.93-31.5,21.22a8,8,0,0,0,15,5.56C193.74,92.73,201,88,208,88a16,16,0,0,1,0,32H32a8,8,0,0,0,0,16H208a32,32,0,0,0,0-64Z"/></symbol>
+<symbol id="i-refrescar" viewBox="0 0 256 256" fill="currentColor"><path d="M216,128a88,88,0,1,1-88-88A88,88,0,0,1,216,128Z" opacity="0.2"/><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"/></symbol>
+<symbol id="i-sos" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol>
+<symbol id="i-alarma" viewBox="0 0 256 256" fill="currentColor"><path d="M208,192H48a8,8,0,0,1-6.88-12C47.71,168.6,56,139.81,56,104a72,72,0,0,1,144,0c0,35.82,8.3,64.6,14.9,76A8,8,0,0,1,208,192Z" opacity="0.2"/><path d="M168,224a8,8,0,0,1-8,8H96a8,8,0,1,1,0-16h64A8,8,0,0,1,168,224Zm53.85-32A15.8,15.8,0,0,1,208,200H48a16,16,0,0,1-13.8-24.06C39.75,166.38,48,139.34,48,104a80,80,0,1,1,160,0c0,35.33,8.26,62.38,13.81,71.94A15.89,15.89,0,0,1,221.84,192ZM208,184c-7.73-13.27-16-43.95-16-80a64,64,0,1,0-128,0c0,36.06-8.28,66.74-16,80Z"/><path d="M229.3,59.6a8,8,0,0,1-10.74-3.5A104.33,104.33,0,0,0,184,16.8a8,8,0,0,1,8.8-13.4,120.28,120.28,0,0,1,40,45.46A8,8,0,0,1,229.3,59.6ZM26.7,59.6a8,8,0,0,0,10.74-3.5A104.33,104.33,0,0,1,72,16.8,8,8,0,1,0,63.2,3.4a120.28,120.28,0,0,0-40,45.46A8,8,0,0,0,26.7,59.6Z"/></symbol>
+<symbol id="m-zona" viewBox="0 0 24 24"><path d="M6 21V3.5M6 4h11.5l-2.6 4 2.6 4H6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+<symbol id="m-gente" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="7.5" r="3.3"/><circle cx="17" cy="9" r="2.7"/><path d="M2.5 20.5c0-3.8 2.9-6.5 6.5-6.5s6.5 2.7 6.5 6.5zM16 20.5c0-2.4-.7-4.1-1.7-5.2.8-.5 1.7-.8 2.7-.8 2.9 0 4.5 2.4 4.5 6z"/></symbol>
+<symbol id="m-sirena" viewBox="0 0 24 24"><path d="M3.5 9h4l5-4.2v14.4l-5-4.2h-4z" fill="currentColor"/><path d="M16 8.6a5 5 0 0 1 0 6.8M18.6 6a8.6 8.6 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+<symbol id="m-comando" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.3l-5.9 3.2 1.2-6.5-4.8-4.6 6.6-.9z"/></symbol>
+<symbol id="m-heli" viewBox="0 0 24 24"><text x="12" y="18" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="17" fill="currentColor">H</text></symbol>
+<symbol id="t-paraguas" viewBox="0 0 256 256" fill="currentColor"><path d="M232,128H24a104,104,0,0,1,208,0Z" opacity="0.2"/><path d="M240,126.79A112.12,112.12,0,0,0,16,128a8,8,0,0,0,8,8h96v56a32,32,0,0,0,64,0,8,8,0,0,0-16,0,16,16,0,0,1-32,0V136h96a8,8,0,0,0,8-9.21ZM32.66,120a96.1,96.1,0,0,1,190.68,0Z"/></symbol>
 <symbol id="n-sim" viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"/><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm36.44-94.66-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17Z"/></symbol>
 <symbol id="il-mochila" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#ffedd5"/><path d="M25 18a7 7 0 0 1 14 0" fill="none" stroke="#9a3412" stroke-width="3.2" stroke-linecap="round"/><rect x="15" y="17" width="34" height="38" rx="10" fill="#f97316"/><path d="M15 31V27a10 10 0 0 1 10-10h14a10 10 0 0 1 10 10v4Z" fill="#c2410c"/><rect x="21" y="37" width="22" height="13" rx="4" fill="#fdba74"/><rect x="21" y="41" width="22" height="2.6" fill="#fff"/><circle cx="32" cy="31" r="2.2" fill="#fff7ed"/><path d="M15 34h-3v12a3 3 0 0 0 3 3M49 34h3v12a3 3 0 0 1-3 3" fill="none" stroke="#9a3412" stroke-width="2.4"/></symbol>
 <symbol id="il-familia" viewBox="0 0 64 64"><circle cx="32" cy="32" r="31" fill="#ede9fe"/><circle cx="23" cy="19" r="6.5" fill="#e9b48a"/><path d="M16.5 17.5a6.5 6.5 0 0 1 13 0c-3-2-9-2-13 0Z" fill="#3b2a20"/><path d="M12 56V36a11 11 0 0 1 22 0v20Z" fill="#7c3aed"/><circle cx="44" cy="31" r="5" fill="#e9b48a"/><path d="M39 30a5 5 0 0 1 10 0c-2-2-7-2-10 0Z" fill="#3b2a20"/><path d="M36 56V44a8 8 0 0 1 16 0v12Z" fill="#a78bfa"/><path d="M31 42c3 3 6 3 8 1" fill="none" stroke="#e9b48a" stroke-width="3.4" stroke-linecap="round"/><path d="M29 8l1.6 3 3.3.5-2.4 2.3.6 3.3-3.1-1.6-3 1.6.6-3.3L24.2 11.5l3.3-.5Z" fill="#f59e0b" opacity=".9" transform="translate(16 -2) scale(.8)"/></symbol>
@@ -394,6 +470,7 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
     <div class="rl-izq"><span class="rl-modo"><span class="punto" aria-hidden="true"></span><b id="rl-modo">Conectando…</b></span><span id="rl-dia"></span></div>
     <div class="rl-hora" id="rl-hora">--:--</div>
     <p id="rl-txt">La app revisa la lluvia sola, cada 20 minutos.</p>
+    <div class="rl-acc"><span id="rl-prox"></span><button type="button" id="actualizar"><svg aria-hidden="true"><use href="#i-refrescar"/></svg>Actualizar</button></div>
   </div>
 
   <!-- AHORA -->
@@ -437,6 +514,22 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
     </section>
     <div class="escala" id="escala" aria-hidden="true"></div>
 
+    <section class="card ayuda" id="ayuda" aria-labelledby="t-ayuda">
+      <h2 class="tit" id="t-ayuda">¿Necesitas ayuda?</h2>
+      <div class="llamar">
+        <a href="tel:116"><b>116</b><span>Bomberos</span></a>
+        <a href="tel:115"><b>115</b><span>Defensa Civil</span></a>
+        <a href="tel:105"><b>105</b><span>Policía</span></a>
+        <a href="tel:106"><b>106</b><span>Ambulancia</span></a>
+      </div>
+      <div class="avisar">
+        <button type="button" class="pedir" data-tipo="ayuda"><svg aria-hidden="true"><use href="#i-sos"/></svg>Pedir ayuda a mis contactos</button>
+        <button type="button" class="salvo" data-tipo="salvo"><svg aria-hidden="true"><use href="#i-ok"/></svg>Avisar que estoy a salvo</button>
+      </div>
+      <div class="envio" id="envio" hidden></div>
+      <button type="button" class="alarma-btn" id="alarma-btn"><svg aria-hidden="true"><use href="#i-alarma"/></svg>Alarma fuerte en mi celular</button>
+      <p class="sub">La app no llama ni manda mensajes sola: tú tocas enviar. Tu ubicación solo sale de tu celular si tú envías el mensaje. La alarma suena solo en tu celular, para despertar a tu familia o que te encuentren.</p>
+    </section>
     <section class="card" aria-labelledby="t-lluvia">
       <h2 class="tit" id="t-lluvia">Lluvia en la quebrada</h2>
       <div class="medidor" id="medidor">
@@ -512,14 +605,28 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
     <div class="fondos" id="fondos" role="group" aria-label="Fondo del mapa">
       <button type="button" data-f="calles" aria-pressed="true">Calles</button>
       <button type="button" data-f="satelite" aria-pressed="false">Satélite</button>
-      <button type="button" data-f="relieve" aria-pressed="false">Relieve</button>
+      <button type="button" data-f="topo" aria-pressed="false">Topográfico</button>
     </div>
     <div id="mapa" role="region" aria-label="Mapa de peligros y rutas de evacuación de Quirio"></div>
-    <button type="button" class="gps" id="gps"><svg aria-hidden="true"><use href="#i-gps"/></svg>Usar mi ubicación (GPS)</button>
+    <button type="button" class="ir-zona" id="ir-zona"><svg aria-hidden="true"><use href="#m-zona"/></svg>Llévame a la zona segura más cercana</button>
+    <button type="button" class="gps" id="gps"><svg aria-hidden="true"><use href="#i-gps"/></svg>¿Dónde está mi casa? (GPS)</button>
     <div class="mio" id="mio" aria-live="polite">
       <b class="grande">¿Dónde está tu casa?</b>
       <p id="mio-txt">Toca el botón GPS o toca el mapa en tu casa. Te digo si estás en zona de peligro y a dónde ir. Si no estás en Quirio, toca cualquier casa del mapa para probar.</p>
     </div>
+    <section class="card leyenda-mapa" aria-labelledby="t-puntos">
+      <h2 class="tit" id="t-puntos">¿Qué es cada punto?</h2>
+      <ul class="lm">
+        <li><span class="pin-c zona"><svg><use href="#m-zona"/></svg></span><div><b>Zona segura</b><span>Lugar alto, fuera del alcance del huaico. Quédate ahí hasta que la sirena dé la cancelación.</span></div></li>
+        <li><span class="pin-c reunion"><svg><use href="#m-gente"/></svg></span><div><b>Punto de reunión</b><span>Ahí se junta tu familia y la brigada antes de subir juntos a la zona segura.</span></div></li>
+        <li><span class="lm-ruta"></span><div><b>Ruta de evacuación</b><span>Camino verde para subir sin cruzar el cauce.</span></div></li>
+        <li><span class="lm-peligro"></span><div><b>Zona de huaico</b><span>Por aquí puede bajar el huaico. No te quedes ni cruces cuando llueve.</span></div></li>
+        <li><span class="pin-c sat"><svg><use href="#m-sirena"/></svg></span><div><b>Sirena del SAT</b><span>Suena con los mensajes de Alerta, Alarma y Cancelación.</span></div></li>
+        <li><span class="pin-c comando"><svg><use href="#m-comando"/></svg></span><div><b>Puesto de comando</b><span>Donde autoridades y brigadas coordinan la emergencia.</span></div></li>
+      </ul>
+      <p class="sub">Toca cualquier punto del mapa para ver qué es y cómo llegar a pie.</p>
+    </section>
+    <h2 class="tit" style="margin-top:4px">Mostrar u ocultar en el mapa</h2>
     <div class="chips" id="chips"></div>
   </main>
 
@@ -544,6 +651,33 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
       </ol>
       <p class="sub">Las sirenas se prueban cada día en silencio y se usan en los simulacros. Borrador según el Protocolo del SAT comunitario de Quirio (2023, punto 4.3); los pasos “propuesta” se validarán con el COE y las brigadas.</p>
     </section>
+    <section class="card" aria-labelledby="t-contactos">
+      <h2 class="tit" id="t-contactos">Mis contactos de confianza</h2>
+      <p class="sub">A ellos les llega tu mensaje de “Pedir ayuda” o “Estoy a salvo”. Se guardan solo en tu celular.</p>
+      <ul class="contactos" id="contactos"></ul>
+      <form class="nuevo" id="nuevo-contacto" autocomplete="off">
+        <input id="ct-nombre" placeholder="Nombre" maxlength="30" aria-label="Nombre del contacto">
+        <input id="ct-num" type="tel" inputmode="tel" placeholder="Celular" maxlength="15" aria-label="Número de celular">
+        <button type="submit">Agregar</button>
+      </form>
+    </section>
+    <section class="card" aria-labelledby="t-instalar">
+      <h2 class="tit" id="t-instalar">Instálala en tu celular</h2>
+      <button type="button" class="instalar" id="instalar" hidden>Instalar Quirio Alerta</button>
+      <ol class="pasos">
+        <li><b>Android:</b> abre el enlace en Chrome → toca <b>⋮</b> → <b>Instalar app</b> (o “Agregar a pantalla principal”).</li>
+        <li><b>iPhone:</b> abre el enlace en Safari → toca <b>Compartir</b> → <b>Agregar a inicio</b>.</li>
+      </ol>
+      <p class="sub">Queda como una app más, con su ícono, y abre aunque no tengas señal.</p>
+    </section>
+    <section class="card" aria-labelledby="t-sinred">
+      <h2 class="tit" id="t-sinred">Sin internet, ¿qué funciona?</h2>
+      <div class="sinred">
+        <div class="si-red"><b>Funciona sin internet</b><span>Tu plan, la mochila, tus contactos, los teléfonos, los mensajes de sirena, el último estado guardado y el mapa que ya viste.</span></div>
+        <div class="no-red"><b>Necesita internet</b><span>La lluvia nueva, el tiempo de ahora y “Cómo llegar”.</span></div>
+      </div>
+      <p class="sub">Sin datos, la alerta te llega por las <b>sirenas del SAT</b>, la <b>radio a pilas</b>, la <b>brigada</b> y los mensajes de alerta del Estado (<b>SISMATE</b>), que entran al celular aunque no tengas datos.</p>
+    </section>
     <section class="card">
       <h2 class="tit">Teléfonos de emergencia</h2>
       <div class="tels">
@@ -566,11 +700,11 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
         <li>Umbrales preliminares (lluvia de 3 días): en vivo, con GPM Early, amarillo ≥ 10 mm y naranja ≥ 17 mm (calibrados con 2023–2025, porque desde 2023 Early marca el doble que Final); en la demo, con GPM Final, 5 y 8 mm, que avisan 4 y 3 de los 5 huaicos de 2009–2017. Se revisarán cada temporada y con datos SENAMHI. El pronóstico (ECMWF) solo da avisos informativos: no cambia el color.</li>
         <li>Huaico del 23 de marzo de 2015 en Quirio: Núñez et al. (2015), INGEMMET A6680.</li>
         <li>Rutas, zonas seguras, puntos de reunión, colegios, puesto de comando y flujo de 2023: paquetes ArcGIS KNOW / GRACC 2026 (vía Diego Miranda).</li>
-        <li>Zonas de peligro: mapas comunitarios KNOW / GRACC 2026, digitalizados del PDF. Calles y puentes: paquetes KNOW / GRACC 2026.</li><li>Mapa de fondo: © colaboradores de OpenStreetMap (calles), Esri (satélite). Las rutas a pie se abren en Google Maps.</li>
+        <li>Zonas de peligro: mapas comunitarios KNOW / GRACC 2026, digitalizados del PDF. Calles y puentes: paquetes KNOW / GRACC 2026.</li><li>Mapa de fondo: © colaboradores de OpenStreetMap (calles); Esri, Maxar, HERE, Garmin y USGS (satélite y topográfico). Las rutas a pie se abren en Google Maps.</li>
         <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos del SAT comunitario de Quirio (informe de diseño, 2023), usadas con permiso del equipo KNOW / GRACC.</li><li>Íconos de menú: Phosphor Icons (licencia MIT). Logo, paisaje e ilustraciones de “Haz esto”: dibujo propio del proyecto.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.12 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.14 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
     </section>
   </main>
 </div>
@@ -585,6 +719,15 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
   </div>
 </nav>
 <div id="toast-slot"></div>
+<div class="capa-alarma" id="capa-alarma" hidden role="alertdialog" aria-label="Alarma activada">
+  <div class="ca-in">
+    <svg aria-hidden="true"><use href="#i-alarma"/></svg>
+    <b>ALARMA</b>
+    <p id="calma">Respira. Sigue la ruta verde hacia la zona segura.</p>
+    <button type="button" id="alarma-stop">Detener alarma</button>
+    <small>Detenla cuando ya no la necesites: así ahorras batería.</small>
+  </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script>
@@ -605,8 +748,8 @@ const NIV = {
     si:[["il-mochila","Ten tu mochila lista"],["il-ruta","Conoce tu ruta y tu punto de reunión"],["il-familia","Acuerda con tu familia dónde encontrarse"],["il-radio","Ten una radio a pilas"]],
     no:[["il-cauce","No bajes al cauce a jugar o botar basura"],["il-construir","No construyas en el cauce"]]},
   amarillo:{palabra:"Prepárate",nivel:"Amarillo · Condiciones de aviso",ico:"i-atento",
-    frase:"Está lloviendo en la parte alta. Ten tu mochila y tus documentos a la mano.",quien:"Te lo dice la app. Las brigadas vigilan la quebrada.",
-    si:[["il-mochila","Ten la mochila y los documentos a la mano"],["il-familia","Ubica a niños, abuelos y vecinos que necesitan ayuda"],["il-ruta","Repasa tu ruta de evacuación"],["il-radio","Atento a sirenas, megáfonos y brigadas"]],
+    frase:"Está lloviendo en la parte alta. Ten tu mochila y tus documentos a la mano. Escucha la radio y las noticias locales.",quien:"Te lo dice la app. Las brigadas vigilan la quebrada.",
+    si:[["il-mochila","Ten la mochila y los documentos a la mano"],["il-familia","Ubica a niños, abuelos y vecinos que necesitan ayuda"],["il-ruta","Repasa tu ruta de evacuación"],["il-radio","Escucha la radio y las noticias; atento a sirenas y brigadas"]],
     no:[["il-puente","No cruces puentes ni el cauce si sigue lloviendo"],["il-cauce","No te quedes cerca del cauce de noche"]]},
   naranja:{palabra:"Alístate",nivel:"Naranja · Condiciones críticas",ico:"i-atento",
     frase:"Varios días de lluvia: el cerro está cargado de agua. Ponte la mochila y prepárate para salir.",quien:"La app lo propone. El COE de Lurigancho-Chosica decide la alerta y la evacuación.",
@@ -623,7 +766,7 @@ const SIRENAS = [
   {n:"02",tipo:"Alarma",k:"rojo",texto:"¡Evacuar inmediatamente!, aléjate de las zonas cercanas al cauce."},
   {n:"03",tipo:"Cancelación",k:"verde",texto:"¡Atención!, el caudal de la quebrada Quirio se encuentra estable, ¡se cancela el mensaje de alerta anterior!"}
 ];
-const MOCHILA = ["Agua (2 litros por persona)","Linterna y pilas","Radio a pilas","Botiquín y medicinas","Documentos en bolsa plástica","Abrigo y poncho para lluvia","Comida que no se malogre","Silbato"];
+const MOCHILA = ["Agua (2 litros por persona)","Linterna y pilas","Radio a pilas","Botiquín y medicinas","Documentos en bolsa plástica","Abrigo y poncho para lluvia","Comida que no se malogre","Silbato","Celular cargado y batería externa"];
 
 /* ---------- Cálculo del día ---------- */
 function calc(i){
@@ -640,7 +783,7 @@ function mensajes(i){
   const dato = `${h.mm.toFixed(1)} mm hoy · ${h.p3.toFixed(1)} mm en 3 días`;
   if (h.k==="rojo") out.push({k:"rojo",ico:"i-huaico",t:"¡Evacúa ya!",p:"La brigada reporta huaico bajando por la quebrada. Sal ahora hacia la zona segura, lejos del cauce. El COE activa la sirena de Alarma.",d:"Reporte de brigada / cámara del SAT"});
   else if (r>0 && h.k==="naranja") out.push({k:"naranja",ico:"i-atento",t:"Alístate para salir",p:"La lluvia de estos días ya es alta. El cerro está cargado de agua y puede bajar un huaico. Ponte la mochila y ten clara tu ruta. Si el COE lo indica, sal.",d:dato});
-  else if (r>0 && h.k==="amarillo") out.push({k:"amarillo",ico:"i-atento",t:"Prepárate",p:"Está lloviendo fuerte en la parte alta de Quirio. Revisa tu mochila y ten tus documentos a la mano.",d:dato});
+  else if (r>0 && h.k==="amarillo") out.push({k:"amarillo",ico:"i-atento",t:"Prepárate",p:"Está lloviendo fuerte en la parte alta de Quirio. Revisa tu mochila, ten tus documentos a la mano y escucha la radio y las noticias locales.",d:dato});
   else if (r<0 && h.k!=="rojo") out.push({k:h.k,ico:"i-gota",t:"Bajó la lluvia, sigue atento",p:"Hoy llovió menos, pero el suelo sigue mojado. No bajes la guardia ni cruces el cauce todavía.",d:dato});
   else if (h.k==="naranja") out.push({k:"naranja",ico:"i-atento",t:`Sigue lloviendo: ${h.seg} días seguidos`,p:"El riesgo se mantiene alto. Quédate atento a la brigada y a las sirenas.",d:dato});
   if (h.k!=="rojo" && h.seg>=2 && r>0) out.push({k:h.k,ico:"i-gota",t:`${h.seg} días seguidos de lluvia`,p:"Con varios días de lluvia el suelo se empapa y el cerro se suelta más fácil. Repasa tu plan con tu familia.",d:dato});
@@ -652,7 +795,9 @@ function mensajes(i){
 /* Respaldo: el último estado real guardado al armar esta versión. Solo se muestra si no hay conexión, y se marca como atrasado. */
 const RESPALDO = {"actualizado":"2026-11-11T17:45-05:00","color":"verde","p3_mm":1.1,"lluvia_por_dia_mm":{"2026-11-08":0.0,"2026-11-09":0.8,"2026-11-10":0.2,"2026-11-11":0.2},"pronostico":[{"fecha":"2026-11-12","mm":1.2},{"fecha":"2026-11-13","mm":1.0},{"fecha":"2026-11-14","mm":0.5}],"avisos":[],"fuente":"GPM IMERG Early V07 (135 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.","nota":"El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.","color_desde":"2026-11-10T08:19-05:00"};
 let VIVO=null;
-function hora(iso){ try{ const d=new Date(iso); return d.toLocaleString("es-PE",{weekday:"short",hour:"2-digit",minute:"2-digit"}); }catch(e){ return iso; } }
+function hora(iso){ try{ return new Date(iso).toLocaleString("es-PE",{weekday:"long",day:"numeric",month:"short",hour:"numeric",minute:"2-digit",hour12:true,timeZone:"America/Lima"}); }catch(e){ return iso; } }
+const hm12 = d => d.toLocaleTimeString("es-PE",{hour:"numeric",minute:"2-digit",hour12:true,timeZone:"America/Lima"});
+function proxima(){ /* el motor corre a los :07, :27 y :47 y tarda ~3 min */ const d=new Date(); d.setSeconds(0,0); do{ d.setMinutes(d.getMinutes()+1); }while(![10,30,50].includes(d.getMinutes())); return d; }
 const hhmm = iso => { try{ return new Date(iso).toLocaleTimeString("es-PE",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"America/Lima"}); }catch(e){ return "--:--"; } };
 const diaLargo = iso => { try{ return new Date(iso).toLocaleDateString("es-PE",{weekday:"long",day:"numeric",month:"short",timeZone:"America/Lima"}); }catch(e){ return ""; } };
 const TONO={"i-mochila":["#ffb067","#f2681d"],x:["#94a3b8","#475569"]};
@@ -689,7 +834,9 @@ function pintarVivo(){
   $("rl-modo").textContent = viejo ? "Sin datos nuevos" : "En vivo";
   $("rl-hora").textContent = hhmm(E.actualizado);
   $("rl-dia").textContent = (viejo?"último dato: ":"revisado ")+diaLargo(E.actualizado);
-  $("rl-txt").textContent = viejo ? "No llegan datos nuevos del satélite. Atiende a la brigada, las sirenas y los avisos del SENAMHI." : "La app revisa la lluvia sola, cada 20 minutos.";
+  $("rl-txt").textContent = viejo ? "No llegan datos nuevos del satélite. Atiende a la brigada, las sirenas y los avisos del SENAMHI." : "La app revisa la lluvia sola, cada 20 minutos. El satélite la mide con unas 4 h de retraso.";
+  $("rl-prox").textContent = "Próxima revisión: hacia las "+hm12(proxima());
+  ordenarAyuda();
   /* medidor: lluvia de 3 días contra los umbrales */
   $("c-p3").textContent=p3.toFixed(1)+" mm";
   const pc=v=>Math.min(100,v/TOPE*100);
@@ -716,18 +863,23 @@ function pintarVivo(){
   const b=$("badge"); b.textContent=av.length; b.hidden=!av.length;
 }
 /* El tiempo ahora en Quirio (modelo Open-Meteo; si no hay internet, no se muestra) */
+function pintarTiempo(c){
+  const it=(ico,v,u,txt)=>`<div><svg aria-hidden="true"><use href="#${ico}"/></svg><b>${v}${u}</b><span>${txt}</span></div>`;
+  $("tiempo").innerHTML=`<h3>El tiempo ahora · ${hhmm(c.hora)}</h3>`+it("t-temp",Math.round(c.temp_c),"°","temp.")+it("i-gota",Math.round(c.humedad),"%","humedad")+it("t-nube",Math.round(c.nubes),"%","nubes")+it("t-viento",Math.round(c.viento_kmh)," km/h","viento")
+    +(c.prob_lluvia_hoy!=null?it("t-paraguas",Math.round(c.prob_lluvia_hoy),"%","prob. de lluvia hoy"):"");
+  $("tiempo").hidden=false; }
 async function cargarTiempo(){
-  try{ const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-11.92&longitude=-76.725&current=temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m&timezone=America%2FLima",{cache:"no-store"});
-    if(!r.ok) throw 0; const c=(await r.json()).current; if(!c) throw 0;
-    const it=(ico,v,u,txt)=>`<div><svg aria-hidden="true"><use href="#${ico}"/></svg><b>${v}${u}</b><span>${txt}</span></div>`;
-    $("tiempo").innerHTML=`<h3>El tiempo ahora · ${hhmm(c.time+"-05:00")}</h3>`+it("t-temp",Math.round(c.temperature_2m),"°","temperatura")+it("i-gota",Math.round(c.relative_humidity_2m),"%","humedad")+it("t-nube",Math.round(c.cloud_cover),"%","nubes")+it("t-viento",Math.round(c.wind_speed_10m)," km/h","viento");
-    $("tiempo").hidden=false; }catch(e){ $("tiempo").hidden=true; }
+  try{ const r=await fetch("https://api.open-meteo.com/v1/forecast?latitude=-11.92&longitude=-76.725&current=temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m&daily=precipitation_probability_max&forecast_days=1&timezone=America%2FLima",{cache:"no-store"});
+    if(!r.ok) throw 0; const j=await r.json(), c=j.current; if(!c) throw 0;
+    pintarTiempo({hora:c.time+"-05:00",temp_c:c.temperature_2m,humedad:c.relative_humidity_2m,nubes:c.cloud_cover,viento_kmh:c.wind_speed_10m,prob_lluvia_hoy:j.daily&&j.daily.precipitation_probability_max?j.daily.precipitation_probability_max[0]:null}); }
+  catch(e){ if(VIVO&&VIVO.tiempo_ahora) pintarTiempo(VIVO.tiempo_ahora); else $("tiempo").hidden=true; }
 }
 async function cargarVivo(){
   if(!VIVO){ VIVO=RESPALDO; pintarVivo(); $("reloj").classList.remove("viejo"); $("rl-modo").textContent="Conectando…"; $("rl-txt").textContent="Buscando el último dato de lluvia…"; }
   try{ const r=await fetch("estado.json",{cache:"no-store"}); if(!r.ok) throw 0; const E=await r.json(); if(!E.lluvia_por_dia_mm) throw 0; VIVO=E; }
   catch(e){ if(!VIVO) VIVO=RESPALDO; }
   pintarVivo();
+  if($("tiempo").hidden && VIVO.tiempo_ahora) pintarTiempo(VIVO.tiempo_ahora);
 }
 /* ---------- Simulacro 2015 ---------- */
 let dia = 4; /* 19 de marzo: primer aviso */
@@ -761,7 +913,7 @@ $("play").addEventListener("click",()=>{ if(timer){parar();return;}
 /* ---------- Voz ---------- */
 function hablar(t){ try{ const s=window.speechSynthesis; if(!s) return false; s.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="es-PE"; u.rate=.95; s.speak(u); return true; }catch(e){ return false; } }
 $("oir").addEventListener("click",()=>{ const v=location.hash.slice(1)||"ahora"; let t="";
-  if(v==="ahora"||v==="simulacro"){ const N=NIV[v==="ahora"?(VIVO&&ORDEN.includes(VIVO.color)?VIVO.color:"verde"):calc(dia).k]; t=`${N.palabra}. ${N.frase} Haz esto: ${N.si.map(x=>x[1]).join(". ")}. No hagas esto: ${N.no.map(x=>x[1]).join(". ")}.`; }
+  if(v==="ahora"||v==="simulacro"){ const N=NIV[v==="ahora"?(VIVO&&ORDEN.includes(VIVO.color)?VIVO.color:"verde"):calc(dia).k]; t=`${N.palabra}. ${N.frase} Haz esto: ${N.si.map(x=>x[1]).join(". ")}. No hagas esto: ${N.no.map(x=>x[1]).join(". ")}.`+(["naranja","rojo"].includes(v==="ahora"?(VIVO&&VIVO.color):calc(dia).k)?" Ahorra batería: baja el brillo y activa el ahorro de energía.":""); }
   else if(v==="avisos"){ t=[...document.querySelectorAll(".aviso")].slice(0,2).map(a=>a.querySelector("b").textContent+". "+a.querySelector("p").textContent).join(" "); }
   else if(v==="mapa"){ t=$("mio-txt").textContent; } else { t="Revisa tu mochila de emergencia y guarda los teléfonos: 115 Defensa Civil, 116 Bomberos, 105 Policía, 106 ambulancia."; }
   if(!hablar(t)) $("oir").textContent="Sin voz en este equipo"; });
@@ -774,6 +926,59 @@ function cuenta(){ const n=[...$("mochila").querySelectorAll("input")].filter(x=
 $("mochila").addEventListener("change",()=>{ const sel=[...$("mochila").querySelectorAll("input")].map((x,j)=>x.checked?j:-1).filter(j=>j>=0); try{localStorage.setItem("quirio-mochila",JSON.stringify(sel));}catch(e){} cuenta(); });
 cuenta();
 $("sirenas").innerHTML = SIRENAS.map(s=>`<div class="sirena" style="--c:var(--${s.k});--on:var(--on-${s.k})"><div class="h"><b>Mensaje ${s.n} · ${s.tipo}</b><button type="button" data-hablar="${s.texto}"><svg><use href="#i-parlante"/></svg>Oír</button></div><q>${s.texto}</q></div>`).join("");
+
+
+/* ---------- Actualizar a mano (no hace más rápido al satélite) ---------- */
+$("actualizar").addEventListener("click",async()=>{ const b=$("actualizar"); if(b.disabled) return; b.disabled=true; b.classList.add("girando");
+  const antes=VIVO&&VIVO.actualizado; await cargarVivo(); cargarTiempo();
+  $("rl-txt").textContent = (VIVO&&VIVO.actualizado!==antes) ? "¡Listo! Llegaron datos nuevos." : "Sin cambios todavía. El satélite llega con unas 4 h de retraso: si llueve fuerte, no esperes a la app, atiende la sirena y la brigada.";
+  setTimeout(()=>{ b.disabled=false; b.classList.remove("girando"); },20000); setTimeout(()=>b.classList.remove("girando"),1200); });
+
+/* ---------- Ayuda: contactos, mensajes y alarma ---------- */
+let CONTACTOS=[]; try{ CONTACTOS=JSON.parse(localStorage.getItem("quirio-contactos")||"[]"); }catch(e){}
+function guardarContactos(){ try{ localStorage.setItem("quirio-contactos",JSON.stringify(CONTACTOS)); }catch(e){} pintarContactos(); }
+function pintarContactos(){ $("contactos").innerHTML = CONTACTOS.length ? CONTACTOS.map((c,j)=>`<li><b></b><span></span><button type="button" data-borrar="${j}" aria-label="Quitar contacto">✕</button></li>`).join("") : `<li class="vacio">Todavía no agregas contactos.</li>`;
+  [...$("contactos").querySelectorAll("li")].forEach((li,j)=>{ if(!CONTACTOS[j]) return; li.querySelector("b").textContent=CONTACTOS[j].n; li.querySelector("span").textContent=CONTACTOS[j].t; }); }
+$("nuevo-contacto").addEventListener("submit",e=>{ e.preventDefault(); const n=$("ct-nombre").value.trim(), tel=$("ct-num").value.replace(/[^0-9+]/g,"");
+  if(!n||tel.length<6){ $("ct-num").focus(); return; } CONTACTOS.push({n,t:tel}); $("ct-nombre").value=""; $("ct-num").value=""; guardarContactos(); });
+$("contactos").addEventListener("click",e=>{ const b=e.target.closest("[data-borrar]"); if(b){ CONTACTOS.splice(+b.dataset.borrar,1); guardarContactos(); } });
+pintarContactos();
+function miUbicacion(){ return new Promise(r=>{ if(!navigator.geolocation) return r(null); navigator.geolocation.getCurrentPosition(p=>r(p.coords),()=>r(null),{enableHighAccuracy:true,timeout:8000,maximumAge:120000}); }); }
+document.querySelectorAll(".avisar button").forEach(b=>b.addEventListener("click",async()=>{
+  const tipo=b.dataset.tipo, env=$("envio"); env.hidden=false; env.innerHTML="<p>Buscando tu ubicación…</p>";
+  const c=await miUbicacion();
+  const donde = c ? ` Mi ubicación: https://maps.google.com/?q=${c.latitude.toFixed(5)},${c.longitude.toFixed(5)}` : " (No pude obtener mi ubicación.)";
+  const txt = (tipo==="ayuda" ? "¡NECESITO AYUDA! Estoy en la zona de la quebrada Quirio (Chosica)." : "ESTOY A SALVO. No te preocupes, sigo las indicaciones de la brigada.") + donde + " — Quirio Alerta";
+  const nums=CONTACTOS.map(x=>x.t).join(","), q=encodeURIComponent(txt);
+  env.innerHTML = `<p></p><div class="btns">${CONTACTOS.length?`<a href="sms:${nums}?&body=${q}">Enviar SMS a ${CONTACTOS.length} contacto${CONTACTOS.length>1?"s":""}</a>`:""}<a class="wa" href="https://wa.me/?text=${q}" target="_blank" rel="noopener">Enviar por WhatsApp</a><button type="button" id="copiar">Copiar mensaje</button></div>`
+    + (CONTACTOS.length?"":`<p><b>Aún no tienes contactos.</b> Agrégalos en <a href="#plan">Mi plan</a> para enviarles a todos de una vez.</p>`);
+  env.querySelector("p").textContent = txt;
+  $("copiar").addEventListener("click",()=>{ try{ navigator.clipboard.writeText(txt); $("copiar").textContent="¡Copiado!"; }catch(e){} });
+}));
+const CALMA=["Respira hondo. Estás haciendo lo correcto.","Sigue la ruta verde hacia la zona segura.","Aléjate del cauce. Sube.","No regreses por tus cosas.","Ayuda primero a niños, abuelos y personas con discapacidad.","Quédate en la zona segura hasta que la sirena dé la cancelación.","Ahorra batería: baja el brillo de tu celular."];
+let AL=null;
+function alarma(){ if(AL) return; const capa=$("capa-alarma"); capa.hidden=false; AL={};
+  try{ const ctx=new (window.AudioContext||window.webkitAudioContext)(), o=ctx.createOscillator(), g=ctx.createGain(); o.type="square"; o.frequency.value=880; g.gain.value=.9; o.connect(g).connect(ctx.destination); o.start();
+    let alto=false; AL.tono=setInterval(()=>{ alto=!alto; o.frequency.setValueAtTime(alto?1320:880,ctx.currentTime); },420); Object.assign(AL,{ctx,o,g}); }catch(e){}
+  if(navigator.vibrate){ navigator.vibrate([700,250,700,250,700]); AL.vib=setInterval(()=>navigator.vibrate([700,250,700,250,700]),2900); }
+  try{ navigator.wakeLock && navigator.wakeLock.request("screen").then(w=>AL&&(AL.wl=w)).catch(()=>{}); }catch(e){}
+  let i=0; $("calma").textContent=CALMA[0];
+  AL.txt=setInterval(()=>{ i=(i+1)%CALMA.length; $("calma").textContent=CALMA[i]; },7000);
+  AL.voz=setInterval(()=>{ if(!AL) return; if(AL.g) AL.g.gain.value=.12; hablar(CALMA.slice(0,3).join(" ")); setTimeout(()=>{ if(AL&&AL.g) AL.g.gain.value=.9; },9000); },120000);
+}
+function pararAlarma(){ if(!AL) return; clearInterval(AL.tono); clearInterval(AL.vib); clearInterval(AL.txt); clearInterval(AL.voz);
+  try{ AL.o.stop(); AL.ctx.close(); }catch(e){} try{ navigator.vibrate&&navigator.vibrate(0); }catch(e){} try{ AL.wl&&AL.wl.release(); }catch(e){} try{ speechSynthesis.cancel(); }catch(e){}
+  AL=null; $("capa-alarma").hidden=true; }
+$("alarma-btn").addEventListener("click",alarma); $("alarma-stop").addEventListener("click",pararAlarma);
+/* Ayuda arriba si hay rojo o si tu casa está en zona de peligro */
+let EN_PELIGRO=false;
+function ordenarAyuda(){ const a=$("ayuda"), v=$("v-ahora"), arriba=(VIVO&&VIVO.color==="rojo")||EN_PELIGRO;
+  a.classList.toggle("arriba",arriba); if(arriba) $("escala").after(a); else v.appendChild(a); }
+
+/* ---------- Instalar ---------- */
+let pedidoInstalar=null;
+window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); pedidoInstalar=e; $("instalar").hidden=false; });
+$("instalar").addEventListener("click",async()=>{ if(!pedidoInstalar) return; pedidoInstalar.prompt(); try{ await pedidoInstalar.userChoice; }catch(e){} pedidoInstalar=null; $("instalar").hidden=true; });
 
 /* ---------- Navegación ---------- */
 let mapa=null;
@@ -794,14 +999,18 @@ function abrirMapa(){
   /* Fondos: calles (OpenStreetMap + CARTO), satélite (Esri) y relieve propio (funciona sin internet) */
   const FONDOS={
     calles:L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}),
-    satelite:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Imagen © Esri, Maxar, Earthstar"}),
+    satelite:L.layerGroup([L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Imagen © Esri, Maxar, Earthstar"}),
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",{maxZoom:19}),
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",{maxZoom:19})]),
+    topo:L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",{maxZoom:19,attribution:"Mapa © Esri, HERE, Garmin, USGS, OpenStreetMap"}),
     relieve:L.imageOverlay(RELIEVE.uri,RELIEVE.bounds,{interactive:false,attribution:"Relieve: Copernicus GLO-30"})};
   let fondo=null, errores=0, cargo=false;
   const callesPropias=L.layerGroup();
-  function ponerFondo(f){ if(fondo) m.removeLayer(FONDOS[fondo]); fondo=f; FONDOS[f].addTo(m); FONDOS[f].bringToBack?.();
+  function ponerFondo(f){ if(fondo) m.removeLayer(FONDOS[fondo]); fondo=f; FONDOS[f].addTo(m); (FONDOS[f].eachLayer?FONDOS[f].eachLayer(l=>l.bringToBack&&l.bringToBack()):FONDOS[f].bringToBack?.());
     f==="relieve" ? callesPropias.addTo(m) : m.removeLayer(callesPropias);
     document.querySelectorAll("#fondos button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===f))); }
-  ["calles","satelite"].forEach(k=>{ FONDOS[k].on("tileload",()=>{cargo=true;}); FONDOS[k].on("tileerror",()=>{ if(!cargo && ++errores>=4 && fondo===k){ ponerFondo("relieve"); $("mio-txt").textContent="Sin conexión al mapa de calles: te muestro el relieve con las calles principales."; } }); });
+  ["calles","satelite","topo"].forEach(k=>{ const capas=FONDOS[k].getLayers?FONDOS[k].getLayers():[FONDOS[k]];
+    capas.forEach(c=>{ c.on("tileload",()=>{cargo=true;}); c.on("tileerror",()=>{ if(!cargo && ++errores>=4 && fondo===k){ ponerFondo("relieve"); $("mio-txt").textContent="Sin internet para el mapa: te muestro el relieve con las calles principales, las rutas y las zonas seguras."; } }); }); });
   $("fondos").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b){ errores=0; ponerFondo(b.dataset.f); } });
   const g={}, de=t=>({type:"FeatureCollection",features:GEO.features.filter(t)});
   for(const [k,[n,c]] of Object.entries(PEL)) g[k]=L.geoJSON(de(f=>f.properties.tipo==="peligro"&&f.properties.clase===k),{style:{color:c,weight:1,fillColor:c,fillOpacity:.4},onEachFeature:(f,l)=>l.bindPopup(`<b>${n}</b>`)}).addTo(m);
@@ -810,8 +1019,16 @@ function abrirMapa(){
   g.puente=L.geoJSON(de(f=>f.properties.tipo==="puente"),{style:{color:"#334155",weight:6,lineCap:"butt"},onEachFeature:(f,l)=>l.bindTooltip(f.properties.n.replace("-"," "),{sticky:true})}).addTo(m);
   L.geoJSON(de(f=>f.properties.tipo==="etiqueta"),{pointToLayer:(f,ll)=>L.marker(ll,{interactive:false,icon:L.divIcon({className:"etq-calle",html:`<span>${f.properties.n}</span>`,iconSize:null})})}).addTo(m);
   g.ruta=L.geoJSON(de(f=>f.properties.tipo==="ruta"),{style:{color:"#16a34a",weight:4,dashArray:"8 6"},onEachFeature:(f,l)=>l.bindPopup(`<b>Ruta de evacuación</b><br>${f.properties.N_Calle||""}`)}).addTo(m);
-  for(const [k,[n,c,r]] of Object.entries(PTS)) g[k]=L.geoJSON(de(f=>f.properties.tipo===k),{pointToLayer:(f,ll)=>L.circleMarker(ll,{radius:(k==="sat"&&!String(f.properties.id).startsWith("PDD"))?3.5:r,color:"#fff",weight:2,fillColor:c,fillOpacity:1}),
-    onEachFeature:(f,l)=>{const p=f.properties; l.bindPopup(`<b>${n}</b>`+(p.id?`<br>${p.id}`:"")+(p.referencia?`<br>${p.referencia}`:"")+(p.descripcion?`<br>${p.descripcion}`:"")+(p.Name_C?`<br>${p.Name_C}`:"")+(p.estado_2026?`<br>${p.estado_2026}`:""));}}).addTo(m);
+  const PIN={zona:["m-zona","Zona segura"],reunion:["m-gente",""],comando:["m-comando","Puesto de comando"],helipuerto:["m-heli",""],sat:["m-sirena",""]};
+  const QUE={zona:"Lugar alto, fuera del alcance del huaico. Quédate aquí hasta que la sirena dé la cancelación.",reunion:"Aquí se junta tu familia y la brigada antes de subir juntos a la zona segura.",comando:"Donde autoridades y brigadas coordinan la emergencia.",sat:"Sirena del SAT: suena con los mensajes de Alerta, Alarma y Cancelación.",critico:"Punto crítico del cauce: aquí el huaico puede desbordarse.",barrera:"Barrera dinámica: atrapa piedras y lodo del huaico.",colegio:"Lugar de referencia del barrio."};
+  const llegar=ll=>`<a class="ir" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${ll.lat.toFixed(6)},${ll.lng.toFixed(6)}&travelmode=walking">Cómo llegar a pie</a>`;
+  const pinIcon=(k,label,grande)=>L.divIcon({className:"pin "+k+(grande?" grande":""),html:`<span class="pin-c ${k}"><svg><use href="#${PIN[k][0]}"/></svg></span>${label?`<b>${label}</b>`:""}`,iconSize:null,iconAnchor:grande?[19,19]:[13,13],popupAnchor:[0,-14]});
+  const calleCerca=ll=>{let b=null;for(const f of GEO.features){if(f.properties.tipo!=="etiqueta")continue;const d=ll.distanceTo(L.latLng(f.geometry.coordinates[1],f.geometry.coordinates[0]));if(!b||d<b.d)b={d,n:f.properties.n};}return b&&b.d<400?b.n:"";};
+  let nz=0;
+  for(const [k,[n,c,r]] of Object.entries(PTS)) g[k]=L.geoJSON(de(f=>f.properties.tipo===k),{pointToLayer:(f,ll)=>{
+      if(PIN[k] && !(k==="sat"&&!String(f.properties.id).startsWith("PDD"))){ const lab=k==="zona"?`Zona segura ${++nz}`:PIN[k][1]; f.properties._nombre=k==="zona"?lab+(calleCerca(ll)?` · cerca de ${calleCerca(ll)}`:""):""; return L.marker(ll,{icon:pinIcon(k,k==="zona"?lab:"",k==="zona"||k==="comando"),zIndexOffset:k==="zona"?1000:0}); }
+      return L.circleMarker(ll,{radius:(k==="sat"&&!String(f.properties.id).startsWith("PDD"))?3.5:r,color:"#fff",weight:2,fillColor:c,fillOpacity:1}); },
+    onEachFeature:(f,l)=>{const p=f.properties; l.bindPopup(()=>`<b>${p._nombre||n}</b>`+(QUE[k]?`<br>${QUE[k]}`:"")+(p.id?`<br><small>${p.id}</small>`:"")+(p.referencia?`<br>${p.referencia}`:"")+(p.descripcion?`<br><small>${p.descripcion}</small>`:"")+(p.Name_C?`<br>${p.Name_C}`:"")+(p.estado_2026?`<br>${p.estado_2026}`:"")+(["zona","reunion","comando"].includes(k)?`<br>${llegar(l.getLatLng())}`:""));}}).addTo(m);
   m.fitBounds(L.featureGroup(Object.values(g)).getBounds(),{padding:[12,12]});
   ponerFondo("calles");
   const APAGADAS=["colegio","sat","critico","barrera","activacion_carcavas","propenso_caida_rocas"];   /* menos ruido al abrir */
@@ -827,14 +1044,24 @@ function abrirMapa(){
   ubicar = ll => { const z=GEO.features.filter(f=>f.properties.tipo==="peligro"&&enPol(ll,f)).map(f=>PEL[f.properties.clase][0]);
     const pr=cerca(ll,"reunion"), zs=cerca(ll,"zona"); if(capa) m.removeLayer(capa);
     capa=L.layerGroup([L.polyline([ll,pr.c],{color:"#14b8a6",weight:3}),L.polyline([ll,zs.c],{color:"#14a44d",weight:3,dashArray:"4 6"}),L.circleMarker(ll,{radius:10,color:"#fff",weight:3,fillColor:"#1747a6",fillOpacity:1})]).addTo(m);
-    const mio=$("mio"); mio.classList.toggle("peligro",z.length>0);
+    const mio=$("mio"); mio.classList.toggle("peligro",z.length>0); EN_PELIGRO=z.length>0; ordenarAyuda();
     $("mio-txt").innerHTML=(z.length?`<b>Tu casa está en zona de peligro (${z.join(", ")}).</b> Cuando la app diga “Alístate”, sal temprano. `:`Tu casa no está en las zonas de peligro del mapa comunitario. `)+`Tu punto de reunión está a <b>${Math.round(pr.d)} m</b> y la zona segura a <b>${Math.round(zs.d)} m</b> en línea recta. Ve por las rutas verdes, sin cruzar el cauce.`
-      +`<span class="irs">${comoLlegar(ll,pr.c,"Cómo llegar al punto de reunión")}${comoLlegar(ll,zs.c,"Cómo llegar a la zona segura")}</span><small class="nota-gm">Se abre en Google Maps, caminando. Revisa que la ruta no cruce el cauce.</small>`;
+      +`<span class="irs">${comoLlegar(ll,pr.c,"Cómo llegar al punto de reunión")}${comoLlegar(ll,zs.c,"Cómo llegar a la zona segura")}</span><small class="nota-gm">Se abre en Google Maps, caminando. Revisa que la ruta no cruce el cauce. Tu ubicación no sale de tu celular: solo va en este enlace si lo tocas (si Google Maps ofrece enviarla a otro equipo, es opción de Google).</small>`;
     mio.querySelector(".grande").textContent = z.length ? "Atención: zona de peligro" : "Tu casa y tu ruta";
     m.setView(ll, Math.max(m.getZoom(),15)); };
   m.on("preclick",e=>ubicar(e.latlng));
+  zonaCercana = ll => { const z=cerca(ll,"zona"); return z; };
 }
-let ubicar = null;
+let ubicar = null, zonaCercana = null;
+$("ir-zona").addEventListener("click",()=>{
+  const msg=t=>{ $("mio-txt").innerHTML=t; $("mio").scrollIntoView({behavior:"smooth",block:"center"}); };
+  if(!navigator.geolocation){ msg("Este equipo no tiene GPS. Toca el mapa donde estás."); return; }
+  msg("Buscando dónde estás…");
+  navigator.geolocation.getCurrentPosition(p=>{ const ll=L.latLng(p.coords.latitude,p.coords.longitude);
+      if(ll.distanceTo(L.latLng(-11.935,-76.715))>5000){ msg(`Estás a ${(ll.distanceTo(L.latLng(-11.935,-76.715))/1000).toFixed(0)} km de Quirio. Esta función sirve estando en Quirio. <button type="button" class="simular" id="simular">Simular que estoy en Quirio</button>`); return; }
+      if(ubicar) ubicar(ll); const z=zonaCercana&&zonaCercana(ll); if(z) window.open(`https://www.google.com/maps/dir/?api=1&origin=${ll.lat.toFixed(6)},${ll.lng.toFixed(6)}&destination=${z.c.lat.toFixed(6)},${z.c.lng.toFixed(6)}&travelmode=walking`,"_blank","noopener"); },
+    ()=>msg("No se pudo usar el GPS (permiso negado o sin señal). Toca el mapa donde estás y sigue las rutas verdes."),
+    {enableHighAccuracy:true,timeout:15000,maximumAge:60000}); });
 document.addEventListener("click",e=>{ if(e.target.id==="simular" && ubicar) ubicar(L.latLng(-11.944531,-76.71431)); });
 $("gps").addEventListener("click",()=>{
   const msg=t=>{ $("mio-txt").textContent=t; };
