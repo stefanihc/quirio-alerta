@@ -434,6 +434,22 @@ details.mas .chips{margin-top:6px}
 .lm-dot{flex:none;width:34px;height:34px;display:grid;place-items:center}
 .lm-dot::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
 .mas-capas .fondos{margin:6px 0 8px}
+
+/* ---- v0.17: avisos en el celular ---- */
+.push-banner{display:flex;align-items:center;gap:10px;padding-block:10px;background:linear-gradient(118deg,#2a0f55,#6d28d9 60%,#a21caf);color:#fff}
+.push-banner svg{width:30px;height:30px;flex:none}
+.push-banner div{flex:1;display:grid;line-height:1.2} .push-banner span{font-size:.82rem;opacity:.9}
+.push-banner button{border:0;border-radius:999px;background:#fff;color:#4c1d95;font-weight:800;padding:8px 14px}
+.push-estado{border-radius:14px;padding:12px;display:grid;gap:8px;font-size:.95rem}
+.push-estado.bien{background:color-mix(in srgb,var(--verde) 16%,var(--card));border-left:5px solid var(--verde)}
+.push-estado.off,.push-estado.pronto{background:var(--soft);border-left:5px solid var(--accent)}
+.push-estado.aviso{background:color-mix(in srgb,var(--amarillo) 18%,var(--card));border-left:5px solid var(--amarillo)}
+.push-estado.mal{background:color-mix(in srgb,var(--rojo) 12%,var(--card));border-left:5px solid var(--rojo)}
+.push-btns{display:flex;gap:8px;flex-wrap:wrap}
+.push-btns button{flex:1 1 130px;border:0;border-radius:12px;padding:12px;font-weight:800;color:#fff;background:linear-gradient(118deg,#2a0f55,#6d28d9 60%,#a21caf)}
+.push-btns button.sec{background:var(--soft);color:var(--ink)}
+details.bateria{margin-top:10px} details.bateria summary,details.otras summary{cursor:pointer;font-weight:800;color:var(--accent);padding:4px 0}
+details.otras{margin-top:6px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -498,6 +514,12 @@ details.mas .chips{margin-top:6px}
     <div class="rl-hora" id="rl-hora">--:--</div>
     <p id="rl-txt">La app revisa la lluvia sola, cada 20 minutos.</p>
     <div class="rl-acc"><span id="rl-prox"></span><button type="button" id="actualizar"><svg aria-hidden="true"><use href="#i-refrescar"/></svg>Actualizar</button></div>
+  </div>
+
+  <div class="push-banner gut" id="push-banner" hidden>
+    <svg aria-hidden="true"><use href="#i-alarma"/></svg>
+    <div><b>Recibe los avisos en tu celular</b><span>Te suena aunque la app esté cerrada.</span></div>
+    <button type="button" data-push="activar">Activar</button>
   </div>
 
   <!-- AHORA -->
@@ -692,6 +714,17 @@ details.mas .chips{margin-top:6px}
       </ol>
       <p class="sub">Las sirenas se prueban cada día en silencio y se usan en los simulacros. Borrador según el Protocolo del SAT comunitario de Quirio (2023, punto 4.3); los pasos “propuesta” se validarán con el COE y las brigadas.</p>
     </section>
+    <section class="card push-card" id="push-card" aria-labelledby="t-push">
+      <h2 class="tit" id="t-push">Avisos en tu celular</h2>
+      <div id="push-estado"></div>
+      <details class="bateria" id="push-bateria">
+        <summary>¿No te llegan o llegan tarde? Quita el ahorro de batería a Chrome</summary>
+        <p class="sub" id="push-marca"></p>
+        <div id="push-pasos"></div>
+        <details class="otras"><summary>Ver pasos de otras marcas</summary><div id="push-otras"></div></details>
+      </details>
+      <p class="sub">Los avisos pueden demorar si tu celular ahorra batería o no tiene señal. Un aviso con más de 3 horas ya no llega: abre la app para ver el estado. <b>La sirena del SAT y la brigada siguen siendo la alerta principal.</b> El servicio OneSignal solo recibe un código anónimo de tu celular, no tu nombre ni tu número.</p>
+    </section>
     <section class="card" aria-labelledby="t-contactos">
       <h2 class="tit" id="t-contactos">Mis contactos de confianza</h2>
       <p class="sub">A ellos les llega tu mensaje de “Pedir ayuda” o “Estoy a salvo”. Se guardan solo en tu celular.</p>
@@ -745,7 +778,7 @@ details.mas .chips{margin-top:6px}
         <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos del SAT comunitario de Quirio (informe de diseño, 2023), usadas con permiso del equipo KNOW / GRACC.</li><li>Íconos de menú: Phosphor Icons (licencia MIT). Logo, paisaje e ilustraciones de “Haz esto”: dibujo propio del proyecto.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.16 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.17 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
     </section>
   </main>
 </div>
@@ -1024,6 +1057,77 @@ function ordenarAyuda(){ const a=$("ayuda"), v=$("v-ahora"), arriba=(VIVO&&VIVO.
 let pedidoInstalar=null;
 window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); pedidoInstalar=e; $("instalar").hidden=false; });
 $("instalar").addEventListener("click",async()=>{ if(!pedidoInstalar) return; pedidoInstalar.prompt(); try{ await pedidoInstalar.userChoice; }catch(e){} pedidoInstalar=null; $("instalar").hidden=true; });
+
+
+/* ---------- Avisos en el celular (Web Push con OneSignal) ---------- */
+/* El App ID es público (va en la página). La clave secreta solo vive en GitHub (ONESIGNAL_API_KEY). */
+const ONESIGNAL_APP_ID = "";
+const PASOS_BATERIA = {
+  xiaomi:["Xiaomi / Redmi / POCO",["Ajustes → Aplicaciones → Administrar aplicaciones → Chrome.","Ahorro de batería → <b>Sin restricciones</b>.","Activa <b>Inicio automático</b>.","En Notificaciones, deja todo permitido (con sonido)."]],
+  samsung:["Samsung",["Ajustes → Batería → Límites de uso en segundo plano.","Apps que nunca se suspenden → agrega <b>Chrome</b>.","Ajustes → Aplicaciones → Chrome → Batería → <b>Sin restricciones</b>."]],
+  huawei:["Huawei / Honor",["Ajustes → Batería → Inicio de aplicaciones.","Busca Chrome → apágalo para <b>gestionar manualmente</b> y activa las 3 opciones.","Ajustes → Aplicaciones → Chrome → Notificaciones → permitidas."]],
+  oppo:["OPPO / Realme / OnePlus",["Ajustes → Batería → Más ajustes de batería → Optimizar uso de batería.","Chrome → <b>No optimizar</b>.","Ajustes → Aplicaciones → Chrome → permite <b>Inicio automático</b>."]],
+  vivo:["vivo",["Ajustes → Batería → Consumo en segundo plano.","Chrome → <b>Permitir alto consumo en segundo plano</b>."]],
+  motorola:["Motorola / otros Android",["Ajustes → Aplicaciones → Chrome → Batería.","Elige <b>Sin restricciones</b> (o “No optimizar”)."]],
+  iphone:["iPhone",["Necesitas iOS 16.4 o más nuevo.","Abre Quirio Alerta desde el ícono de tu pantalla de inicio (no desde Safari).","Ajustes → Notificaciones → Quirio Alerta → permitir, con sonido."]]};
+const PUSH = { ok:false, os:null };
+const esIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+const instalada = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+async function detectarMarca(){
+  if(esIOS) return "iphone";
+  let txt = navigator.userAgent;
+  try{ if(navigator.userAgentData && navigator.userAgentData.getHighEntropyValues){ const h=await navigator.userAgentData.getHighEntropyValues(["model"]); txt+=" "+(h.model||""); } }catch(e){}
+  if(/xiaomi|redmi|poco|\bmi \d|\b2[0-4]\d{2}[0-9A-Z]{3,8}\b|M20\d\d/i.test(txt)) return "xiaomi";
+  if(/\bSM-|samsung|galaxy/i.test(txt)) return "samsung";
+  if(/huawei|honor|\b(ELE|VOG|MAR|JNY|ANE|POT|STK|LYA|YAL)-/i.test(txt)) return "huawei";
+  if(/oppo|realme|oneplus|\bCPH\d|\bRMX\d/i.test(txt)) return "oppo";
+  if(/vivo|\bV\d{4}/i.test(txt)) return "vivo";
+  return "motorola";
+}
+async function pintarBateria(){
+  const k=await detectarMarca(), [nom,pasos]=PASOS_BATERIA[k];
+  $("push-marca").textContent = k==="motorola" ? "No reconocí la marca de tu celular. Estos pasos sirven para la mayoría:" : `Tu celular parece ${nom}. Haz esto una sola vez:`;
+  $("push-pasos").innerHTML = `<ol class="pasos">${pasos.map(p=>`<li>${p}</li>`).join("")}</ol>`;
+  $("push-otras").innerHTML = Object.entries(PASOS_BATERIA).filter(([x])=>x!==k).map(([,[n,ps]])=>`<p><b>${n}</b></p><ol class="pasos">${ps.map(p=>`<li>${p}</li>`).join("")}</ol>`).join("");
+}
+function estadoPush(){
+  const caja=$("push-estado"), banner=$("push-banner");
+  const pinta=(cls,html)=>{ caja.className="push-estado "+cls; caja.innerHTML=html; };
+  banner.hidden=true;
+  if(!ONESIGNAL_APP_ID || location.hostname!=="stefanihc.github.io"){ pinta("pronto","<b>Muy pronto.</b> Aquí podrás activar los avisos en tu celular."); return; }
+  if(esIOS && !instalada()){ pinta("aviso","<b>En iPhone, primero instala la app.</b> Safari → Compartir → <b>Agregar a inicio</b>. Luego ábrela desde el ícono y vuelve aquí para activar los avisos."); return; }
+  if(!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)){ pinta("aviso","<b>Este navegador no permite avisos.</b> Abre la app en <b>Chrome</b>."); return; }
+  if(Notification.permission==="denied"){ pinta("mal",`<b>Bloqueaste los avisos.</b> Para activarlos: toca el candado o <b>⋮</b> junto a la dirección → <b>Configuración del sitio</b> → <b>Notificaciones</b> → Permitir. Si instalaste la app: mantén presionado su ícono → <b>Información de la app</b> → Notificaciones → activar.`); return; }
+  if(!PUSH.os){ pinta("aviso","Conectando con el servicio de avisos… Si no avanza, revisa tu internet."); return; }
+  const activo = Notification.permission==="granted" && PUSH.os.User.PushSubscription.optedIn;
+  if(activo){ pinta("bien",`<b>✓ Avisos activados.</b> Te llegarán cuando cambie el color o haya un aviso nuevo.<div class="push-btns"><button type="button" data-push="probar">Probar sonido</button><button type="button" class="sec" data-push="desactivar">Desactivar</button></div>`); $("push-bateria").open=false; return; }
+  pinta("off",`<b>Avisos apagados.</b> Actívalos para que tu celular suene aunque la app esté cerrada.<div class="push-btns"><button type="button" data-push="activar">Activar avisos</button></div>`);
+  banner.hidden=false;
+}
+async function accionPush(a){
+  try{
+    if(a==="activar"){ if(!PUSH.os) return; await PUSH.os.Notifications.requestPermission(); if(Notification.permission==="granted") await PUSH.os.User.PushSubscription.optIn(); }
+    if(a==="desactivar" && PUSH.os) await PUSH.os.User.PushSubscription.optOut();
+    if(a==="probar"){ const r=await navigator.serviceWorker.ready; await r.showNotification("Prueba de Quirio Alerta",{body:"Así te llegarán los avisos. No es una alerta real.",icon:"iconos/icono-v2-192.png",tag:"quirio-prueba",vibrate:[300,120,300],requireInteraction:false}); }
+  }catch(e){ $("push-estado").insertAdjacentHTML("beforeend",`<p class="sub">No se pudo completar: ${String(e.message||e).slice(0,120)}</p>`); }
+  estadoPush();
+}
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-push]"); if(b) accionPush(b.dataset.push); });
+pintarBateria(); estadoPush();
+if(ONESIGNAL_APP_ID && location.hostname==="stefanihc.github.io" && !(esIOS && !instalada())){
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async OS=>{
+    try{
+      await OS.init({ appId:ONESIGNAL_APP_ID, serviceWorkerPath:"quirio-alerta/sw.js", serviceWorkerParam:{scope:"/quirio-alerta/"},
+                      notifyButton:{enable:false}, promptOptions:{autoPrompt:false} });
+      PUSH.os=OS; OS.User.PushSubscription.addEventListener("change",estadoPush); OS.Notifications.addEventListener("permissionChange",estadoPush);
+    }catch(e){ console.log("OneSignal:",e); }
+    estadoPush();
+  });
+  const s=document.createElement("script"); s.src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"; s.defer=true;
+  s.onerror=()=>{ $("push-estado").innerHTML="<b>No se pudo conectar con el servicio de avisos.</b> Revisa tu internet y vuelve a abrir la app."; };
+  document.head.appendChild(s);
+}
 
 /* ---------- Navegación ---------- */
 let mapa=null;
