@@ -420,6 +420,20 @@ nav.abajo a[aria-current="page"]::before{content:"";position:absolute;top:-7px;l
 details.mas{width:100%;margin-top:4px}
 details.mas summary{cursor:pointer;font-weight:800;color:var(--accent);padding:6px 2px}
 details.mas .chips{margin-top:6px}
+
+/* ---- v0.16: cajones del mapa ---- */
+.vistas{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vistas button{display:grid;justify-items:center;gap:3px;border:2px solid var(--line);background:var(--card);border-radius:16px;padding:10px 4px;font-weight:800;font-size:.95rem;color:var(--muted)}
+.vistas button svg{width:26px;height:26px}
+.vistas button[aria-pressed="true"]{color:#fff;border-color:transparent;background:linear-gradient(135deg,#4c1d95,#7e22ce)}
+.vistas button[data-vista="evacuar"][aria-pressed="true"]{background:linear-gradient(135deg,#16a34a,#0f7a3a)}
+.vistas button[data-vista="huaico"][aria-pressed="true"]{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.vista-txt{margin:2px 2px 0;font-weight:700;font-size:.95rem}
+#mapa.gris .leaflet-tile-pane{filter:grayscale(1) brightness(1.1) contrast(.9)}
+.lm-sq{flex:none;width:34px;height:34px;display:block;border-radius:8px;background:color-mix(in srgb,var(--c) 55%,transparent);border:2px solid var(--c)}
+.lm-dot{flex:none;width:34px;height:34px;display:grid;place-items:center}
+.lm-dot::before{content:"";width:16px;height:16px;border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.mas-capas .fondos{margin:6px 0 8px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -615,11 +629,12 @@ details.mas .chips{margin-top:6px}
 
   <!-- MAPA -->
   <main id="v-mapa" class="vista gut" hidden>
-    <div class="fondos" id="fondos" role="group" aria-label="Fondo del mapa">
-      <button type="button" data-f="dron" aria-pressed="true">Foto de dron</button>
-      <button type="button" data-f="satelite" aria-pressed="false">Satélite</button>
-      <button type="button" data-f="calles" aria-pressed="false">Calles</button>
+    <div class="vistas" id="vistas" role="group" aria-label="¿Qué quieres ver en el mapa?">
+      <button type="button" data-vista="evacuar" aria-pressed="true"><svg aria-hidden="true"><use href="#m-zona"/></svg>Evacuar</button>
+      <button type="button" data-vista="huaico" aria-pressed="false"><svg aria-hidden="true"><use href="#i-huaico"/></svg>Huaico</button>
+      <button type="button" data-vista="barrio" aria-pressed="false"><svg aria-hidden="true"><use href="#n-mapa"/></svg>Mi barrio</button>
     </div>
+    <p class="vista-txt" id="vista-txt"></p>
     <div id="mapa" role="region" aria-label="Mapa de peligros y rutas de evacuación de Quirio"></div>
     <button type="button" class="ir-zona" id="ir-zona"><svg aria-hidden="true"><use href="#m-zona"/></svg>Llévame a la zona segura más cercana</button>
     <button type="button" class="gps" id="gps"><svg aria-hidden="true"><use href="#i-gps"/></svg>¿Dónde está mi casa? (GPS)</button>
@@ -630,17 +645,30 @@ details.mas .chips{margin-top:6px}
     <section class="card leyenda-mapa" aria-labelledby="t-puntos">
       <h2 class="tit" id="t-puntos">¿Qué es cada punto?</h2>
       <ul class="lm">
-        <li><span class="pin-c zona"><svg><use href="#m-zona"/></svg></span><div><b>Zona segura</b><span>Lugar alto, fuera del alcance del huaico. Quédate ahí hasta que la sirena dé la cancelación.</span></div></li>
-        <li><span class="pin-c reunion"><svg><use href="#m-gente"/></svg></span><div><b>Punto de reunión</b><span>Ahí se junta tu familia y la brigada antes de subir juntos a la zona segura.</span></div></li>
-        <li><span class="lm-ruta"></span><div><b>Ruta de evacuación</b><span>Las rayas verdes avanzan hacia donde debes ir: lejos del cauce.</span></div></li>
-        <li><span class="lm-peligro"></span><div><b>Zona de huaico</b><span>Por aquí puede bajar el huaico. No te quedes ni cruces cuando llueve.</span></div></li>
-        <li><span class="pin-c sat"><svg><use href="#m-sirena"/></svg></span><div><b>Sirena del SAT</b><span>Suena con los mensajes de Alerta, Alarma y Cancelación.</span></div></li>
-        <li><span class="pin-c comando"><svg><use href="#m-comando"/></svg></span><div><b>Puesto de comando</b><span>Donde autoridades y brigadas coordinan la emergencia.</span></div></li>
+        <li data-v="evacuar huaico barrio"><span class="pin-c zona"><svg><use href="#m-zona"/></svg></span><div><b>Zona segura</b><span>Lugar alto, fuera del alcance del huaico. Quédate ahí hasta que la sirena dé la cancelación.</span></div></li>
+        <li data-v="evacuar barrio"><span class="pin-c reunion"><svg><use href="#m-gente"/></svg></span><div><b>Punto de reunión</b><span>Ahí se junta tu familia y la brigada antes de subir juntos a la zona segura.</span></div></li>
+        <li data-v="evacuar barrio"><span class="lm-ruta"></span><div><b>Ruta de evacuación</b><span>Las rayas verdes avanzan hacia donde debes ir: lejos del cauce.</span></div></li>
+        <li data-v="evacuar huaico"><span class="lm-peligro"></span><div><b>Zona de huaico</b><span>Por aquí puede bajar el huaico. No te quedes ni cruces cuando llueve.</span></div></li>
+        <li data-v="huaico"><span class="lm-sq" style="--c:#e54c00"></span><div><b>Huaico 2023 (Yaku)</b><span>Por donde bajó el huaico de marzo de 2023.</span></div></li>
+        <li data-v="huaico"><span class="lm-sq" style="--c:#ffaa00"></span><div><b>Cárcavas</b><span>Zanjas en el cerro que se activan con la lluvia y llevan lodo y piedras.</span></div></li>
+        <li data-v="huaico"><span class="lm-sq" style="--c:#8d5a2b"></span><div><b>Caída de rocas</b><span>Laderas donde pueden caer piedras. No te pares debajo cuando llueve.</span></div></li>
+        <li data-v="huaico"><span class="lm-sq" style="--c:#2b7bd6"></span><div><b>Inundación</b><span>Zonas donde se empoza el agua y el lodo.</span></div></li>
+        <li data-v="huaico"><span class="lm-dot" style="--c:#111"></span><div><b>Punto crítico</b><span>Lugar del cauce donde el huaico puede desbordarse.</span></div></li>
+        <li data-v="huaico"><span class="lm-dot" style="--c:#9b1c1c"></span><div><b>Barrera dinámica</b><span>Malla que atrapa piedras. Hoy están llenas (colmatadas).</span></div></li>
+        <li data-v="barrio"><span class="pin-c sat"><svg><use href="#m-sirena"/></svg></span><div><b>Sirena del SAT</b><span>Suena con los mensajes de Alerta, Alarma y Cancelación.</span></div></li>
+        <li data-v="barrio"><span class="pin-c comando"><svg><use href="#m-comando"/></svg></span><div><b>Puesto de comando</b><span>Donde autoridades y brigadas coordinan la emergencia.</span></div></li>
+        <li data-v="barrio"><span class="lm-dot" style="--c:#f59e0b"></span><div><b>Lugares de referencia</b><span>Colegios, losas y locales del barrio para ubicarte.</span></div></li>
       </ul>
       <p class="sub">Toca cualquier punto del mapa para ver qué es y cómo llegar a pie.</p>
     </section>
-    <h2 class="tit" style="margin-top:4px">Mostrar u ocultar en el mapa</h2>
-    <div class="chips" id="chips"></div>
+    <details class="mas mas-capas"><summary>Armar mi propio mapa (más capas)</summary>
+      <div class="fondos" id="fondos" role="group" aria-label="Fondo del mapa">
+        <button type="button" data-f="dron" aria-pressed="true">Foto de dron</button>
+        <button type="button" data-f="satelite" aria-pressed="false">Satélite</button>
+        <button type="button" data-f="calles" aria-pressed="false">Calles</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </details>
   </main>
 
   <!-- MI PLAN -->
@@ -717,7 +745,7 @@ details.mas .chips{margin-top:6px}
         <li>Mensajes de sirena y puntos críticos: SAT comunitario de Quirio, informe de implementación 2023, tabla 5. Fotos del SAT comunitario de Quirio (informe de diseño, 2023), usadas con permiso del equipo KNOW / GRACC.</li><li>Íconos de menú: Phosphor Icons (licencia MIT). Logo, paisaje e ilustraciones de “Haz esto”: dibujo propio del proyecto.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.15 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.16 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
     </section>
   </main>
 </div>
@@ -1050,12 +1078,23 @@ function abrirMapa(){
     onEachFeature:(f,l)=>{const p=f.properties; l.bindPopup(()=>`<b>${p._nombre||n}</b>`+(QUE[k]?`<br>${QUE[k]}`:"")+(p.id?`<br><small>${p.id}</small>`:"")+(p.referencia?`<br>${p.referencia}`:"")+(p.descripcion?`<br><small>${p.descripcion}</small>`:"")+(p.Name_C?`<br>${p.Name_C}`:"")+(p.estado_2026?`<br>${p.estado_2026}`:"")+(["zona","reunion","comando"].includes(k)?`<br>${llegar(l.getLatLng())}`:""));}}).addTo(m);
   m.fitBounds(L.featureGroup(Object.values(g)).getBounds(),{padding:[12,12]});
   ponerFondo("dron");
-  const APAGADAS=["colegio","sat","critico","barrera","activacion_carcavas","propenso_caida_rocas"];   /* menos ruido al abrir */
-  APAGADAS.forEach(k=>g[k]&&m.removeLayer(g[k]));
+  const APAGADAS=[];
   const chip=(k,n,c,cl)=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${!APAGADAS.includes(k)}"><i class="${cl}" style="--c:${c}"></i>${n}</button>`;
-  const BASICAS=["ruta","zona","reunion","flujo_huaico","flujo_2023_Yaku"];
   const todos=[["ruta","Rutas","#16a34a","ln"],...Object.entries(PTS).map(([k,[n,c]])=>[k,n,c,""]),...Object.entries(PEL).map(([k,[n,c]])=>[k,n,c,"sq"])];
-  $("chips").innerHTML = todos.filter(x=>BASICAS.includes(x[0])).map(x=>chip(...x)).join("")+`<details class="mas"><summary>Más capas</summary><div class="chips">${todos.filter(x=>!BASICAS.includes(x[0])).map(x=>chip(...x)).join("")}</div></details>`;
+  $("chips").innerHTML = todos.map(x=>chip(...x)).join("");
+  /* Tres cajones: cada uno muestra solo lo que responde a una pregunta */
+  const VISTAS={
+    evacuar:{fondo:"dron",capas:["ruta","zona","reunion","flujo_huaico"],txt:"¿A dónde voy? Sigue las rayas verdes hasta la zona segura (banderín verde). Lo rojo es por donde baja el huaico: aléjate de ahí."},
+    huaico:{fondo:"dron",gris:true,capas:["flujo_huaico","flujo_2023_Yaku","activacion_carcavas","propenso_caida_rocas","inundacion","critico","barrera","zona"],txt:"¿Por dónde baja el huaico? Foto en gris para que resalten los peligros: el rojo es la zona de huaico y el naranja, por donde bajó en 2023."},
+    barrio:{fondo:"calles",capas:["ruta","zona","reunion","comando","sat","colegio"],txt:"¿Dónde queda cada cosa? Calles con nombres, sirenas, puesto de comando y lugares de referencia del barrio."}};
+  ponerVista = v => { const V=VISTAS[v]; errores=0; ponerFondo(V.fondo); $("mapa").classList.toggle("gris",!!V.gris);
+    todos.forEach(([k])=>{ const on=V.capas.includes(k); if(!g[k]) return; on?g[k].addTo(m):m.removeLayer(g[k]); const c=document.querySelector(`.chip[data-k="${k}"]`); c&&c.setAttribute("aria-pressed",String(on)); });
+    V.capas.includes("ruta") ? (rutaBorde.addTo(m), g.ruta.bringToFront()) : m.removeLayer(rutaBorde);
+    document.querySelectorAll("#vistas button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.vista===v)));
+    $("vista-txt").textContent=V.txt;
+    document.querySelectorAll(".lm li").forEach(li=>li.hidden=!(li.dataset.v||"").split(" ").includes(v)); };
+  $("vistas").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) ponerVista(b.dataset.vista); });
+  ponerVista("evacuar");
   $("chips").addEventListener("click",e=>{const b=e.target.closest(".chip"); if(!b) return; const on=b.getAttribute("aria-pressed")!=="true"; b.setAttribute("aria-pressed",String(on)); on?g[b.dataset.k].addTo(m):m.removeLayer(g[b.dataset.k]); if(b.dataset.k==="ruta") on?rutaBorde.addTo(m)&&g.ruta.bringToFront():m.removeLayer(rutaBorde);});
   const dentro=(pt,r)=>{let d=false;for(let i=0,j=r.length-1;i<r.length;j=i++){const[xi,yi]=r[i],[xj,yj]=r[j];if(((yi>pt[1])!==(yj>pt[1]))&&(pt[0]<(xj-xi)*(pt[1]-yi)/(yj-yi)+xi))d=!d;}return d;};
   const enPol=(ll,f)=>{const pt=[ll.lng,ll.lat],gm=f.geometry,ps=gm.type==="Polygon"?[gm.coordinates]:gm.coordinates;return ps.some(p=>dentro(pt,p[0])&&!p.slice(1).some(h=>dentro(pt,h)));};
@@ -1073,7 +1112,7 @@ function abrirMapa(){
   m.on("preclick",e=>ubicar(e.latlng));
   zonaCercana = ll => { const z=cerca(ll,"zona"); return z; };
 }
-let ubicar = null, zonaCercana = null;
+let ubicar = null, zonaCercana = null, ponerVista = null;
 $("ir-zona").addEventListener("click",()=>{
   const msg=t=>{ $("mio-txt").innerHTML=t; $("mio").scrollIntoView({behavior:"smooth",block:"center"}); };
   if(!navigator.geolocation){ msg("Este equipo no tiene GPS. Toca el mapa donde estás."); return; }

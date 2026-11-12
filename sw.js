@@ -1,5 +1,5 @@
 // Quirio Alerta: funciona sin internet con lo último que vio.
-const CACHE = "quirio-v13";
+const CACHE = "quirio-v14";
 const TESELAS = "quirio-teselas-v1";       // mapa de calles/satélite que la persona ya miró
 const MAX_TESELAS = 1500;                   // ~30 MB como máximo
 const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-v2-192.png", "iconos/icono-v2-512.png", "iconos/icono-v2-maskable.png",
