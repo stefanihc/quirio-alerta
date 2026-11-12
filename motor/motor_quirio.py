@@ -64,6 +64,20 @@ def pronostico():
     return [{"fecha": f, "mm": round(mm or 0, 1)} for f, mm in zip(d["time"], d["precipitation_sum"])][1:]
 
 
+def tiempo_ahora():
+    """Tiempo actual en Quirio (modelo de Open-Meteo, no una estación): para que la app lo muestre aunque el celular no pueda pedirlo."""
+    url = ("https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s"
+           "&current=temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m"
+           "&daily=precipitation_probability_max&forecast_days=1&timezone=America%%2FLima" % (LAT, LON))
+    with urlopen(url, timeout=30) as r:
+        d = json.load(r)
+    c = d["current"]
+    prob = (d.get("daily") or {}).get("precipitation_probability_max") or [None]
+    return {"hora": c["time"] + "-05:00", "temp_c": c["temperature_2m"], "humedad": c["relative_humidity_2m"],
+            "nubes": c["cloud_cover"], "viento_kmh": c["wind_speed_10m"], "prob_lluvia_hoy": prob[0],
+            "fuente": "Open-Meteo (modelo)"}
+
+
 def color(p3, antes=None):
     """Color por lluvia de 3 días. Para BAJAR de nivel pide 1 mm menos que el umbral (histéresis),
     así el color no salta de ida y vuelta cada hora cuando la lluvia está justo en el límite."""
@@ -103,7 +117,7 @@ def avisos(dias, p3, k, pron):
                   "La lluvia de estos días ya es alta. El cerro está cargado de agua. Ponte la mochila y ten clara tu ruta. Si el COE lo indica, sal."))
     elif k == "amarillo":
         a.append(("amarillo", "Prepárate",
-                  "Está lloviendo en la parte alta de Quirio. Revisa tu mochila y ten tus documentos a la mano."))
+                  "Está lloviendo en la parte alta de Quirio. Revisa tu mochila, ten tus documentos a la mano y escucha la radio y las noticias locales."))
     if lluviosos >= 2:
         a.append((k, f"{lluviosos} días seguidos de lluvia",
                   "Con varios días de lluvia el suelo se empapa y el cerro se suelta más fácil. Repasa tu plan con tu familia."))
@@ -169,6 +183,10 @@ if __name__ == "__main__":
         "umbrales_mm": {"amarillo": AMARILLO, "naranja": NARANJA},
         **extra,
     }
+    try:
+        estado["tiempo_ahora"] = tiempo_ahora()
+    except Exception as e:
+        print("Sin tiempo actual:", e)
     # ¿Qué es nuevo respecto a la corrida anterior? Solo eso se notifica (no se repite cada hora).
     titulos_antes = {x["titulo"] for x in previo.get("avisos", [])}
     nuevos = [x for x in estado["avisos"] if x["titulo"] not in titulos_antes]
