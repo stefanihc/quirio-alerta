@@ -29,6 +29,8 @@ jobs:
           QUIRIO_SALIDA: estado.json
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CANAL: ${{ secrets.TELEGRAM_CANAL }}
+          ONESIGNAL_APP_ID: ${{ secrets.ONESIGNAL_APP_ID }}
+          ONESIGNAL_API_KEY: ${{ secrets.ONESIGNAL_API_KEY }}
       - name: Guardar estado.json
         run: |
           git config user.name "motor-quirio"
