@@ -1,7 +1,7 @@
 // Quirio Alerta: funciona sin internet con lo último que vio.
 // Avisos en el celular (OneSignal). Si no carga (sin internet o bloqueado), la app sigue funcionando igual.
 try { importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js"); } catch (e) {}
-const CACHE = "quirio-v15";
+const CACHE = "quirio-v16";
 const TESELAS = "quirio-teselas-v1";       // mapa de calles/satélite que la persona ya miró
 const MAX_TESELAS = 1500;                   // ~30 MB como máximo
 const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-v2-192.png", "iconos/icono-v2-512.png", "iconos/icono-v2-maskable.png",
