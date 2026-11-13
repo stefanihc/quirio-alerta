@@ -110,7 +110,9 @@ def avisar_celulares(nuevos, k, p3):
     Robusto: 3 intentos con espera creciente, llave anti-duplicado (si GitHub repite la corrida no llega dos veces),
     caducidad de 3 h (un aviso viejo no debe llegar tarde) y un solo aviso visible a la vez (el nuevo reemplaza al anterior).
     Nunca detiene al motor: si falla, solo lo anota en el registro."""
-    app_id, clave = os.environ.get("ONESIGNAL_APP_ID"), os.environ.get("ONESIGNAL_API_KEY")
+    # El App ID es público (también está en la app); la clave secreta solo vive en los secrets de GitHub.
+    app_id = os.environ.get("ONESIGNAL_APP_ID") or "a4c2aefa-f247-4bb6-8c24-efa4c8f7efa7"
+    clave = os.environ.get("ONESIGNAL_API_KEY")
     if not (app_id and clave) or not nuevos:
         return
     import hashlib
