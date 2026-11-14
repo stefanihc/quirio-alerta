@@ -155,6 +155,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sirena q{font-weight:700;quotes:"“" "”"}
 .fuentes{font-size:.8rem;color:var(--muted)}
 .fuentes ol{margin:6px 0 0;padding-left:1.2em;display:grid;gap:3px}
+.legal-pie{margin-top:4px;font-size:.72rem;opacity:.85}
+.legal{margin-top:4px;font-size:.72rem}.legal summary{cursor:pointer;text-decoration:underline;opacity:.85;list-style:none}.legal summary::-webkit-details-marker{display:none}.legal p{margin:6px 0 0}
 /* Navegación inferior */
 nav.abajo{position:fixed;left:0;right:0;bottom:0;z-index:1000;background:var(--card);border-top:1px solid var(--line);
   padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
@@ -725,7 +727,7 @@ details.otras{margin-top:6px}
         <div id="push-pasos"></div>
         <details class="otras"><summary>Ver pasos de otras marcas</summary><div id="push-otras"></div></details>
       </details>
-      <p class="sub">Los avisos pueden demorar si tu celular ahorra batería o no tiene señal. Un aviso con más de 3 horas ya no llega: abre la app para ver el estado. <b>La sirena del SAT y la brigada siguen siendo la alerta principal.</b> El servicio OneSignal solo recibe un código anónimo de tu celular, no tu nombre ni tu número.</p>
+      <p class="sub">Los avisos pueden demorar si tu celular ahorra batería o no tiene señal. Un aviso con más de 3 horas ya no llega: abre la app para ver el estado. <b>La sirena del SAT y la brigada siguen siendo la alerta principal.</b> El servicio OneSignal (servidores en EE. UU.) solo recibe un código de tu celular, el tipo de equipo y la conexión, para poder enviarte avisos; nunca tu nombre, tu número ni tu ubicación. Puedes apagarlos cuando quieras.</p>
     </section>
     <section class="card" aria-labelledby="t-contactos">
       <h2 class="tit" id="t-contactos">Mis contactos de confianza</h2>
@@ -772,7 +774,7 @@ details.otras{margin-top:6px}
     <section class="card fuentes">
       <b>De dónde salen los datos</b>
       <ol>
-        <li>Lluvia en vivo: GPM IMERG Early V07 (NASA), cada 30 min, con unas 4 h de retraso. Pronóstico: ECMWF IFS 0,25° vía Open-Meteo. El tiempo de ahora (temperatura, humedad, nubes, viento) es de un modelo de Open-Meteo, no de una estación en Quirio. Intensidad: llovizna/ligera &lt; 2,5 mm/h, moderada 2,5–7,6 mm/h, fuerte &gt; 7,6 mm/h (Glosario de la AMS).</li><li>Simulacro: GPM IMERG V07 final, 15–23 de marzo de 2015.</li>
+        <li>Lluvia en vivo: GPM IMERG Early V07 (NASA), cada 30 min, con unas 4 h de retraso. Pronóstico: ECMWF IFS 0,25° vía Open-Meteo.com (CC BY 4.0). El tiempo de ahora (temperatura, humedad, nubes, viento) es de un modelo de Open-Meteo, no de una estación en Quirio. Intensidad: llovizna/ligera &lt; 2,5 mm/h, moderada 2,5–7,6 mm/h, fuerte &gt; 7,6 mm/h (Glosario de la AMS).</li><li>Simulacro: GPM IMERG V07 final, 15–23 de marzo de 2015.</li>
         <li>Umbrales preliminares (lluvia de 3 días): en vivo, con GPM Early, amarillo ≥ 10 mm y naranja ≥ 17 mm (calibrados con 2023–2025, porque desde 2023 Early marca el doble que Final); en la demo, con GPM Final, 5 y 8 mm, que avisan 4 y 3 de los 5 huaicos de 2009–2017. Se revisarán cada temporada y con datos SENAMHI. El pronóstico (ECMWF) solo da avisos informativos: no cambia el color.</li>
         <li>Huaico del 23 de marzo de 2015 en Quirio: Núñez et al. (2015), INGEMMET A6680.</li>
         <li>Rutas, zonas seguras, puntos de reunión, colegios, puesto de comando y flujo de 2023: paquetes ArcGIS KNOW / GRACC 2026 (vía Diego Miranda).</li>
@@ -781,7 +783,13 @@ details.otras{margin-top:6px}
         <li>Escenarios de huayco (v2, en revisión): huellas por evento del mapa geomorfológico por procesos de la UNMSM (2017, 2023, 2015, 1943 y depósitos antiguos), agrupadas según la clasificación por magnitud de H. O'Connor (tipos I–IV). Contexto: INGEMMET (2015). Muestra hasta dónde llegaron los huaicos, no una probabilidad exacta, y no reemplaza la evaluación de riesgo oficial.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.19 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.20 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p class="legal-pie">Desarrollo: Estefani Herrera Cerrón (UNI-FIGMM). Apoyo: Diego Miranda (GRD-UNI) y Samuel Santana (análisis de datos). Código: licencia MIT · Contenidos: CC BY-NC 4.0.</p>
+      <details class="legal"><summary>Términos de uso y privacidad</summary>
+        <p><b>Herramienta complementaria.</b> Quirio Alerta es un proyecto de investigación universitario y gratuito. No reemplaza las alertas oficiales de INDECI, SENAMHI ni de la Municipalidad de Lurigancho-Chosica, ni la sirena del SAT comunitario. Los datos de satélite pueden llegar con retraso, fallar o no ver tormentas pequeñas: ante la duda, sigue a la brigada y evacúa.</p>
+        <p><b>Tus datos.</b> La app no pide registro. Tu casa, tu plan familiar y tus preferencias se guardan solo en tu celular; puedes borrarlos limpiando los datos del navegador o desinstalando la app. Si activas los avisos, el servicio OneSignal (EE. UU.) guarda un código de tu celular, el tipo de equipo y la conexión, solo para enviarte alertas de Quirio, mientras los tengas activos. No vendemos ni compartimos esos datos con nadie más.</p>
+        <p><b>Tus derechos.</b> Puedes apagar los avisos cuando quieras desde la app o desde el navegador. Para pedir información o que borremos tu suscripción (Ley 29733 de Protección de Datos Personales), escribe al equipo del proyecto en la Facultad de Ingeniería Geológica, Minera y Metalúrgica de la UNI.</p>
+      </details>
     </section>
   </main>
 </div>
