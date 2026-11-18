@@ -1,7 +1,7 @@
 // Quirio Alerta: funciona sin internet con lo último que vio.
 // Avisos en el celular (OneSignal). Si no carga (sin internet o bloqueado), la app sigue funcionando igual.
 try { importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js"); } catch (e) {}
-const CACHE = "quirio-v24";
+const CACHE = "quirio-v25";
 const TESELAS = "quirio-teselas-v1";       // mapa de calles/satélite que la persona ya miró
 const MAX_TESELAS = 1500;                   // ~30 MB como máximo
 const BASE = ["./", "index.html", "manifest.webmanifest", "iconos/icono-v2-192.png", "iconos/icono-v2-512.png", "iconos/icono-v2-maskable.png", "escenarios.json",
@@ -26,6 +26,12 @@ self.addEventListener("fetch", e => {
         .catch(() => guardada);
       return guardada || red;
     })));
+    return;
+  }
+  if (e.request.mode === "navigate" || url.pathname.endsWith("/") || url.pathname.endsWith("index.html")) {
+    // la app: primero internet (así cada cambio llega al instante); sin internet, la última guardada
+    e.respondWith(fetch(e.request).then(r => { if (r.ok) { const c = r.clone(); caches.open(CACHE).then(k => k.put("index.html", c)); } return r; })
+      .catch(() => caches.match(e.request).then(r => r || caches.match("index.html"))));
     return;
   }
   e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
