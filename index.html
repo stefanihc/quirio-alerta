@@ -507,6 +507,21 @@ body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!i
 .top .oir svg{width:24px;height:24px}
 .top h1{font-size:1.25rem!important}
 #bv-saltar{border:0;background:transparent;color:var(--muted);font-weight:700;padding:8px}
+
+/* ---- v0.24: computadora (pantalla ancha) ---- */
+@media (min-width:900px){
+  .app{max-width:1120px}
+  #v-ahora:not([hidden]),#v-plan:not([hidden]){display:block;columns:2;column-gap:18px}
+  #v-ahora > *,#v-plan > *{break-inside:avoid;display:block;margin-top:0;margin-bottom:16px}
+  #v-ahora > .escala{display:grid}
+  #v-mapa:not([hidden]){display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);column-gap:18px;align-items:start;grid-auto-flow:row dense}
+  #v-mapa > #vistas,#v-mapa > #vista-txt{grid-column:1/-1}
+  #v-mapa > #mapa{grid-column:1;grid-row:span 6;height:calc(100vh - 260px);min-height:480px;max-height:none}
+  #v-mapa > :not(#vistas):not(#vista-txt):not(#mapa){grid-column:2}
+  nav.abajo .in{max-width:420px}
+  .bv-caja{margin-bottom:auto;margin-top:auto}
+  .bienvenida{place-items:center}
+}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -852,7 +867,7 @@ body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!i
         <li>Escenarios de huayco (v2, en revisión): huellas por evento del mapa geomorfológico por procesos de la UNMSM (2017, 2023, 2015, 1943 y depósitos antiguos), agrupadas según la clasificación por magnitud de H. O'Connor (tipos I–IV). Contexto: INGEMMET (2015). Muestra hasta dónde llegaron los huaicos, no una probabilidad exacta, y no reemplaza la evaluación de riesgo oficial.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.23 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.24 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
       <p class="legal-pie">Desarrollo: Estefani Herrera Cerrón (UNI-FIGMM). Apoyo: Diego Miranda (GRD-UNI) y Samuel Santana (análisis de datos). Código: licencia MIT · Contenidos: CC BY-NC 4.0.</p>
       <details class="legal"><summary>Términos de uso y privacidad</summary>
         <p><b>Herramienta complementaria.</b> Quirio Alerta es un proyecto de investigación universitario y gratuito. No reemplaza las alertas oficiales de INDECI, SENAMHI ni de la Municipalidad de Lurigancho-Chosica, ni la sirena del SAT comunitario. Los datos de satélite pueden llegar con retraso, fallar o no ver tormentas pequeñas: ante la duda, sigue a la brigada y evacúa.</p>
