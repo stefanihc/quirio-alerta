@@ -479,6 +479,34 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
 .top .logo{width:40px;height:40px}
 .top .oir{padding:6px 10px}
 .reloj .rl-hora small{font-size:.38em;font-weight:800;margin-left:4px;letter-spacing:0}
+
+/* ---- v0.23: pantalla más simple, ejemplo arriba, bienvenida ---- */
+nav.abajo .in{grid-template-columns:repeat(3,1fr)!important}
+.ejemplo-btn{text-decoration:none}
+.top .campana + .campana{margin-left:6px}
+.top .ejemplo-btn{margin-left:auto}
+details.mas{margin-top:10px}
+details.mas > summary{cursor:pointer;list-style:none;font-weight:800;color:var(--accent);padding:8px 0;display:flex;align-items:center;gap:6px}
+details.mas > summary::-webkit-details-marker{display:none}
+details.mas > summary::after{content:"▾";font-size:.9em;transition:transform .2s}
+details.mas[open] > summary::after{transform:rotate(180deg)}
+details.mas-no{margin-top:0}
+details.mas-no > summary{color:var(--ink);padding:0}
+details.mas-no > summary .tit{margin:0}
+.cinta.ejemplo{position:sticky;top:64px;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;background:#fde68a;border:2px solid #b45309}
+.cinta.ejemplo .salir{background:#1f1433;color:#fff;text-decoration:none;border-radius:10px;padding:6px 12px;font-weight:800;font-size:.9rem;letter-spacing:0}
+.bienvenida{position:fixed;inset:0;z-index:2000;background:rgba(15,10,30,.55);display:grid;place-items:end center;padding:16px}
+.bienvenida[hidden]{display:none}
+.bv-caja{width:min(440px,100%);background:var(--card);color:var(--ink);border-radius:20px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);margin-bottom:calc(var(--nav-h) + 8px)}
+.bv-paso{font-size:.8rem;font-weight:800;color:var(--muted);margin:0 0 4px}
+.bv-caja h2{font-size:1.3rem;font-weight:800;margin:0 0 6px}
+.bv-caja p{margin:0;font-size:1rem;line-height:1.45}
+.bv-bot{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!important}
+.top .oir{width:42px;height:42px;padding:0!important;border-radius:50%;justify-content:center;font-size:0;gap:0;margin-left:6px;flex:none}
+.top .oir svg{width:24px;height:24px}
+.top h1{font-size:1.25rem!important}
+#bv-saltar{border:0;background:transparent;color:var(--muted);font-weight:700;padding:8px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -535,6 +563,7 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
   <header class="top gut">
     <svg class="logo" width="46" height="46" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lq-f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a0b3b"/><stop offset=".58" stop-color="#5b21b6"/><stop offset="1" stop-color="#c026d3"/></linearGradient><linearGradient id="lq-i" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2a867"/><stop offset="1" stop-color="#9c6a3c"/></linearGradient><linearGradient id="lq-d" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c78e"/><stop offset="1" stop-color="#b98149"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lq-f)"/><path d="M32 6.5 L42.5 24 H21.5Z" fill="#ffc53d" stroke="#ffc53d" stroke-width="3" stroke-linejoin="round"/><path d="M32 12.5v5.5" stroke="#3a2600" stroke-width="2.8" stroke-linecap="round"/><circle cx="32" cy="21.3" r="1.5" fill="#3a2600"/><path d="M0 40 L15 22 L22 29 L31 36 L28 64 H0Z" fill="url(#lq-i)"/><path d="M33 36 L42 25 L50 19 L64 34 V64 H36Z" fill="url(#lq-d)"/><path d="M31 36 L33 36 L36 64 H28Z" fill="#7a4e2a" opacity=".35"/><path d="M0 64 V54 Q32 45 64 54 V64Z" fill="#f6e3c2"/><path d="M32 35 C29 41 35 44 31.5 49 S 28 57 33 64" fill="none" stroke="#5fe0e6" stroke-width="3.4" stroke-linecap="round"/><path d="M32 35 C29 41 35 44 31.5 49 S 28 57 33 64" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity=".8"/><rect x="12" y="53" width="6" height="5" rx="1" fill="#c8553d"/><rect x="44" y="52" width="6" height="5" rx="1" fill="#3d7ea6"/><rect x="51" y="55" width="5" height="4" rx="1" fill="#ffffff"/></svg>
     <h1>Quirio Alerta<small>Quirio, Chosica</small></h1>
+    <a class="campana ejemplo-btn" id="ejemplo-btn" href="#simulacro" aria-label="Ver un ejemplo de cómo avisa la app"><svg><use href="#n-sim"/></svg></a>
     <button class="campana" id="campana" type="button" aria-label="Avisos" aria-expanded="false" aria-controls="buzon"><svg><use href="#n-avisos"/></svg><span class="badge" id="badge" hidden></span></button>
     <button class="oir" id="oir" type="button" aria-label="Escuchar lo que dice la pantalla"><svg><use href="#i-parlante"/></svg>Escuchar</button>
   </header>
@@ -542,6 +571,14 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
     <div class="bz-h"><b>Avisos</b><button type="button" id="bz-x" aria-label="Cerrar avisos">Cerrar</button></div>
     <div class="avisos" id="avisos"></div>
     <p class="bz-pie">La app te avisa solo cuando cambia el nivel. Si no hay avisos nuevos, todo sigue tranquilo.</p>
+  </div>
+  <div class="bienvenida" id="bienvenida" role="dialog" aria-modal="true" aria-labelledby="bv-t" hidden>
+    <div class="bv-caja">
+      <p class="bv-paso" id="bv-paso">1 de 3</p>
+      <h2 id="bv-t"></h2>
+      <p id="bv-p"></p>
+      <div class="bv-bot"><button type="button" id="bv-saltar">Saltar</button><button type="button" id="bv-sig" class="in-si">Siguiente</button></div>
+    </div>
   </div>
   <div class="instala gut" id="instala" hidden>
     <div class="in-txt"><b>Instala Quirio Alerta</b><span id="in-pasos">Queda como una app más en tu celular y funciona sin señal.</span></div>
@@ -627,6 +664,7 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
         <div class="m-esc" aria-hidden="true"><span style="left:0">0</span><span id="m-u1">10 · amarillo</span><span id="m-u2">17 · naranja</span></div>
         <p class="m-falta" id="m-falta"></p>
       </div>
+      <details class="mas"><summary>Ver más sobre la lluvia</summary>
       <div class="lluvia" id="barras" role="img" aria-label="Lluvia de los últimos días y pronóstico"></div>
       <p class="leyenda"><i class="ob"></i>medido por satélite <i class="fu"></i>pronóstico</p>
       <div class="cifras c4">
@@ -637,6 +675,7 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
       </div>
       <div class="tiempo" id="tiempo" hidden></div>
       <p class="sub" id="c-fuente">Medido por satélite (GPM, NASA) en la parte alta de la quebrada. La app lo lee sola: no tienes que ingresar nada.</p>
+      </details>
     </section>
 
     <section class="card" aria-labelledby="t-hacer">
@@ -644,18 +683,19 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
       <div class="tiles" id="si"></div>
     </section>
     <section class="card" aria-labelledby="t-no">
-      <h2 class="tit" id="t-no">No hagas esto</h2>
+      <details class="mas mas-no"><summary><span class="tit" id="t-no">No hagas esto</span></summary>
       <div class="tiles" id="no"></div>
+      </details>
     </section>
   </main>
 
   <!-- AVISOS -->
   <!-- SIMULACRO -->
   <main id="v-simulacro" class="vista gut" hidden>
-    <div class="cinta" role="note"><b>SIMULACRO</b> · Esto NO está pasando ahora</div>
+    <div class="cinta ejemplo" role="note"><span><b>EJEMPLO</b> · Esto NO está pasando ahora</span><a href="#ahora" class="salir">Salir</a></div>
     <section class="card">
-      <h2 class="tit">¿Cómo habría avisado la app en 2015?</h2>
-      <p class="sub">Lluvia real medida por satélite del 17 al 23 de marzo de 2015, antes del huaico del 23 de marzo. Toca un día o ▶ para verlo paso a paso.</p>
+      <h2 class="tit">Así habría avisado la app en marzo de 2015</h2>
+      <p class="sub">Lluvia real medida por satélite del 17 al 23 de marzo de 2015, antes del huaico del 23 de marzo. Se reproduce solo, día por día. Toca un día para verlo de nuevo.</p>
       <div class="ctl">
         <button type="button" id="play" aria-label="Reproducir"><svg><use href="#i-play"/></svg></button>
         <div class="dias" id="dias"></div>
@@ -812,7 +852,7 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
         <li>Escenarios de huayco (v2, en revisión): huellas por evento del mapa geomorfológico por procesos de la UNMSM (2017, 2023, 2015, 1943 y depósitos antiguos), agrupadas según la clasificación por magnitud de H. O'Connor (tipos I–IV). Contexto: INGEMMET (2015). Muestra hasta dónde llegaron los huaicos, no una probabilidad exacta, y no reemplaza la evaluación de riesgo oficial.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.22 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.23 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
       <p class="legal-pie">Desarrollo: Estefani Herrera Cerrón (UNI-FIGMM). Apoyo: Diego Miranda (GRD-UNI) y Samuel Santana (análisis de datos). Código: licencia MIT · Contenidos: CC BY-NC 4.0.</p>
       <details class="legal"><summary>Términos de uso y privacidad</summary>
         <p><b>Herramienta complementaria.</b> Quirio Alerta es un proyecto de investigación universitario y gratuito. No reemplaza las alertas oficiales de INDECI, SENAMHI ni de la Municipalidad de Lurigancho-Chosica, ni la sirena del SAT comunitario. Los datos de satélite pueden llegar con retraso, fallar o no ver tormentas pequeñas: ante la duda, sigue a la brigada y evacúa.</p>
@@ -828,7 +868,6 @@ nav.abajo .in{grid-template-columns:repeat(4,1fr)}
     <a href="#ahora" data-v="ahora"><svg><use href="#n-ahora"/></svg>Ahora</a>
     <a href="#mapa" data-v="mapa"><svg><use href="#n-mapa"/></svg>Mapa</a>
     <a href="#plan" data-v="plan"><svg><use href="#n-plan"/></svg>Mi plan</a>
-    <a href="#simulacro" data-v="simulacro"><svg><use href="#n-sim"/></svg>Simulacro</a>
   </div>
 </nav>
 <div id="toast-slot"></div>
@@ -1037,7 +1076,7 @@ $("oir").addEventListener("click",()=>{ const v=location.hash.slice(1)||"ahora";
   else if(v==="ahora"||v==="simulacro"){ const N=NIV[v==="ahora"?(VIVO&&ORDEN.includes(VIVO.color)?VIVO.color:"verde"):calc(dia).k]; t=`${N.palabra}. ${N.frase} Haz esto: ${N.si.map(x=>x[1]).join(". ")}. No hagas esto: ${N.no.map(x=>x[1]).join(". ")}.`+(["naranja","rojo"].includes(v==="ahora"?(VIVO&&VIVO.color):calc(dia).k)?" Ahorra batería: baja el brillo y activa el ahorro de energía.":""); }
   else if(!$("buzon").hidden){ t=[...document.querySelectorAll(".aviso")].slice(0,2).map(a=>a.querySelector("b").textContent+". "+a.querySelector("p").textContent).join(" "); }
   else if(v==="mapa"){ t=$("mio-txt").textContent; } else { t="Revisa tu mochila de emergencia y guarda los teléfonos: 115 Defensa Civil, 116 Bomberos, 105 Policía, 106 ambulancia."; }
-  if(!hablar(t)) $("oir").textContent="Sin voz en este equipo"; });
+  if(!hablar(t)) toast("Este equipo no tiene voz para leer la pantalla."); });
 document.addEventListener("click",e=>{ const x=e.target.closest("[data-hablar]"); if(x) hablar(x.dataset.hablar); });
 
 /* ---------- Mi plan ---------- */
@@ -1095,6 +1134,17 @@ $("alarma-btn").addEventListener("click",alarma); $("alarma-stop").addEventListe
 let EN_PELIGRO=false;
 function ordenarAyuda(){ const a=$("ayuda"), v=$("v-ahora"), arriba=(VIVO&&VIVO.color==="rojo")||EN_PELIGRO;
   a.classList.toggle("arriba",arriba); if(arriba) $("escala").after(a); else v.appendChild(a); }
+
+/* ---------- Bienvenida (solo la primera vez) ---------- */
+const BV=[["El color te dice qué hacer","Verde es tranquilo. Si cambia a amarillo o naranja, la pantalla te dice qué hacer. La app revisa la lluvia sola cada 20 minutos."],
+  ["Tus avisos, en la campanita","Arriba a la derecha está la campanita. Ahí se guardan los avisos. Activa las notificaciones para que te lleguen al celular."],
+  ["Ubica tu casa en el Mapa","En Mapa toca “¿Dónde está mi casa?”. La app te dice si estás en zona de huaico y cómo llegar a la zona segura."]];
+let bvI=0;
+function pintarBV(){ $("bv-paso").textContent=`${bvI+1} de ${BV.length}`; $("bv-t").textContent=BV[bvI][0]; $("bv-p").textContent=BV[bvI][1]; $("bv-sig").textContent=bvI===BV.length-1?"Entendido":"Siguiente"; }
+function cerrarBV(){ $("bienvenida").hidden=true; try{ localStorage.setItem("quirio-bienvenida","1"); }catch(e){} }
+$("bv-sig").addEventListener("click",()=>{ if(bvI<BV.length-1){ bvI++; pintarBV(); } else cerrarBV(); });
+$("bv-saltar").addEventListener("click",cerrarBV);
+(function(){ let vista=false; try{ vista=!!localStorage.getItem("quirio-bienvenida"); }catch(e){ vista=true; } if(!vista){ pintarBV(); $("bienvenida").hidden=false; } })();
 
 /* ---------- Buzón de avisos (campanita) ---------- */
 let AV_LLAVE="";
@@ -1205,10 +1255,11 @@ const ESC_TXT=["Tu casa está fuera de las huellas de huaicos registradas. Igual
 /* ---------- Navegación ---------- */
 let mapa=null;
 function ir(){ let v=location.hash.slice(1); if(v==="avisos"){ abrirBuzon(true); v="ahora"; } else if(typeof abrirBuzon==="function") abrirBuzon(false); if(!["ahora","mapa","plan","simulacro"].includes(v)) v="ahora";
-  ["ahora","mapa","plan","simulacro"].forEach(x=>$("v-"+x).hidden = x!==v);
+  ["ahora","mapa","plan","simulacro"].forEach(x=>$("v-"+x).hidden = x!==v); document.body.dataset.v=v;
   document.querySelectorAll("nav.abajo a").forEach(a=>a.toggleAttribute("aria-current",a.dataset.v===v)); document.querySelectorAll('nav.abajo a[aria-current]').forEach(a=>a.setAttribute("aria-current","page"));
   if(v!=="simulacro") parar();
-  if(v==="mapa") abrirMapa(); window.scrollTo(0,0); }
+  if(v==="mapa") abrirMapa(); window.scrollTo(0,0);
+  if(v==="simulacro" && !timer){ dia=INICIO-1; setTimeout(()=>{ if(location.hash==="#simulacro" && !timer) $("play").click(); },700); } }
 window.addEventListener("hashchange",ir);
 
 /* ---------- Mapa ---------- */
