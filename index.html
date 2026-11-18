@@ -522,6 +522,30 @@ body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!i
   .bv-caja{margin-bottom:auto;margin-top:auto}
   .bienvenida{place-items:center}
 }
+
+/* ---- v0.25: reportes de vecinos ---- */
+.fab-rep{position:fixed;z-index:1001;right:max(14px,calc(50% - 226px));bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 12px);display:flex;align-items:center;gap:8px;border:0;border-radius:999px;background:#1f1433;color:#fff;font-weight:800;font-size:.92rem;padding:11px 16px 11px 13px;box-shadow:0 8px 24px rgba(20,10,40,.3)}
+.fab-rep svg{width:22px;height:22px}
+body[data-v="simulacro"] .fab-rep{display:none}
+.reporte{position:fixed;inset:0;z-index:2100;background:rgba(15,10,30,.55);display:grid;place-items:end center;padding:10px;overflow:auto}
+.reporte[hidden]{display:none}
+.rp-caja{width:min(460px,100%);background:var(--card);color:var(--ink);border-radius:20px;padding:16px;display:grid;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.rp-h{display:flex;justify-content:space-between;align-items:center}.rp-h h2{margin:0;font-size:1.2rem;font-weight:800}
+.rp-h button{border:0;background:transparent;color:var(--accent);font-weight:800;padding:6px}
+.rp-urg{margin:0;background:#fee2e2;border:1px solid #fca5a5;color:#7f1d1d;border-radius:12px;padding:8px 10px;font-size:.88rem}.rp-urg a{color:#7f1d1d;font-weight:800}
+.rp-tipos{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}.rp-tipos legend{font-weight:800;margin-bottom:6px;padding:0}
+.rp-tipos label{position:relative}.rp-tipos input{position:absolute;opacity:0}
+.rp-tipos span{display:block;border:1.5px solid var(--line);border-radius:999px;padding:7px 12px;font-size:.88rem;font-weight:700;background:var(--soft)}
+.rp-tipos input:checked + span{background:#1f1433;color:#fff;border-color:#1f1433}.rp-tipos input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.rp-campo{display:grid;gap:4px;font-weight:800;font-size:.92rem}
+.rp-campo input,.rp-campo textarea{font:inherit;font-weight:500;border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--card);color:var(--ink);resize:vertical}
+.rp-foto{display:block;border:1.5px dashed var(--line);border-radius:12px;padding:10px;text-align:center;font-weight:700;cursor:pointer}.rp-foto input{display:none}
+#rp-prev{width:100%;max-height:200px;object-fit:cover;border-radius:12px}
+.rp-check{font-weight:700;font-size:.9rem;display:flex;gap:8px;align-items:center}
+.rp-priv{margin:0;font-size:.78rem;color:var(--muted)}
+.rp-msg{margin:0;font-weight:700;min-height:1em}
+.rp-enviar{width:100%;padding:13px;font-size:1rem}
+@media (min-width:900px){ .fab-rep{right:max(18px,calc(50% - 540px))} .reporte{place-items:center} }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -543,6 +567,7 @@ body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!i
 <symbol id="i-play" viewBox="0 0 256 256" fill="currentColor"><path d="M228.23,134.69,84.15,222.81A8,8,0,0,1,72,216.12V39.88a8,8,0,0,1,12.15-6.69l144.08,88.12A7.82,7.82,0,0,1,228.23,134.69Z" opacity="0.2"/><path d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"/></symbol>
 <symbol id="i-pausa" viewBox="0 0 256 256" fill="currentColor"><path d="M208,48V208a8,8,0,0,1-8,8H160a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8h40A8,8,0,0,1,208,48ZM96,40H56a8,8,0,0,0-8,8V208a8,8,0,0,0,8,8H96a8,8,0,0,0,8-8V48A8,8,0,0,0,96,40Z" opacity="0.2"/><path d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"/></symbol>
 <symbol id="n-ahora" viewBox="0 0 256 256" fill="currentColor"><path d="M160,128a32,32,0,1,1-32-32A32,32,0,0,1,160,128Z" opacity="0.2"/><path d="M128,88a40,40,0,1,0,40,40A40,40,0,0,0,128,88Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,152Zm73.71,7.14a80,80,0,0,1-14.08,22.2,8,8,0,0,1-11.92-10.67,63.95,63.95,0,0,0,0-85.33,8,8,0,1,1,11.92-10.67,80.08,80.08,0,0,1,14.08,84.47ZM69,103.09a64,64,0,0,0,11.26,67.58,8,8,0,0,1-11.92,10.67,79.93,79.93,0,0,1,0-106.67A8,8,0,1,1,80.29,85.34,63.77,63.77,0,0,0,69,103.09ZM248,128a119.58,119.58,0,0,1-34.29,84,8,8,0,1,1-11.42-11.2,103.9,103.9,0,0,0,0-145.56A8,8,0,1,1,213.71,44,119.58,119.58,0,0,1,248,128ZM53.71,200.78A8,8,0,1,1,42.29,212a119.87,119.87,0,0,1,0-168,8,8,0,1,1,11.42,11.2,103.9,103.9,0,0,0,0,145.56Z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 256 256" fill="currentColor"><path d="M216,48H40A16,16,0,0,0,24,64V224a15.85,15.85,0,0,0,9.24,14.5A16.13,16.13,0,0,0,40,240a15.89,15.89,0,0,0,10.25-3.78l.09-.07L83,208H216a16,16,0,0,0,16-16V64A16,16,0,0,0,216,48Zm0,144H80a8,8,0,0,0-5.23,1.95L40,224V64H216ZM88,112a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,112Zm0,32a8,8,0,0,1,8-8h64a8,8,0,1,1,0,16H96A8,8,0,0,1,88,144Z"/></symbol>
 <symbol id="n-avisos" viewBox="0 0 256 256" fill="currentColor"><path d="M208,192H48a8,8,0,0,1-6.88-12C47.71,168.6,56,139.81,56,104a72,72,0,0,1,144,0c0,35.82,8.3,64.6,14.9,76A8,8,0,0,1,208,192Z" opacity="0.2"/><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z"/></symbol>
 <symbol id="n-mapa" viewBox="0 0 256 256" fill="currentColor"><path d="M160,72V216L96,184V40Z" opacity="0.2"/><path d="M228.92,49.69a8,8,0,0,0-6.86-1.45L160.93,63.52,99.58,32.84a8,8,0,0,0-5.52-.6l-64,16A8,8,0,0,0,24,56V200a8,8,0,0,0,9.94,7.76l61.13-15.28,61.35,30.68A8.15,8.15,0,0,0,160,224a8,8,0,0,0,1.94-.24l64-16A8,8,0,0,0,232,200V56A8,8,0,0,0,228.92,49.69ZM104,52.94l48,24V203.06l-48-24ZM40,62.25l48-12v127.5l-48,12Zm176,131.5-48,12V78.25l48-12Z"/></symbol>
 <symbol id="n-plan" viewBox="0 0 256 256" fill="currentColor"><path d="M208,48V216a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V48a8,8,0,0,1,8-8H96a39.83,39.83,0,0,0-8,24v8h80V64a39.83,39.83,0,0,0-8-24h40A8,8,0,0,1,208,48Z" opacity="0.2"/><path d="M168,152a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,152Zm-8-40H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm56-64V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V48A16,16,0,0,1,56,32H92.26a47.92,47.92,0,0,1,71.48,0H200A16,16,0,0,1,216,48ZM96,64h64a32,32,0,0,0-64,0ZM200,48H173.25A47.93,47.93,0,0,1,176,64v8a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V64a47.93,47.93,0,0,1,2.75-16H56V216H200Z"/></symbol>
@@ -867,11 +892,11 @@ body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!i
         <li>Escenarios de huayco (v2, en revisión): huellas por evento del mapa geomorfológico por procesos de la UNMSM (2017, 2023, 2015, 1943 y depósitos antiguos), agrupadas según la clasificación por magnitud de H. O'Connor (tipos I–IV). Contexto: INGEMMET (2015). Muestra hasta dónde llegaron los huaicos, no una probabilidad exacta, y no reemplaza la evaluación de riesgo oficial.</li>
         <li>Niveles: nombres de INDECI. Quien declara naranja y rojo es el COE de Lurigancho-Chosica.</li>
       </ol>
-      <p style="margin-top:6px">Prototipo v0.24 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
+      <p style="margin-top:6px">Prototipo v0.25 · Proyecto Quirio, UNI-FIGMM · Para un bien social.</p>
       <p class="legal-pie">Desarrollo: Estefani Herrera Cerrón (UNI-FIGMM). Apoyo: Diego Miranda (GRD-UNI) y Samuel Santana (análisis de datos). Código: licencia MIT · Contenidos: CC BY-NC 4.0.</p>
       <details class="legal"><summary>Términos de uso y privacidad</summary>
         <p><b>Herramienta complementaria.</b> Quirio Alerta es un proyecto de investigación universitario y gratuito. No reemplaza las alertas oficiales de INDECI, SENAMHI ni de la Municipalidad de Lurigancho-Chosica, ni la sirena del SAT comunitario. Los datos de satélite pueden llegar con retraso, fallar o no ver tormentas pequeñas: ante la duda, sigue a la brigada y evacúa.</p>
-        <p><b>Tus datos.</b> La app no pide registro. Tu casa, tu plan familiar y tus preferencias se guardan solo en tu celular; puedes borrarlos limpiando los datos del navegador o desinstalando la app. Si activas los avisos, el servicio OneSignal (EE. UU.) guarda un código de tu celular, el tipo de equipo y la conexión, solo para enviarte alertas de Quirio, mientras los tengas activos. No vendemos ni compartimos esos datos con nadie más.</p>
+        <p><b>Tus datos.</b> La app no pide registro. Si envías un reporte, el mensaje, la foto y la ubicación (si la autorizas) se guardan en el servidor del proyecto y solo los ve el equipo de Quirio Alerta, para coordinar con la brigada; no se publican. Tu casa, tu plan familiar y tus preferencias se guardan solo en tu celular; puedes borrarlos limpiando los datos del navegador o desinstalando la app. Si activas los avisos, el servicio OneSignal (EE. UU.) guarda un código de tu celular, el tipo de equipo y la conexión, solo para enviarte alertas de Quirio, mientras los tengas activos. No vendemos ni compartimos esos datos con nadie más.</p>
         <p><b>Tus derechos.</b> Puedes apagar los avisos cuando quieras desde la app o desde el navegador. Para pedir información o que borremos tu suscripción (Ley 29733 de Protección de Datos Personales), escribe al equipo del proyecto en la Facultad de Ingeniería Geológica, Minera y Metalúrgica de la UNI.</p>
       </details>
     </section>
@@ -885,6 +910,28 @@ body[data-v="simulacro"] #reloj,body[data-v="simulacro"] #instala{display:none!i
     <a href="#plan" data-v="plan"><svg><use href="#n-plan"/></svg>Mi plan</a>
   </div>
 </nav>
+<button type="button" class="fab-rep" id="fab-rep" aria-haspopup="dialog" aria-controls="reporte"><svg><use href="#i-chat"/></svg><span>Reporta lo que ves</span></button>
+<div class="reporte" id="reporte" role="dialog" aria-modal="true" aria-labelledby="rp-t" hidden>
+  <form class="rp-caja" id="rp-form" novalidate>
+    <div class="rp-h"><h2 id="rp-t">Reporta lo que ves</h2><button type="button" id="rp-x" aria-label="Cerrar">Cerrar</button></div>
+    <p class="rp-urg"><b>Esto no es una llamada de emergencia.</b> Si hay peligro, llama al <a href="tel:116">116</a> o al <a href="tel:115">115</a>.</p>
+    <fieldset class="rp-tipos"><legend>¿Qué está pasando?</legend>
+      <label><input type="radio" name="tipo" value="huaico" checked><span>Huaico o lodo bajando</span></label>
+      <label><input type="radio" name="tipo" value="lluvia"><span>Lluvia fuerte</span></label>
+      <label><input type="radio" name="tipo" value="cauce"><span>Cauce crecido o tapado</span></label>
+      <label><input type="radio" name="tipo" value="rocas"><span>Caída de piedras</span></label>
+      <label><input type="radio" name="tipo" value="otro"><span>Otro</span></label>
+    </fieldset>
+    <label class="rp-campo">¿Dónde? <input id="rp-sector" maxlength="80" placeholder="Ej.: calle Sucre, parte alta" autocomplete="off"></label>
+    <label class="rp-campo">Cuéntanos qué ves <textarea id="rp-texto" maxlength="600" rows="3" placeholder="Ej.: está bajando lodo por el cauce desde hace 10 minutos"></textarea></label>
+    <label class="rp-foto"><input type="file" id="rp-foto" accept="image/*" capture="environment"><span id="rp-foto-t">📷 Agregar una foto (opcional)</span></label>
+    <img id="rp-prev" alt="Foto que vas a enviar" hidden>
+    <label class="rp-check"><input type="checkbox" id="rp-gps" checked> Enviar mi ubicación (GPS)</label>
+    <p class="rp-priv">Tu reporte llega solo al equipo de Quirio Alerta (GRD-UNI) para revisar y avisar a la brigada. Se guarda el mensaje, la foto y la ubicación si la envías; no tu nombre ni tu número.</p>
+    <p class="rp-msg" id="rp-msg" role="status"></p>
+    <button type="submit" class="in-si rp-enviar" id="rp-enviar">Enviar reporte</button>
+  </form>
+</div>
 <div id="toast-slot"></div>
 <div class="capa-alarma" id="capa-alarma" hidden role="alertdialog" aria-label="Alarma activada">
   <div class="ca-in">
@@ -1149,6 +1196,36 @@ $("alarma-btn").addEventListener("click",alarma); $("alarma-stop").addEventListe
 let EN_PELIGRO=false;
 function ordenarAyuda(){ const a=$("ayuda"), v=$("v-ahora"), arriba=(VIVO&&VIVO.color==="rojo")||EN_PELIGRO;
   a.classList.toggle("arriba",arriba); if(arriba) $("escala").after(a); else v.appendChild(a); }
+
+
+/* ---------- Reportes de vecinos (bandeja del equipo) ---------- */
+const URL_REP="https://quirio-reportes.ample.run/api/reporte";
+let rpFoto=null;
+function abrirRep(si){ $("reporte").hidden=!si; if(si){ $("rp-msg").textContent=""; $("rp-enviar").disabled=false; } }
+$("fab-rep").addEventListener("click",()=>abrirRep(true));
+$("rp-x").addEventListener("click",()=>abrirRep(false));
+$("reporte").addEventListener("click",e=>{ if(e.target.id==="reporte") abrirRep(false); });
+function achicar(file){ return new Promise((ok,mal)=>{ const img=new Image(), u=URL.createObjectURL(file);
+  img.onload=()=>{ const k=Math.min(1,1280/Math.max(img.width,img.height)), c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k);
+    c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(u); ok(c.toDataURL("image/jpeg",.72)); };
+  img.onerror=()=>{ URL.revokeObjectURL(u); mal(); }; img.src=u; }); }
+$("rp-foto").addEventListener("change",async e=>{ const f=e.target.files&&e.target.files[0]; rpFoto=null; $("rp-prev").hidden=true; if(!f) return;
+  try{ rpFoto=await achicar(f); $("rp-prev").src=rpFoto; $("rp-prev").hidden=false; $("rp-foto-t").textContent="📷 Cambiar la foto"; }catch(_){ $("rp-foto-t").textContent="No se pudo leer la foto. Prueba con otra."; } });
+function ubicacion(){ return new Promise(ok=>{ if(!$("rp-gps").checked||!navigator.geolocation) return ok(null);
+  navigator.geolocation.getCurrentPosition(p=>ok({lat:p.coords.latitude,lon:p.coords.longitude,precision:p.coords.accuracy}),()=>ok(null),{enableHighAccuracy:true,timeout:12000,maximumAge:60000}); }); }
+async function mandar(d){ const r=await fetch(URL_REP,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)}); let j={}; try{ j=await r.json(); }catch(_){} if(!r.ok||!j.ok) throw Object.assign(new Error(j.error||"No se pudo enviar"),{servidor:r.status>=400&&r.status<500}); return j; }
+function pendientes(){ try{ return JSON.parse(localStorage.getItem("quirio-rep-pend")||"[]"); }catch(_){ return []; } }
+function guardarPend(a){ try{ localStorage.setItem("quirio-rep-pend",JSON.stringify(a.slice(-3))); }catch(_){ try{ localStorage.setItem("quirio-rep-pend",JSON.stringify(a.slice(-3).map(x=>({...x,foto:null})))); }catch(__){} } }
+async function vaciarPend(){ const a=pendientes(); if(!a.length||!navigator.onLine) return; const quedan=[];
+  for(const d of a){ try{ await mandar(d); }catch(e){ if(!e.servidor) quedan.push(d); } } guardarPend(quedan); if(a.length>quedan.length) toast("Se envió tu reporte guardado. Gracias."); }
+window.addEventListener("online",vaciarPend); setTimeout(vaciarPend,4000);
+$("rp-form").addEventListener("submit",async e=>{ e.preventDefault();
+  const texto=$("rp-texto").value.trim(); if(!texto&&!rpFoto){ $("rp-msg").textContent="Escribe qué ves o agrega una foto."; return; }
+  $("rp-enviar").disabled=true; $("rp-msg").textContent="Enviando…";
+  const g=await ubicacion();
+  const d={tipo:(document.querySelector('input[name="tipo"]:checked')||{}).value||"otro",sector:$("rp-sector").value.trim(),texto,foto:rpFoto,version:"v0.25",...(g||{})};
+  try{ await mandar(d); $("rp-msg").textContent="Recibido. Gracias: el equipo lo revisará."; $("rp-form").reset(); rpFoto=null; $("rp-prev").hidden=true; $("rp-foto-t").textContent="📷 Agregar una foto (opcional)"; setTimeout(()=>abrirRep(false),2200); }
+  catch(err){ if(err.servidor){ $("rp-msg").textContent=err.message; } else { guardarPend([...pendientes(),d]); $("rp-msg").textContent="Sin conexión: tu reporte se guardó y se enviará solo cuando vuelva el internet. Si es urgente, llama al 116 o 115."; } $("rp-enviar").disabled=false; } });
 
 /* ---------- Bienvenida (solo la primera vez) ---------- */
 const BV=[["El color te dice qué hacer","Verde es tranquilo. Si cambia a amarillo o naranja, la pantalla te dice qué hacer. La app revisa la lluvia sola cada 20 minutos."],
