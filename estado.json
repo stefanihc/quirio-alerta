@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-18T18:13-05:00",
+  "actualizado": "2026-11-18T23:20-05:00",
   "color": "verde",
   "p3_mm": 0.0,
   "lluvia_por_dia_mm": {
@@ -18,16 +18,7 @@
   },
   "lluvia_24h_mm": 0.0,
   "intensidad_max_mm_h": 0.0,
-  "hora_intensidad_max": "2026-11-15T18:00-05:00",
-  "dato_satelite_hasta": "2026-11-18T12:30-05:00",
-  "tiempo_ahora": {
-    "hora": "2026-11-18T18:00-05:00",
-    "temp_c": 18.8,
-    "humedad": 94,
-    "nubes": 100,
-    "viento_kmh": 6.8,
-    "prob_lluvia_hoy": 100,
-    "fuente": "Open-Meteo (modelo)"
-  },
+  "hora_intensidad_max": "2026-11-18T17:00-05:00",
+  "dato_satelite_hasta": "2026-11-18T17:30-05:00",
   "color_desde": "2026-11-10T08:19-05:00"
 }
