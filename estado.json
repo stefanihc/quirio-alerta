@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-22T12:08-05:00",
+  "actualizado": "2026-11-22T17:31-05:00",
   "color": "verde",
   "p3_mm": 0.5,
   "lluvia_por_dia_mm": {
@@ -11,15 +11,15 @@
   "pronostico": [
     {
       "fecha": "2026-11-23",
-      "mm": 0.9
+      "mm": 0.1
     },
     {
       "fecha": "2026-11-24",
-      "mm": 0.7
+      "mm": 0.3
     },
     {
       "fecha": "2026-11-25",
-      "mm": 0.3
+      "mm": 0.2
     }
   ],
   "avisos": [],
@@ -32,13 +32,13 @@
   "lluvia_24h_mm": 0.5,
   "intensidad_max_mm_h": 1.0,
   "hora_intensidad_max": "2026-11-21T16:00-05:00",
-  "dato_satelite_hasta": "2026-11-22T06:30-05:00",
+  "dato_satelite_hasta": "2026-11-22T11:30-05:00",
   "tiempo_ahora": {
-    "hora": "2026-11-22T12:00-05:00",
-    "temp_c": 23.1,
-    "humedad": 79,
+    "hora": "2026-11-22T17:30-05:00",
+    "temp_c": 18.6,
+    "humedad": 98,
     "nubes": 100,
-    "viento_kmh": 12.1,
+    "viento_kmh": 6.9,
     "prob_lluvia_hoy": 8,
     "fuente": "Open-Meteo (modelo)"
   },
