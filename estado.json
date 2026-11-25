@@ -1,9 +1,9 @@
 {
-  "actualizado": "2026-11-24T15:27-05:00",
+  "actualizado": "2026-11-24T22:41-05:00",
   "color": "verde",
-  "p3_mm": 0.5,
+  "p3_mm": 0.0,
   "lluvia_por_dia_mm": {
-    "2026-11-21": 0.5,
+    "2026-11-21": 0.0,
     "2026-11-22": 0.0,
     "2026-11-23": 0.0,
     "2026-11-24": 0.0
@@ -11,11 +11,11 @@
   "pronostico": [
     {
       "fecha": "2026-11-25",
-      "mm": 0.2
+      "mm": 0.1
     },
     {
       "fecha": "2026-11-26",
-      "mm": 1.4
+      "mm": 1.0
     },
     {
       "fecha": "2026-11-27",
@@ -23,22 +23,22 @@
     }
   ],
   "avisos": [],
-  "fuente": "GPM IMERG Early V07 (134 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.",
+  "fuente": "GPM IMERG Early V07 (128 archivos de 30 min) y Open-Meteo. Umbrales preliminares 10.0 y 17.0 mm en 3 días.",
   "nota": "El rojo lo declara el COE de Lurigancho-Chosica. Este archivo solo propone hasta naranja.",
   "umbrales_mm": {
     "amarillo": 10.0,
     "naranja": 17.0
   },
   "lluvia_24h_mm": 0.0,
-  "intensidad_max_mm_h": 1.0,
-  "hora_intensidad_max": "2026-11-21T16:00-05:00",
-  "dato_satelite_hasta": "2026-11-24T09:30-05:00",
+  "intensidad_max_mm_h": 0.0,
+  "hora_intensidad_max": "2026-11-22T17:30-05:00",
+  "dato_satelite_hasta": "2026-11-24T16:30-05:00",
   "tiempo_ahora": {
-    "hora": "2026-11-24T15:15-05:00",
-    "temp_c": 18.5,
+    "hora": "2026-11-24T22:30-05:00",
+    "temp_c": 18.7,
     "humedad": 98,
-    "nubes": 100,
-    "viento_kmh": 7.6,
+    "nubes": 83,
+    "viento_kmh": 1.5,
     "prob_lluvia_hoy": 67,
     "fuente": "Open-Meteo (modelo)"
   },
